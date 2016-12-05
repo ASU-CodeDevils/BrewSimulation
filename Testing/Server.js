@@ -22,6 +22,7 @@ var net = require("net");
 var express = require('express');
 var app = express();
 app.set('port',(process.env.PORT ||port));
+app.use(express.static(--dirname + '/public'));
 app.get('/meth/*',function(req,res){
     var url_parts = url.parse(req.url,true);
     var path = url_parts.path;
