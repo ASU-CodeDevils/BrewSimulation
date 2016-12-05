@@ -21,7 +21,7 @@ var net = require("net");
 // Libraries
 var express = require('express');
 var app = express();
-
+app.set('port',(process.env.PORT ||port));
 app.get('/meth/*',function(req,res){
     var url_parts = url.parse(req.url,true);
     var path = url_parts.path;
@@ -54,7 +54,7 @@ app.use(function(req, res, next) {
 console.log(sitePath);
 console.log("Starting server in: " + __dirname + '/' + sitePath);
 app.use(express.static(__dirname + '/' + sitePath));
-app.listen(port, function() { 
+app.listen(app.get('port'), function() { 
     console.log("Server running at: http://localhost:" + port)
 });
 
