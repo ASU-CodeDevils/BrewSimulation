@@ -1,2 +1,2 @@
 web: node Testing/Server.js
-worker: java -jar Testing/javatest.jar
+web: java -jar Testing/javatest.jar
