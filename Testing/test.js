@@ -1,7 +1,7 @@
 
 var toflip = "";
 var flipped="";
-var request = "localhost/meth/"
+var request = "http://localhost/meth/"
 
 
 
