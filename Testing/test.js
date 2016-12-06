@@ -1,7 +1,7 @@
 
 var toflip = "";
 var flipped="";
-var request = "http://localhost:4242/meth/"
+var request = "http://testingcodedevils.herokuapp.com/meth/"
 
 
 
