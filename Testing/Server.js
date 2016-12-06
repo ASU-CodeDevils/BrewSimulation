@@ -15,8 +15,8 @@ var url = require('url');
 var cookieParser = require('cookie-parser');
 var responsefinal;
 var sitePath = process.argv[2] || ".";
-var port = 4242;
-var PORT = 9001;
+var port = 80;
+var PORT = 80;
 var net = require("net");
 // Libraries
 var express = require('express');
