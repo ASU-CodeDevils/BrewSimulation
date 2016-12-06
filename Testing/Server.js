@@ -27,7 +27,7 @@ app.get('/meth/*',function(req,res){
     var url_parts = url.parse(req.url,true);
     var path = url_parts.path;
     var meth = path.substr(6,path.length);
-    const client = net.createConnection(PORT,'localhost');
+    const client = net.createConnection(PORT,'jtestcd.heroku.com');
     meth = meth.replace(/%20/gi, " ");
     meth += '\r\n';
     console.log(meth);
