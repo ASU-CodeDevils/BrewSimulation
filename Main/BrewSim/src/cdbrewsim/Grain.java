@@ -3,8 +3,8 @@ package cdbrewsim;
 public class Grain extends InvItem {
 	double PE; //Potential Extract (points per lb / gallon)
 	double lovibonds; // Color intensity of grain
-	final double EXTRACT_EFFICIENCY = 0.70;
-	final double BATCH_SIZE = 5.0;
+	final double EXTRACT_EFFICIENCY = 0.70; // Efficiency is usually between 60%-80%. Split the difference.
+	final double BATCH_SIZE = 5.0; // Standardize all calculations to be 5 gallon batch.
 	public Grain(String name, String description, String category, double amount, String graphic, double price, double potentialExtract, double lovibonds) {
 		super(name, description, category, amount, graphic, price);
 		this.PE = potentialExtract;
