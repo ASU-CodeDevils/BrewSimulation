@@ -19,42 +19,79 @@ package cdbrewsim;
 
 public class InvItem {
 	String name;
+	String description;
 	String category;
 	double amount;
 	String graphic; //to map to the graphic asset by name
 	double price;
 	
-	public InvItem(String name, String category, double amount, String graphic, double price){
+	public InvItem(String name, String description, String category, double amount, String graphic, double price){
+		this.name = name;
+		this.description = description;
+		this.category = category;
+		this.amount = amount;
+		this.graphic = graphic;
+		this.price = price;
 		
 	}
 	public String getName(){
-		
+		return this.name;
 	}
 	public boolean setName(String name){
-		
+		this.name = name;
+		if(this.name.equals(name))
+			return true;
+		else
+			return false;
+	}
+	public String getDescription(){
+		return this.description;
+	}
+	public boolean setDescription(String description){
+		this.description = description;
+		if(this.description.equals(description))
+			return true;
+		else
+			return false;
 	}
 	public String getCategory(){
-		
+		return this.category;
 	}
 	public boolean setCategory(String cat){
-		
+		this.category = cat;
+		if(this.category.equals(cat))
+			return true;
+		else
+			return false;
 	}
 	public double getAmount(){
-		
+		return this.amount;
 	}
 	public boolean setAmount(Double amount){
-		
+		this.amount = amount;
+		if(this.amount == amount)
+			return true;
+		else
+			return false;
 	}
 	public String getGraphic(){
-		
+		return this.graphic;
 	}
 	public boolean setGraphic(String graphicName){
-		
+		this.graphic = graphicName;
+		if(this.graphic.equals(graphicName))
+			return true;
+		else
+			return false;
 	}
 	public double getPrice(){
-		
+		return this.price;
 	}
 	public boolean setPrice(double price){
-		
+		this.price = price;
+		if(this.price == price)
+			return true;
+		else
+			return false;
 	}
 }
