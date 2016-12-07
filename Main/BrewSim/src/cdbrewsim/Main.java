@@ -115,7 +115,8 @@ public class Main {
     
   }   
   public static String testclass(){
-	  String test = jsonPack();
+	   
+	  String test = jsonPack("testing", "testing");
 	  return(test);
   }
   public static String reflectflip(String meth, String[] para) throws Exception, SecurityException{
@@ -164,14 +165,70 @@ public class Main {
             return(result);
         }
  
-   public static String jsonPack(){
+  public static String jsonPack(){
 	   String meth = "Method";
 	   String par = "Parameter";
 	   String ret = "Return";
 	   String boo = "Bool";
-	   String result = "{Method:\"\", Parameter:[], Return:\"\",Bool:\"\")";
+	   String result = "{\"Method\":\"\", \"Parameter\":[], \"Return\":\"\",\"Bool\":\"\"}";
 	   return(result);
 	   
-   }
+  }
+  public static String jsonPack(boolean blean){
+	   String meth = "Method";
+	   String par = "Parameter";
+	   String ret = "Return";
+	   String bool = "";
+	   if(blean)
+	   {
+		   bool = "true";
+	   }
+	   else 
+	   {
+		   bool = "false";
+	   }
+	   
+	   String result = "{\"Method\":\"\", \"Parameter\":[], \"Return\":\"\",\"Bool\":\"" + bool + "\"}";
+	   return(result);
+	   
+  }
+  public static String jsonPack(String method){
+	   String meth = method;
+	   String par = "Parameter";
+	   String ret = "Return";
+	   String boo = "Bool";
+	   String result = "{\"Method\":\"\""+ meth +", \"Parameter\":[], \"Return\":\"\",\"Bool\":\"\"}";
+	   return(result);
+	   
+ }
+  public static String jsonPack(String method, String[] para){
+	   String meth = method;
+	   String par = "";
+	   for(int x = 0;x<para.length;x++)
+	   {
+		   if(x+1!=para.length)
+		   {
+			   par += para[x] + ",";
+		   }
+		   else
+		   {
+			   par += para[x];
+		   }
+	   }
+	   String ret = "Return";
+	   String boo = "Bool";
+	   String result = "{\"Method\":\"" + meth +"\",\"Parameter\":["+par+"], \"Return\":\"\",\"Bool\":\"\"}";
+	   return(result);
+	   
+}
+  public static String jsonPack(String retValue, String diff){
+	   String meth = "Method";
+	   String par = "Parameter";
+	   String ret = retValue;
+	   String boo = "Bool";
+	   String result = "{\"Method\":\"\", \"Parameter\":[], \"Return\":\""+ret+"\",\"Bool\":\"\"}";
+	   return(result);
+	   
+}
 }
 
