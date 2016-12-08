@@ -19,6 +19,8 @@ package cdbrewsim;
 
 import java.sql.*;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
@@ -46,7 +48,14 @@ public class Main {
 
     //port(Integer.valueOf(System.getenv("PORT")));
 	  port(9091);
-	  
+	  //Below is for testing. 
+	 /* String test = "{\"Class\":\"Main\",\"Method\":\"test\"}";
+	  JSONObject method = new JSONObject(test);
+	  System.out.println(method.toString());
+	  String[] names = JSONObject.getNames(method);
+	  System.out.println(names[0]);
+	  String result = reflectflip(method, names);*/
+		  
 	  staticFileLocation("/public");
 	 
 	 
@@ -64,108 +73,83 @@ public class Main {
 	  });
     
   }   
-  public static String hello(int x, int y, boolean yep){
-	   System.out.println(x);
-	   System.out.println(y);
-	   System.out.println(yep);
-	  String test = jsonPack("testing", "testing");
-	  return(test);
-  }
-  public class customParameter{
-      String para;
-      Integer paraint;
-      Double parad;
-      Boolean parab;
-      char type;
-      public void customSet(String p)
-      {
-	  
-	  para = p;
-	  type ='s';
-      }
-      public void customSet(int p)
-      {
-	  
-	  paraint = p;
-	  type ='i';
-      }
-      public void customSet(double p)
-      {
-	 
-	  parad = p;
-	  type ='d';
-      }
-      public void customSet(boolean p)
-      {
-	 
-	  parab = p;
-	  type ='b';
-      }
-      
-      @SuppressWarnings("unchecked")
-    public <Any> Any getparam(){
-	  if(type == 's')
-	  {
-	      return((Any)para);
-	  }
-	  else if(type=='i')
-	  {
-	      return((Any)paraint);
-	  }
-	  else if(type=='d')
-	  {
-	      return((Any)parad);
-	  }
-	  else 
-	  {
-	      return((Any)parab);
-	  }
-      }
-  }
+  
+  
   public static String reflectflip(JSONObject meth, String[] names) throws Exception, SecurityException{
-             String aClass;
+             String aClass ="";
              String aMethod="";
              String result = "";
-             customParameter[] para = new customParameter[names.length-1];
-              
-             int count = 0;
+             customParameter[] para = new customParameter[names.length-2];
+             
+            // List<customParameter> para = new LinkedList<customParameter>();
+             @SuppressWarnings("rawtypes")
+	    Class params[] = new Class[names.length-2];
+          
+             
              // we assume that called methods have no argument
              for(int z = 0;z<names.length;z++)
              {
-        	 if(names[z]=="Method")
+        	 if(names[z].compareTo("Method")==0)
         	 {
         	     aMethod = meth.getString("Method");
+        	     System.out.println(aMethod);
+        	 }
+        	 else if(names[z].compareTo("Class")==0)
+        	 {
+        	     aClass  = "cdbrewsim." + meth.getString(names[z]);
+        	     System.out.println(aClass);
         	 }
         	 else
         	 {
+        	     int count = 0;
+        	     if(names[z].compareTo("param1")==0)
+        		 count=1;
+        	     else if(names[z].compareTo("param2")==0)
+        		 count=2;
+        	     else if(names[z].compareTo("param3")==0)
+        		 count=3;
+        	     else if(names[z].compareTo("param4")==0)
+        		 count=4;
+        	     else if(names[z].compareTo("param5")==0)
+        		 count=5;
+        	     else if(names[z].compareTo("param6")==0)
+        		 count=6;
+        	     else if(names[z].compareTo("param7")==0)
+        		 count=7;
+        	     System.out.println("here");
+        	     
         	     System.out.println(count);
         		 Object check = meth.get(names[z]);
         		 if(check instanceof Integer){
-        		    
-        		     para[count].customSet(meth.getInt(names[z]));
+        		    customParameter temp = new customParameter();
+        		    temp.customSet(meth.getInt(names[z]));
+        		     para[count] = temp;
+        		     params[count] = Integer.class;
         		 }
         		 else if(check instanceof String){
-        		     para[count].customSet(meth.getString(names[z]));
+        		     customParameter temp = new customParameter();
+         		    temp.customSet(meth.getString(names[z]));
+         		   para[count] = temp;
+         		     params[count] = String.class;
         		 }
         		 else if(check instanceof Double){
-        		     para[count].customSet(meth.getDouble(names[z]));
+        		     customParameter temp = new customParameter();
+         		    temp.customSet(meth.getDouble(names[z]));
+         		   para[count] = temp;
+         		   params[count] = Double.class;
         		 }
         		 else 
         		 {
-        		     para[count].customSet(meth.getBoolean(names[z]));
+        		     customParameter temp = new customParameter();
+         		    temp.customSet(meth.getBoolean(names[z]));
+         		   para[count] = temp;
+         		   params[count]= Boolean.class;
         		 }
-        		 count++;
+        		 
         	     
         	 }
              }
-             Class params[] = new Class[para.length];
-             for(int z = 0;z<para.length;z++)
-             {
-            	 params[z] = String.class;
-             }
-             Object paramsObj[] = {};
-        	aClass  = "cdbrewsim.Main";
-            
+             
             System.out.println(aMethod);
             
             // get the Class
@@ -198,71 +182,12 @@ public class Main {
             }
             return(result);
         }
- 
-  public static String jsonPack(){
-	   String meth = "Method";
-	   String par = "Parameter";
-	   String ret = "Return";
-	   String boo = "Bool";
-	   String result = "{\"Method\":\"\", \"Parameter\":[], \"Return\":\"\",\"Bool\":\"\"}";
+  public static String jsonPack(String retValue){
+	 
+	   String result = "{\"Return\":\""+ retValue+ "\"}";
 	   return(result);
 	   
   }
-  public static String jsonPack(boolean blean){
-	   String meth = "Method";
-	   String par = "Parameter";
-	   String ret = "Return";
-	   String bool = "";
-	   if(blean)
-	   {
-		   bool = "true";
-	   }
-	   else 
-	   {
-		   bool = "false";
-	   }
-	   
-	   String result = "{\"Method\":\"\", \"Parameter\":[], \"Return\":\"\",\"Bool\":\"" + bool + "\"}";
-	   return(result);
-	   
-  }
-  public static String jsonPack(String method){
-	   String meth = method;
-	   String par = "Parameter";
-	   String ret = "Return";
-	   String boo = "Bool";
-	   String result = "{\"Method\":\"\""+ meth +", \"Parameter\":[], \"Return\":\"\",\"Bool\":\"\"}";
-	   return(result);
-	   
- }
-  public static String jsonPack(String method, String[] para){
-	   String meth = method;
-	   String par = "";
-	   for(int x = 0;x<para.length;x++)
-	   {
-		   if(x+1!=para.length)
-		   {
-			   par += para[x] + ",";
-		   }
-		   else
-		   {
-			   par += para[x];
-		   }
-	   }
-	   String ret = "Return";
-	   String boo = "Bool";
-	   String result = "{\"Method\":\"" + meth +"\",\"Parameter\":["+par+"], \"Return\":\"\",\"Bool\":\"\"}";
-	   return(result);
-	   
-}
-  public static String jsonPack(String retValue, String diff){
-	   String meth = "Method";
-	   String par = "Parameter";
-	   String ret = retValue;
-	   String boo = "Bool";
-	   String result = "{\"Method\":\"\", \"Parameter\":[], \"Return\":\""+ret+"\",\"Bool\":\"\"}";
-	   return(result);
-	   
-}
+
 }
 

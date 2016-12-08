@@ -17,47 +17,68 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package cdbrewsim;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class Database {
-	static List<User> users;
-	static List<Recipe> recipes;
-	static List<InvItem> ingredients;
-	static List<Equipment> tools;
+	static List<User> users = new LinkedList<User>();
+	static List<Recipe> recipes = new LinkedList<Recipe>();
+	static List<InvItem> ingredients = new LinkedList<InvItem>();
+	static List<Equipment> tools = new LinkedList<Equipment>();
 	public static boolean addUser(User name){
-		
+		users.add(name);
+		return(true);
 	}
 	public static  boolean isUser(String username){
-		
+		for(User check: users)
+		{
+		    if(check.getUsername().compareTo(username)==0)
+		    {
+			return(true);
+		    }
+		}
+		return(false);
 	}
+	//Will implement when we know what these json files will look like. 
 	public static  boolean importJson(){
-		
+		return(true);
 	}
+	//Will implement when we know what these json files will look like. 
 	public static boolean exportJson(){
-		
+		return(true);
 	}
 	public static User getUser(String username){
-		
+		for(User check: users)
+		{
+		    if(check.getUsername().compareTo(username)==0)
+		    {
+			return(check);
+		    }
+		}
+		return(null);
 	}
 	public static List<Recipe> getRecipes(){
-		
+		return(recipes);
 	}
 	//Shouldn't need the one below if we import from json, but for testing. 
-	public static boolean setRecipes(List<Recipe> recipes){
-		
+	public static boolean setRecipes(List<Recipe> rec){
+		recipes = rec;
+		return(true);
 	}
 	public static List<InvItem> getIngredients(){
-		
+		return(ingredients);
 	}
 	//Shouldn't need the one below if we import from json, but for testing. 
-	public static boolean setIngredients(List<InvItem> ingredients){
-		
+	public static boolean setIngredients(List<InvItem> ingred){
+		ingredients = ingred;
+		return(true);
 	}
 	public static List<Equipment> getEquipment(){
-		
+		return(tools);
 	}
-	public static boolean setEquipment(List<Equipement> tools){
-		
+	public static boolean setEquipment(List<Equipment> ntools){
+	    	tools = ntools;
+	    	return(true);
 	}
 }
 
