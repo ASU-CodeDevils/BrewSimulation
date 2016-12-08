@@ -22,7 +22,9 @@ import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
-
+import org.json.JSONString;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 import javax.servlet.http.HttpServletResponse;
 
 import java.net.URI;
@@ -44,86 +46,118 @@ public class Main {
 
     //port(Integer.valueOf(System.getenv("PORT")));
 	  port(9091);
-	  Path currentRelativePath = Paths.get("");
-	  staticFileLocation("/");
-
-	  get("/meth/*",(req,res)->{
-		  	String name = req.pathInfo().toString();
-	        //String name = test;
-	        String meth = "";
-	        int start = name.indexOf("meth/");
-	        System.out.println(name);
-	        start += 5;
-	        int last = name.indexOf(")");
-	        meth = name.substring(start);
-	        start = meth.indexOf("(");
-	        meth = meth.substring(0,start);
-	        int count = 0;
-	        for(int i =0; i<name.length();i++){
-	        	if(name.charAt(i)==',')
-	        	{
-	        		count++;
-	        	}
-	        }
-	        String para[] = new String[0];
-	        start = name.indexOf("(");
-	        if((last-start)>1&&count==0){
-	        	 para = new String[1];
-	        	start = name.indexOf("(");
-	            para[0] = name.substring(start+1);
-	            System.out.println("in one");
-	            last = para[0].indexOf(")");
-	           
-	            para[0] = para[0].substring(0,last);
-	           
-	        }
-	        else if((last-start)>1)
-	        {
-	        	para = new String[count+1];
-	        	System.out.println("test");
-	        }
-	        int begin = 0;
-	        String temp = "";
-	        while(begin<count+1&&count>0){
-	        	
-	        	start = name.indexOf("(");
-	        	temp = name.substring(start+1);
-	        	start = temp.indexOf(",");
-	        	System.out.println(temp);
-	        	para[begin] = temp.substring(0,start);
-	        	start = name.indexOf(",");
-	        	if(begin<count)
-	        	{
-		        	name = name.substring(start+1);
-		        	System.out.println(name);
-		        	name = "(" +name;
-		        	if(name.indexOf(",")==-1)
-		        	{
-		        		name = name.substring(0, name.length()-1);
-		        		name = name + ",";
-		        	}
-	        	}
-	        	begin++;
-	        	
-	        }
-	        System.out.println(meth);
-	       
-	        String result = Main.reflectflip(meth,para);
-	        
-	        return(result);
+	  
+	  staticFileLocation("/public");
+	 
+	 
+	  post("/meth",(req,res)->{
+		  System.out.println("receiving request");
+		  System.out.println(req.body().toString());
+		  JSONObject method = new JSONObject(req.body().toString());
+		  System.out.println(method.toString());
+		  String[] names = JSONObject.getNames(method);
+		  System.out.println(names[0]);
+		  String result = reflectflip(method, names);
+		   return(result);
+		  
+	      
 	  });
     
   }   
-  public static String testclass(){
-	   
+  public static String hello(int x, int y, boolean yep){
+	   System.out.println(x);
+	   System.out.println(y);
+	   System.out.println(yep);
 	  String test = jsonPack("testing", "testing");
 	  return(test);
   }
-  public static String reflectflip(String meth, String[] para) throws Exception, SecurityException{
-        	 String aClass;
-             String aMethod;
+  public class customParameter{
+      String para;
+      Integer paraint;
+      Double parad;
+      Boolean parab;
+      char type;
+      public void customSet(String p)
+      {
+	  
+	  para = p;
+	  type ='s';
+      }
+      public void customSet(int p)
+      {
+	  
+	  paraint = p;
+	  type ='i';
+      }
+      public void customSet(double p)
+      {
+	 
+	  parad = p;
+	  type ='d';
+      }
+      public void customSet(boolean p)
+      {
+	 
+	  parab = p;
+	  type ='b';
+      }
+      
+      @SuppressWarnings("unchecked")
+    public <Any> Any getparam(){
+	  if(type == 's')
+	  {
+	      return((Any)para);
+	  }
+	  else if(type=='i')
+	  {
+	      return((Any)paraint);
+	  }
+	  else if(type=='d')
+	  {
+	      return((Any)parad);
+	  }
+	  else 
+	  {
+	      return((Any)parab);
+	  }
+      }
+  }
+  public static String reflectflip(JSONObject meth, String[] names) throws Exception, SecurityException{
+             String aClass;
+             String aMethod="";
              String result = "";
+             customParameter[] para = new customParameter[names.length-1];
+              
+             int count = 0;
              // we assume that called methods have no argument
+             for(int z = 0;z<names.length;z++)
+             {
+        	 if(names[z]=="Method")
+        	 {
+        	     aMethod = meth.getString("Method");
+        	 }
+        	 else
+        	 {
+        	     System.out.println(count);
+        		 Object check = meth.get(names[z]);
+        		 if(check instanceof Integer){
+        		    
+        		     para[count].customSet(meth.getInt(names[z]));
+        		 }
+        		 else if(check instanceof String){
+        		     para[count].customSet(meth.getString(names[z]));
+        		 }
+        		 else if(check instanceof Double){
+        		     para[count].customSet(meth.getDouble(names[z]));
+        		 }
+        		 else 
+        		 {
+        		     para[count].customSet(meth.getBoolean(names[z]));
+        		 }
+        		 count++;
+        	     
+        	 }
+             }
              Class params[] = new Class[para.length];
              for(int z = 0;z<para.length;z++)
              {
@@ -131,7 +165,7 @@ public class Main {
              }
              Object paramsObj[] = {};
         	aClass  = "cdbrewsim.Main";
-            aMethod = meth;
+            
             System.out.println(aMethod);
             
             // get the Class
@@ -144,21 +178,21 @@ public class Main {
             switch(para.length){
             case 0: result = thisMethod.invoke(iClass, null).toString();
             		break;
-            case 1: result = thisMethod.invoke(iClass, para[0]).toString();
+            case 1: result = thisMethod.invoke(iClass, para[0].getparam()).toString();
     				break;
-            case 2: result = thisMethod.invoke(iClass, para[0], para[1]).toString();
+            case 2: result = thisMethod.invoke(iClass, para[0].getparam(), para[1].getparam()).toString();
     				break;
-            case 3: result = thisMethod.invoke(iClass, para[0], para[1], para[2]).toString();
+            case 3: result = thisMethod.invoke(iClass, para[0].getparam(), para[1].getparam(), para[2].getparam()).toString();
     				break;
-            case 4: result = thisMethod.invoke(iClass, para[0], para[1], para[2], para[3]).toString();
+            case 4: result = thisMethod.invoke(iClass, para[0].getparam(), para[1].getparam(), para[2].getparam(), para[3].getparam()).toString();
     				break;
-            case 5: result = thisMethod.invoke(iClass, para[0], para[1], para[2], para[3], para[4]).toString();
+            case 5: result = thisMethod.invoke(iClass, para[0].getparam(), para[1].getparam(), para[2].getparam(), para[3].getparam(), para[4].getparam()).toString();
 					break;
-            case 6: result = thisMethod.invoke(iClass, para[0], para[1], para[2], para[3], para[4], para[5]).toString();
+            case 6: result = thisMethod.invoke(iClass, para[0].getparam(), para[1].getparam(), para[2].getparam(), para[3].getparam(), para[4].getparam(), para[5].getparam()).toString();
 					break;
-            case 7: result = thisMethod.invoke(iClass, para[0], para[1], para[2], para[3], para[4], para[5], para[6]).toString();
+            case 7: result = thisMethod.invoke(iClass, para[0].getparam(), para[1].getparam(), para[2].getparam(), para[3].getparam(), para[4].getparam(), para[5].getparam(), para[6].getparam()).toString();
 					break;
-            case 8: result = thisMethod.invoke(iClass, para[0], para[1], para[2], para[3], para[4], para[5], para[6], para[7]).toString();
+            case 8: result = thisMethod.invoke(iClass, para[0].getparam(), para[1].getparam(), para[2].getparam(), para[3].getparam(), para[4].getparam(), para[5].getparam(), para[6].getparam(), para[7].getparam()).toString();
 					break;
             
             }

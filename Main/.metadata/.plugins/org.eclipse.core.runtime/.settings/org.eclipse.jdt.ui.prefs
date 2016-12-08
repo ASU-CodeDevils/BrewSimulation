@@ -9,6 +9,8 @@ content_assist_proposals_background=52,57,61
 content_assist_proposals_foreground=238,238,238
 eclipse.preferences.version=1
 fontPropagated=true
+formatter_profile=org.eclipse.jdt.ui.default.sun_profile
+formatter_settings_version=12
 java_bracket=249,250,244
 java_comment_task_tag=154,140,124
 java_default=217,232,247
@@ -25,8 +27,11 @@ java_string=23,198,163
 matchingBracketsColor=102,112,125
 org.eclipse.jdt.internal.ui.navigator.layout=2
 org.eclipse.jdt.ui.editor.tab.width=
+org.eclipse.jdt.ui.exception.name=e
 org.eclipse.jdt.ui.formatterprofiles.version=12
+org.eclipse.jdt.ui.gettersetter.use.is=true
 org.eclipse.jdt.ui.javadoclocations.migrated=true
+org.eclipse.jdt.ui.overrideannotation=true
 org.eclipse.jdt.ui.text.code_templates_migrated=true
 org.eclipse.jdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><templates/>
 org.eclipse.jdt.ui.text.custom_templates=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><templates/>

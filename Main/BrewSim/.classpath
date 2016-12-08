@@ -14,5 +14,6 @@
 	<classpathentry kind="lib" path="C:/Users/lowes_000/.m2/repository/org/eclipse/jetty/jetty-webapp/9.0.2.v20130417/jetty-webapp-9.0.2.v20130417.jar"/>
 	<classpathentry kind="lib" path="C:/Users/lowes_000/.m2/repository/org/eclipse/jetty/jetty-xml/9.0.2.v20130417/jetty-xml-9.0.2.v20130417.jar"/>
 	<classpathentry kind="lib" path="C:/Users/lowes_000/.m2/repository/org/eclipse/jetty/jetty-security/9.0.2.v20130417/jetty-security-9.0.2.v20130417.jar"/>
+	<classpathentry kind="lib" path="C:/Users/lowes_000/Documents/ASU/CodeDevils/BrewSim/BrewSimulation/Main/BrewSim/lib/json.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
