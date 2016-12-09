@@ -32,6 +32,8 @@ public class LogReg {
 	{
 	   User newuser = new User(username, pass);
 	   Database.addUser(newuser);
+	   GameState playerstate = new GameState(0,1,500.00);
+	   newuser.setGameState(playerstate);
 	   isname = true;
 	   System.out.println(toset);
 	   return("{\"Boolean\":"+isname.toString()+",\"Name\":\""+toset+"\"}");
