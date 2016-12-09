@@ -18,6 +18,32 @@ public class BeerStyle {
 	}
 	
 	// need setters for max values and getters for each value still.
+	public boolean setMaxBitterness(double bitterness){
+		this.maxBitterness = bitterness;
+		if(this.maxBitterness ==bitterness)
+			return true;
+		return false;
+	}
+	public boolean setMaxColor(double color){
+		this.maxColor = color;
+		if(this.maxColor ==color)
+			return true;
+		return false;
+	}
+	public boolean setMaxABV(double ABV){
+		this.maxABV = ABV;
+		if(this.maxABV == ABV)
+			return true;
+		return false;
+	}
+	
+	
+	public double getMinBitterness(){
+		return this.minBitterness;
+	}
+	public double getMaxBitterness(){
+		return this.maxBitterness;
+	}
 	
 	
 	

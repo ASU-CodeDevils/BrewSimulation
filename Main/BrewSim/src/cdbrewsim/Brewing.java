@@ -25,12 +25,29 @@ public class Brewing {
 		this.style = style;
 	}
 	
-	public double getBitterScore(){
+	public int getBitterScore(){
 		// returns a score 0-100
-		double score = 0;
+		int score = 100;
+		double IBU = 0;
 		for(Hop hop: recipe.getHops()){
+			// convert  to IBU's
+			double gravityBoil = 1.08; // temp value, needs to be calculated.
 			
+			
+			double fG = 1.65 * Math.pow(0.000125, gravityBoil);
+			double fT = (1-Math.pow(Math.E, (-0.04*hop.getTime()))) / 4.15 ;
+			double utilization = 0;
+			// IBU = AAU * U * C / V
+			IBU = hop.getAAU() * 74.89;
+			IBU+=hop.getAAU();
 		}
+		
+		if(IBU<style.getMinBitterness())
+			score -= (int)((style.getMinBitterness()-IBU)/10);
+		else if(style.getMaxBitterness()<IBU)
+			score -= (int)((IBU - style.getMaxBitterness())/10);
+		if(score < 0)
+			return 0;
 		return score;
 	}
 	
