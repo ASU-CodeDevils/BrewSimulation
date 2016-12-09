@@ -2,18 +2,18 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="lib" path="C:/Users/lowes_000/.m2/repository/com/sparkjava/spark-core/2.2/spark-core-2.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/lowes_000/.m2/repository/com/sparkjava/spark-template-freemarker/2.0.0/spark-template-freemarker-2.0.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/lowes_000/.m2/repository/org/slf4j/slf4j-api/1.7.7/slf4j-api-1.7.7.jar"/>
-	<classpathentry kind="lib" path="C:/Users/lowes_000/.m2/repository/org/slf4j/slf4j-simple/1.7.7/slf4j-simple-1.7.7.jar"/>
-	<classpathentry kind="lib" path="C:/Users/lowes_000/.m2/repository/org/eclipse/jetty/orbit/javax.servlet/3.0.0.v201112011016/javax.servlet-3.0.0.v201112011016.jar"/>
-	<classpathentry kind="lib" path="C:/Users/lowes_000/.m2/repository/org/eclipse/jetty/jetty-server/9.0.2.v20130417/jetty-server-9.0.2.v20130417.jar"/>
-	<classpathentry kind="lib" path="C:/Users/lowes_000/.m2/repository/org/eclipse/jetty/jetty-http/9.0.2.v20130417/jetty-http-9.0.2.v20130417.jar"/>
-	<classpathentry kind="lib" path="C:/Users/lowes_000/.m2/repository/org/eclipse/jetty/jetty-util/9.0.2.v20130417/jetty-util-9.0.2.v20130417.jar"/>
-	<classpathentry kind="lib" path="C:/Users/lowes_000/.m2/repository/org/eclipse/jetty/jetty-io/9.0.2.v20130417/jetty-io-9.0.2.v20130417.jar"/>
-	<classpathentry kind="lib" path="C:/Users/lowes_000/.m2/repository/org/eclipse/jetty/jetty-webapp/9.0.2.v20130417/jetty-webapp-9.0.2.v20130417.jar"/>
-	<classpathentry kind="lib" path="C:/Users/lowes_000/.m2/repository/org/eclipse/jetty/jetty-xml/9.0.2.v20130417/jetty-xml-9.0.2.v20130417.jar"/>
-	<classpathentry kind="lib" path="C:/Users/lowes_000/.m2/repository/org/eclipse/jetty/jetty-security/9.0.2.v20130417/jetty-security-9.0.2.v20130417.jar"/>
-	<classpathentry kind="lib" path="C:/Users/lowes_000/Documents/ASU/CodeDevils/BrewSim/BrewSimulation/Main/BrewSim/lib/json.jar"/>
+	<classpathentry kind="lib" path="lib/javax.servlet-3.0.0.v201112011016.jar"/>
+	<classpathentry kind="lib" path="lib/jetty-http-9.0.2.v20130417.jar"/>
+	<classpathentry kind="lib" path="lib/jetty-io-9.0.2.v20130417.jar"/>
+	<classpathentry kind="lib" path="lib/jetty-security-9.0.2.v20130417.jar"/>
+	<classpathentry kind="lib" path="lib/jetty-server-9.0.2.v20130417.jar"/>
+	<classpathentry kind="lib" path="lib/jetty-util-9.0.2.v20130417.jar"/>
+	<classpathentry kind="lib" path="lib/jetty-webapp-9.0.2.v20130417.jar"/>
+	<classpathentry kind="lib" path="lib/jetty-xml-9.0.2.v20130417.jar"/>
+	<classpathentry kind="lib" path="lib/json.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j-api-1.7.7.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j-simple-1.7.7.jar"/>
+	<classpathentry kind="lib" path="lib/spark-core-2.2.jar"/>
+	<classpathentry kind="lib" path="lib/spark-template-freemarker-2.0.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
