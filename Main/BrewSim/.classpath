@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="public"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="lib" path="C:/Users/lowes_000/.m2/repository/com/sparkjava/spark-core/2.2/spark-core-2.2.jar"/>
 	<classpathentry kind="lib" path="C:/Users/lowes_000/.m2/repository/com/sparkjava/spark-template-freemarker/2.0.0/spark-template-freemarker-2.0.0.jar"/>
@@ -15,5 +14,6 @@
 	<classpathentry kind="lib" path="C:/Users/lowes_000/.m2/repository/org/eclipse/jetty/jetty-webapp/9.0.2.v20130417/jetty-webapp-9.0.2.v20130417.jar"/>
 	<classpathentry kind="lib" path="C:/Users/lowes_000/.m2/repository/org/eclipse/jetty/jetty-xml/9.0.2.v20130417/jetty-xml-9.0.2.v20130417.jar"/>
 	<classpathentry kind="lib" path="C:/Users/lowes_000/.m2/repository/org/eclipse/jetty/jetty-security/9.0.2.v20130417/jetty-security-9.0.2.v20130417.jar"/>
+	<classpathentry kind="lib" path="C:/Users/lowes_000/Documents/ASU/CodeDevils/BrewSim/BrewSimulation/Main/BrewSim/lib/json.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

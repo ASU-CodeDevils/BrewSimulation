@@ -1,0 +1,258 @@
+/*
+ * Copyright (c) 2016 ASU CodeDevils
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
+documentation files (the "Software"), to deal in the Software without restriction, including without 
+limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies 
+of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial 
+portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT 
+NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, 
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
+OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+package cdbrewsim;
+
+import java.sql.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.Scanner;
+import org.json.JSONString;
+import org.json.JSONObject;
+import org.json.JSONTokener;
+import javax.servlet.http.HttpServletResponse;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.lang.reflect.Method;
+import static spark.Spark.*;
+import spark.template.freemarker.FreeMarkerEngine;
+import spark.ModelAndView;
+import static spark.Spark.get;
+
+//import com.heroku.sdk.jdbc.DatabaseUrl;
+
+public class Main {
+
+  public static void main(String[] args) throws SecurityException, Exception {
+
+    //port(Integer.valueOf(System.getenv("PORT")));
+	  port(9091);
+	  
+	  staticFileLocation("/public");
+	 
+	 
+	  post("/meth",(req,res)->{
+		  System.out.println("receiving request");
+		  System.out.println(req.body().toString());
+		  JSONObject method = new JSONObject(req.body().toString());
+		  System.out.println(method.toString());
+		  String[] names = JSONObject.getNames(method);
+		  System.out.println(names[0]);
+		  String result = reflectflip(method, names);
+		   return(result);
+		  
+	      
+	  });
+    
+  }   
+  public static String hello(int x, int y, boolean yep){
+	   System.out.println(x);
+	   System.out.println(y);
+	   System.out.println(yep);
+	  String test = jsonPack("testing", "testing");
+	  return(test);
+  }
+  
+  public static String reflectflip(JSONObject meth, String[] names) throws Exception, SecurityException{
+             String aClass ="";
+             String aMethod="";
+             String result = "";
+             customParameter[] para = new customParameter[names.length-2];
+             customParameter testing = new customParameter();
+             
+             
+            // List<customParameter> para = new LinkedList<customParameter>();
+             Class params[] = new Class[names.length-2];
+          
+             
+             // we assume that called methods have no argument
+             for(int z = 0;z<names.length;z++)
+             {
+        	 if(names[z]=="Method")
+        	 {
+        	     aMethod = meth.getString("Method");
+        	     System.out.println(aMethod);
+        	 }
+        	 else if(names[z]=="Class")
+        	 {
+        	     aClass  = "cdbrewsim." + meth.getString(names[z]);
+        	     System.out.println(aClass);
+        	 }
+        	 else
+        	 {
+        	     int count = 0;
+        	     System.out.println("here");
+        	     switch(names[z]){
+        	     case "param": break;
+        	     case "param1":count=1;
+        	     		break;
+        	     case "param2":count=2;
+        	     		break;
+        	     case "param3":count=3;
+        	     		break;
+        	     case "param4":count=4;
+        	     		break;
+        	     case "param5":count=5;
+        	     		break;
+        	     case "param6":count=6;
+        	     		break;
+        	     case "param7":count=7;
+        	     		break;
+        	     }
+        	     System.out.println(count);
+        		 Object check = meth.get(names[z]);
+        		 if(check instanceof Integer){
+        		    customParameter temp = new customParameter();
+        		    temp.customSet(meth.getInt(names[z]));
+        		     para[count] = temp;
+        		     params[count] = Integer.class;
+        		 }
+        		 else if(check instanceof String){
+        		     customParameter temp = new customParameter();
+         		    temp.customSet(meth.getString(names[z]));
+         		   para[count] = temp;
+         		     params[count] = String.class;
+        		 }
+        		 else if(check instanceof Double){
+        		     customParameter temp = new customParameter();
+         		    temp.customSet(meth.getDouble(names[z]));
+         		   para[count] = temp;
+         		   params[count] = Double.class;
+        		 }
+        		 else 
+        		 {
+        		     customParameter temp = new customParameter();
+         		    temp.customSet(meth.getBoolean(names[z]));
+         		   para[count] = temp;
+         		   params[count]= Boolean.class;
+        		 }
+        		 
+        	     
+        	 }
+             }
+             
+            
+            Object paramsObj[] = {};
+            
+            
+            System.out.println(aMethod);
+            
+            // get the Class
+            Class<?> thisClass = Class.forName(aClass);
+            // get an instance
+            Object iClass = thisClass.newInstance();
+            // get the method
+            Method thisMethod = thisClass.getDeclaredMethod(aMethod, params);
+            // call the method
+            switch(para.length){
+            case 0: result = thisMethod.invoke(iClass, null).toString();
+            		break;
+            case 1: result = thisMethod.invoke(iClass, para[0].getparam()).toString();
+    				break;
+            case 2: result = thisMethod.invoke(iClass, para[0].getparam(), para[1].getparam()).toString();
+    				break;
+            case 3: result = thisMethod.invoke(iClass, para[0].getparam(), para[1].getparam(), para[2].getparam()).toString();
+    				break;
+            case 4: result = thisMethod.invoke(iClass, para[0].getparam(), para[1].getparam(), para[2].getparam(), para[3].getparam()).toString();
+    				break;
+            case 5: result = thisMethod.invoke(iClass, para[0].getparam(), para[1].getparam(), para[2].getparam(), para[3].getparam(), para[4].getparam()).toString();
+					break;
+            case 6: result = thisMethod.invoke(iClass, para[0].getparam(), para[1].getparam(), para[2].getparam(), para[3].getparam(), para[4].getparam(), para[5].getparam()).toString();
+					break;
+            case 7: result = thisMethod.invoke(iClass, para[0].getparam(), para[1].getparam(), para[2].getparam(), para[3].getparam(), para[4].getparam(), para[5].getparam(), para[6].getparam()).toString();
+					break;
+            case 8: result = thisMethod.invoke(iClass, para[0].getparam(), para[1].getparam(), para[2].getparam(), para[3].getparam(), para[4].getparam(), para[5].getparam(), para[6].getparam(), para[7].getparam()).toString();
+					break;
+            
+            }
+            return(result);
+        }
+ 
+  public static String jsonPack(){
+	   String meth = "Method";
+	   String par = "Parameter";
+	   String ret = "Return";
+	   String boo = "Bool";
+	   String result = "{\"Method\":\"\", \"Parameter\":[], \"Return\":\"\",\"Bool\":\"\"}";
+	   return(result);
+	   
+  }
+  public static String jsonPack(boolean blean){
+	   String meth = "Method";
+	   String par = "Parameter";
+	   String ret = "Return";
+	   String bool = "";
+	   if(blean)
+	   {
+		   bool = "true";
+	   }
+	   else 
+	   {
+		   bool = "false";
+	   }
+	   
+	   String result = "{\"Method\":\"\", \"Parameter\":[], \"Return\":\"\",\"Bool\":\"" + bool + "\"}";
+	   return(result);
+	   
+  }
+  public static String jsonPack(String method){
+	   String meth = method;
+	   String par = "Parameter";
+	   String ret = "Return";
+	   String boo = "Bool";
+	   String result = "{\"Method\":\"\""+ meth +", \"Parameter\":[], \"Return\":\"\",\"Bool\":\"\"}";
+	   return(result);
+	   
+ }
+  public static String jsonPack(String method, String[] para){
+	   String meth = method;
+	   String par = "";
+	   for(int x = 0;x<para.length;x++)
+	   {
+		   if(x+1!=para.length)
+		   {
+			   par += para[x] + ",";
+		   }
+		   else
+		   {
+			   par += para[x];
+		   }
+	   }
+	   String ret = "Return";
+	   String boo = "Bool";
+	   String result = "{\"Method\":\"" + meth +"\",\"Parameter\":["+par+"], \"Return\":\"\",\"Bool\":\"\"}";
+	   return(result);
+	   
+}
+  public static String jsonPack(String retValue, String diff){
+	   String meth = "Method";
+	   String par = "Parameter";
+	   String ret = retValue;
+	   String boo = "Bool";
+	   String result = "{\"Method\":\"\", \"Parameter\":[], \"Return\":\""+ret+"\",\"Bool\":\"\"}";
+	   return(result);
+	   
+}
+}
+

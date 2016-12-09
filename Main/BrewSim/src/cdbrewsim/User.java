@@ -26,39 +26,53 @@ public class User {
 	
 	public User(String user, String pass)
 	{
-		
+		username = user;
+		password = pass;
 	}
 	public String getChallengeResponse(){
-		
+		return(challengeResponse);
+	}
+	public boolean isUser(String user){
+	    return(user.compareTo(username)==0);
+	}
+	public boolean isPass(String pass){
+	    return(password.compareTo(pass)==0);
 	}
 	public boolean setChallengeResponse(String response){
-		
+		challengeResponse=response;
+		return(true);
 	}
 	public String getChallengQuestion(){
-		
+		return(challengeQuestion);
 	}
 	public boolean setChallengeQuestion(String question){
-		
+		challengeQuestion=question;
+		return(true);
 	}
 	public GameState getGameState(){
-		
+		return(current);
 	}
 	public boolean setGameState(GameState save){
-		
+		current = save;
+		return(true);
 	}
 	public boolean newGameState(GameState overwrite){
-		
+		current = overwrite;
+		return(true);
 	}
 	public String getPassword(){
-		
+		return(password);
 	}
 	public boolean setPassword(String pass){
-		
+		password=pass;
+		return(true);
 	}
 	public String getUsername(){
-		
+		return(username);
 	}
 	public boolean setUsername(String user){
+	    	username = user;
+	    	return(true);
 		
 	}
 }

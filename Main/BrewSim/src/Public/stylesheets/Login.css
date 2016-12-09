@@ -1,0 +1,15 @@
+body {
+   
+}
+#original {
+     background-image: url("/graphics/MainPage.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment:fixed;
+}
+h4 {
+    color:white;
+}
+p {
+    color:white;
+}

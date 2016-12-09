@@ -1,0 +1,75 @@
+ <html>
+     <head><title>BrewSim</title>
+        <script src="/js/route.js" delay></script>
+         <script src="/js/login.js" delay></script>
+         <link rel="stylesheet" type="text/css" href="/stylesheets/Login.css">
+     </head> 
+  <body> 
+  <div id="original">
+     <h1>&nbsp</h1>
+     <h1>&nbsp</h1>
+     <h1>&nbsp</h1>
+  
+    <div id="before_id"></div>
+      <br>
+    <div id="after_id"></div>
+      <br>
+      <br>
+      <br>  
+      <br>
+      <br>
+      <br>
+      <br>
+      
+      <br>
+      <br>
+      <br>
+      <br>
+     <br>
+     <br>
+      <center>
+      <div id="errorlogin"></div>
+      
+     <input  id="login" type="button"  value="Login" onclick="login()" />
+     <p id="tag1" hidden>Username</p>
+     <p id="tag6" hidden>Username is already taken</p>
+     <p id="tag5" hidden>Do you want to add a challenge question<br>in case you forget your password?</p>
+     <input hidden id="username" type="text" name="username" style="width: 100px" />
+     <p id="tag3" hidden>Challenge Question</p>
+     <input hidden id="cquestion" type="text" name="ChallengeQuestion" style="width: 100px" />
+     <p id="tag7" hidden></p>
+          <br>
+          <br>
+     <p id="tag2" hidden>Password</p>
+     <input hidden id="pass" type="text" name="pass" style="width: 100px" />
+     <p id="tag4" hidden>Challenge Response</p>
+     <input hidden id="cresponse" type="text" name="ChallengeResponse" style="width: 100px" />
+          <div id="For login"></div>
+          
+          <div id="For Registration"></div>
+          <input hidden id="startgame" type="button"   value="Start" onclick="start()" /> 
+          <input hidden id="logchallenge" type="button"   value="Save" onclick="logchallenge()" />  
+          <input hidden id="subchallenge" type="button"   value="Save" onclick="subchallenge()" /> 
+          <input hidden id="qquestionadd" type="button"   value="Add" onclick="addchallenge()" /> 
+          <input hidden id="checkforchallenge" type="button"   value="Add" onclick="checkchallenge()" />
+          
+    <input id="register" type="button"  value="Join Game" onclick="register()" /> 
+    <br>
+    <input hidden id="logincheck" type="button"   value="Login" onclick="checkLog()" /> 
+    <br>
+    <input id="forgotpass" type="button"  value="Forgot Password" onclick="forgot()" />  
+    <input hidden id="reg" type="button"  value="Register" onclick="reg()" ></input>  
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    </div>
+      </center>
+</body>
+</html>
