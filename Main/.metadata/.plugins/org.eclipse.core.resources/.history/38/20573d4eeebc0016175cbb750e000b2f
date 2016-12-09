@@ -1,0 +1,57 @@
+package cdbrewsim;
+
+public class customParameter {
+  
+	      String para="";
+	      Integer paraint = 0;
+	      Double parad = 0.0;
+	      Boolean parab= false;
+	      char type;
+	      public customParameter(){
+		  
+	      }
+	      public void customSet(String p)
+	      {
+		  
+		  para = p;
+		  type ='s';
+	      }
+	      public void customSet(int p)
+	      {
+		  
+		  paraint = p;
+		  type ='i';
+	      }
+	      public void customSet(double p)
+	      {
+		 
+		  parad = p;
+		  type ='d';
+	      }
+	      public void customSet(boolean p)
+	      {
+		 
+		  parab = p;
+		  type ='b';
+	      }
+	      
+	      @SuppressWarnings("unchecked")
+	    public <Any> Any getparam(){
+		  if(type == 's')
+		  {
+		      return((Any)para);
+		  }
+		  else if(type=='i')
+		  {
+		      return((Any)paraint);
+		  }
+		  else if(type=='d')
+		  {
+		      return((Any)parad);
+		  }
+		  else 
+		  {
+		      return((Any)parab);
+		  }
+	      }
+}
