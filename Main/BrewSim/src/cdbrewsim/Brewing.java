@@ -18,5 +18,23 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 package cdbrewsim;
 
 public class Brewing {
-
+	Recipe recipe;
+	BeerStyle style;
+	Brewing(Recipe recipe,BeerStyle style){
+		this.recipe = recipe;
+		this.style = style;
+	}
+	
+	public double getBitterScore(){
+		// returns a score 0-100
+		double score = 0;
+		for(Hop hop: recipe.getHops()){
+			
+		}
+		return score;
+	}
+	
+	
+	
+	
 }

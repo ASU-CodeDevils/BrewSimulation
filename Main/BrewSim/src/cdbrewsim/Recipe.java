@@ -18,62 +18,70 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 package cdbrewsim;
 
 public class Recipe {
+	final static int MAX_HOPS = 7;
+	final static int MAX_GRAINS = 5;
 	String name;
-	//The next two items are directly tied to each other. Could be another object if we have time. 
-	String [] ingredients;
-	double [] amount;
+	InvItem [] ingredients;
 	int level;
-	double price;
 	
-	public Recipe(String nameit, String[] ingredient,double[] amountNeed,int diffLevel, int sellprice){
-		
+	public Recipe(String name, InvItem[] ingredients, int level){
+		this.name = name;
+		this.ingredients = ingredients;
+		this.level = level;
 	}
-	public String[] getIngredients(){
-		
+	public String getName(){
+		return this.name;
 	}
-	public boolean setIngredients(String[] nIngredients){
-		
+	public Hop[] getHops(){
+		int counter = 0;
+		Hop[] hops = new Hop[MAX_HOPS];
+		for(InvItem item: ingredients){
+			if(item instanceof Hop)
+				hops[counter++] = (Hop)item;
+		}
+		return hops;
+	}
+	public Grain[] getGrains(){
+		int counter = 0;
+		Grain[] grains = new Grain[MAX_GRAINS];
+		for(InvItem item: ingredients){
+			if(item instanceof Hop)
+				grains[counter++] = (Grain)item;
+		}
+		return grains;
+	}
+	public Yeast getYeast(){
+		for(InvItem item: ingredients){
+			if(item instanceof Hop)
+				return (Yeast)item;
+		}
+		return null;
+	}
+	public boolean setIngredients(InvItem[] nIngredients){
+		ingredients = nIngredients;
+		if(ingredients.equals(nIngredients))
+			return true;
+		return false;
 	}
 	//careful here. Going to need to copy array to add. 
-	public boolean setIngredient(String ingredient){
+	public boolean addIngredient(InvItem ingredient){
 		
-	}
-	public double[] getAmount(){
-		
+		return false;
 	}
 	public boolean setAmount(double[] nprices){
 		
-	}
-	//Going to take the ingredient name to match with the right ingredient for array. 
-	public boolean setAmount(String ingredient, double nprice){
-		
-	}
-	
-	public int getDifficulty(){
-		
-	}
-	
-	public boolean setDifficulty(int diff){
-		
+		return false;
 	}
 	public int getLevel(){
-		
-		
+		return this.level;
 	}
-	public boolean setLevel(int nlevel){
-		
+	public boolean setLevel(int level){
+		this.level = level;
+		return true;
 	}
-	public int getPrice(){
-		
-	}
-	public boolean setPrice(double nPrice){
-		
-	}
-	public String getName(){
-		
-	}
-	public boolean changeName(String nName){
-		
+	public boolean changeName(String name){
+		this.name = name;
+		return true;
 	}
 	
 

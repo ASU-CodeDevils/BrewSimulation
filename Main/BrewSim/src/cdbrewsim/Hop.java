@@ -1,14 +1,14 @@
 package cdbrewsim;
 
 public class Hop extends InvItem {
-	double AA;
+	double alphaAcid;
 	public Hop(String name, String description, String category, double amount, String graphic, double price, double alphaAcid) {
 		super(name, description, category, amount, graphic, price);
-		this.AA = alphaAcid;
+		this.alphaAcid = alphaAcid;
 	}
 	
 	public double getAAU(){
-		double AAU = amount * AA;
+		double AAU = amount * alphaAcid;
 		return AAU;
 	}
 
