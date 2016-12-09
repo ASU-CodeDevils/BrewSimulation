@@ -19,9 +19,13 @@ package cdbrewsim;
 
 public class LogReg {
     
-    public String checkUsername(String username, String pass){
+    public String addUsername(String username, String pass){
+	
 	Boolean isname = Database.isUser(username);
+	String toset = username;
+	System.out.println(isname);
 	if(isname){
+	    isname=false;
 	    return("{\"Boolean\":"+isname.toString()+"}");
 	}
 	else
@@ -29,7 +33,8 @@ public class LogReg {
 	   User newuser = new User(username, pass);
 	   Database.addUser(newuser);
 	   isname = true;
-	   return("{\"Boolean\":"+isname.toString()+"}");
+	   System.out.println(toset);
+	   return("{\"Boolean\":"+isname.toString()+",\"Name\":\""+toset+"\"}");
 	}
     }
     public String login(String username,String pass){
@@ -46,7 +51,35 @@ public class LogReg {
 	    return("{\"Boolean\":"+firstcheck.toString()+"}"); 
 	}
 	firstcheck = true;
-	return("{\"Boolean\":"+firstcheck.toString()+"}"); 
+	return("{\"Boolean\":"+firstcheck.toString()+",\"Name\":\""+username+"\"}"); 
+    }
+    public String isUser(String user){
+	Boolean firstcheck = Database.isUser(user);
+	if(!firstcheck){
+	    return("{\"Boolean\":"+firstcheck.toString()+",\"Name\":\""+user+"\"}");
+	}
+	else
+	{
+	    User togetchallenge = Database.getUser(user);
+	    String challenge = togetchallenge.getChallengQuestion();
+	    return("{\"Boolean\":"+firstcheck.toString()+",\"Name\":\""+user+"\",\"Question\":\""+challenge+"\"}");
+	}
+	
+    }
+    public String checkChallenge(String user, String resp){
+	User checkuser = Database.getUser(user);
+	String response = checkuser.getChallengeResponse();
+	if(response.compareTo(resp)==0)
+	{
+	    Boolean check = true;
+	    String pass = checkuser.getPassword();
+	    return("{\"Boolean\":"+check.toString()+",\"Pass\":\""+pass+"\"}");
+	}
+	else
+	{
+	    Boolean check = false;
+	    return("{\"Boolean\":"+check.toString()+"}");
+	}
     }
     public String addChallenge(String user, String challenge, String response){
 	Boolean firstcheck = Database.isUser(user);

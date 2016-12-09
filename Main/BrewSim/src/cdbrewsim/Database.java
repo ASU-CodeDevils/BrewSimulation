@@ -39,6 +39,7 @@ public class Database {
 		}
 		return(false);
 	}
+	
 	//Will implement when we know what these json files will look like. 
 	public static  boolean importJson(){
 		return(true);

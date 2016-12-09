@@ -1,0 +1,54 @@
+ <html>
+     <head><title>BrewSim</title>
+        <script src="/js/route.js" delay></script>
+         <script src="/js/login.js" delay></script>
+         <link rel="stylesheet" type="text/css" href="/stylesheets/Login.css">
+     </head> 
+  <body> 
+     <h1>&nbsp</h1>
+     <h1>&nbsp</h1>
+     <h1>&nbsp</h1>
+     <h1>&nbsp</h1>
+    <div id="before_id"></div>
+      <br>
+    <div id="after_id"></div>
+      <br>
+      <br>
+      <br>  
+      <br>
+      <br>
+      <br>
+      <br>
+      
+      <br>
+      <br>
+      <br>
+      <br>
+     <br>
+     <br>
+      <center>
+      <div id="errorlogin"></div>
+      <div id="original">
+     <input  id="login" type="button"  value="Login" onclick="login()" ></input>
+     <input hidden id="username" type="text" name="username" style="width: 100px" ></input>
+     <input hidden id="cquestion" type="text" name="ChallengeQuestion" style="width: 100px" ></input>
+          </div>
+          <br>
+     <input hidden id="pass" type="text" name="pass" style="width: 100px" ></input>
+     <input hidden id="cresponse" type="text" name="ChallengeResponse" style="width: 100px" ></input>
+          <div id="For login"></div>
+          
+          <div id="For Registration"></div>
+          <input hidden id="startgame" type="button"   value="Start" onclick="checkLog()" ></input> 
+           
+          <input hidden id="qquestionadd" type="button"   value="Add" onclick="addchallenge()" ></input> 
+          
+          
+    <input id="register" type="button"  value="Join Game" onclick="register()" ></input> 
+    <br>
+    <input hidden id="logincheck" type="button"   value="Login" onclick="checkLog()" ></input> 
+    <br>
+    <input id="forgotpass" type="button"  value="Forgot Password" onclick="forgot()" ></input>  
+      </center>
+</body>
+</html>
