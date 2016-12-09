@@ -1,11 +1,17 @@
-body {
-   
+html, body {
+   height: 100%;
+    margin:0;
+    overflow:hidden;
 }
-#original {
+body {
      background-image: url("/graphics/MainPage.png");
     background-repeat: no-repeat;
     background-position: center;
     background-attachment:fixed;
+    
+}
+#original {
+    
 }
 h4 {
     color:white;
