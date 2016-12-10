@@ -25,7 +25,7 @@ public class Brew {
 	int brewRank;
 	int currentQuantity;
 	double currentPrice;
-	//We can set different constructors here. I don't know when we will need what. 
+	// We can set different constructors here. I don't know when we will need what. 
 	public Brew(String name, Brewing brewing, double timeToSpoil, int brewRank, int currentQuantity, double currentPrice){
 		this.name = name;
 		this.brewing = brewing;
@@ -34,6 +34,16 @@ public class Brew {
 		this.brewRank = brewRank;
 		this.currentQuantity = currentQuantity;
 		this.currentPrice = currentPrice;
+	}
+	// For testing brewing classes
+	public Brew(String name, Brewing brewing){
+		this.name = name;
+		this.brewing = brewing;
+		this.timeToSpoil = 0;
+		this.brewScore = brewing.getBrewScore();
+		this.brewRank = 1;
+		this.currentQuantity = 1;
+		this.currentPrice = 1;
 	}
 	
 	public InvItem[] getIngredients(){
