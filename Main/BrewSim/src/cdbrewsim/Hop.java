@@ -9,6 +9,13 @@ public class Hop extends InvItem {
 		super(name, description, category, amount, graphic, price);
 		this.alphaAcid = alphaAcid;
 		this.time = time;
+		this.setCategory("Hop");
+	}
+	public Hop(String name, double amount, double alphaAcid, int time){
+		super(name, amount);
+		this.alphaAcid = alphaAcid;
+		this.time = time;
+		this.setCategory("Hop");
 	}
 	
 	public double getAAU(){

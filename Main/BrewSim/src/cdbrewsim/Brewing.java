@@ -35,7 +35,7 @@ public class Brewing {
 		double IBU = 0;
 		
 		double gravityOfBoil = this.calculateGravityOfBoil();
-		double fG = 1.65 * Math.pow(0.000125, gravityOfBoil);
+		double fG = 1.65 * Math.pow(0.00125, gravityOfBoil - 1);
 		double fT = (1-Math.pow(Math.E, (-0.04*hop.getTime()))) / 4.15 ;
 		double utilization = fG * fT;
 		// IBU = AAU * U * C / V
@@ -46,6 +46,8 @@ public class Brewing {
 		double gravity = 0;
 		for(Grain grain: recipe.getGrains()){
 			gravity += grain.getSpecificGravity();}
+		gravity/=1000;
+		gravity+=1;
 		return gravity;}
 	
 	private double calculateABVperGrain(Grain grain){

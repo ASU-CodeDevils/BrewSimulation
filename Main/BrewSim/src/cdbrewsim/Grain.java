@@ -11,6 +11,13 @@ public class Grain extends InvItem {
 		super(name, description, category, amount, graphic, price);
 		this.PE = potentialExtract;
 		this.lovibonds = lovibonds;
+		this.setCategory("Grain");
+	}
+	public Grain(String name, double amount, double potentialExtract, double lovibonds){
+		super(name, amount);
+		this.PE = potentialExtract;
+		this.lovibonds = lovibonds;
+		this.setCategory("Grain");
 	}
 	
 	public double getSpecificGravity(){
