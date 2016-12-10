@@ -2,11 +2,14 @@ var score = 0;
 var balance = 0;
 var rank = 0;
 var name = "";
+var back = true;
 var sound1 = true;
 var sound2 = true;
 var sound3 = true;
 var sound4 = true;
 var sound5 = true;
+var sound6 = true;
+var sound7 = true;
 var ingredients=[];
 var currentingredient =0;
 var hasnotloaded = true;
@@ -23,6 +26,11 @@ var mainState= {
         game.load.image('rrw', 'graphics/rrw.png');
         game.load.image('rlw', 'graphics/rlw.png');
         game.load.image('barley','graphics/Barley.png');
+        game.load.image('leftarrow','graphics/leftarrow.png');
+        game.load.image('buydown', 'graphics/buydown.png');
+        game.load.image('buyup', 'graphics/buyup.png');
+        game.load.image('leftdown', 'graphics/leftarrowdown.png');
+        
     },
     create: function(){
         game.stage.backgroundColor = '#F5F1DE';
@@ -77,6 +85,11 @@ var mainState= {
         equiptext.setShadow(2,2, 'rgba(0,0,0,0.5)',0);
         
         this.bclick = game.add.audio('bclick');
+        this.back = game.add.sprite(20,40,'leftarrow');
+        this.back.inputEnabled = true;
+        this.back.input.userHandCursor = true;
+        this.backdown = game.add.sprite(20,40, 'leftdown');
+        this.backdown.visible = true;
         this.redl = game.add.sprite(80,260,'redl');
         this.redl.inputEnabled = true;
         this.redl.input.useHandCursor = true;
@@ -84,8 +97,7 @@ var mainState= {
         this.redr.inputEnabled = true;
         this.redr.input.useHandCursor = true;
         this.reds = game.add.sprite(165,265,'reds');
-        this.reds.inputEnabled = true;
-        this.reds.input.useHandCursor = true;
+       
         this.rrw = game.add.sprite(385,260,'rrw');
         this.rrw.visible = false;
         this.rlw = game.add.sprite(80,260,'rlw');
@@ -97,11 +109,21 @@ var mainState= {
         headingtext.setShadow(2,2, 'rgba(0,0,0,0.5)',0);
         headingtext.anchor.set(0.5);
         var pack = packJson("LogReg", "getIngredients",name);
-        getInfo(pack,function(){
-        	var current = ingredients[currentingredient];
-       	 	this.item = game.add.sprite(277	,550,'barley');
-       	 	this.item.anchor.set(0.5);
-        });
+        getInfo(pack,getinvitems);
+        descriptiontext = game.add.text(310,370, '');
+        descriptiontext.fontSize = 18;
+        descriptiontext.fill = '#FDFEFE';
+        descriptiontext.setShadow(2,2, 'rgba(0,0,0,0.5)',0);
+        descriptiontext.wordWrap= true;
+        descriptiontext.wordWrapWidth = 150;
+        //descriptiontext.anchor.set(0.5);
+        this.buyup = game.add.sprite(195,670,'buyup');
+        this.buyup.inputEnabled = true;
+        this.buyup.input.useHandCursor = true;
+        this.buyup.visible = false;
+        this.buydown = game.add.sprite(195,670, 'buydown');
+        this.buydown.visible = false;
+        
         
         
     },
@@ -113,7 +135,57 @@ var mainState= {
     		}
     },
     update: function(){
-    	 
+    	console.log(game.input.mousePointer.x);
+    	console.log(game.input.mousePointer.y);
+    	if(this.buyup.input.pointerOver()){
+    		this.buydown.visible = true;
+    		if(game.input.activePointer.isDown)
+			{
+			if(sound6)
+				{
+				this.bclick.play();
+				sound6=false;
+				console.log("load buy menu");
+				}
+			
+			}
+    		
+    	}
+    	else
+    		{
+    		this.buydown.visible = false;
+    		sound6 = true;
+    		}
+    	if(this.back.input.pointerOver())
+    		{
+    		
+	    		
+	    		this.backdown.visible = true;
+	    		console.log('Mouseover');
+	    		
+    		
+    		
+    		if(game.input.activePointer.isDown)
+    			{
+    			if(sound7)
+    				{
+    				this.bclick.play();
+    				sound7=false;
+    				game.state.start('main');
+    				}
+    			
+    			}
+    		else
+			{
+    			sound7 =true;
+    			
+			}
+    		}
+    	else
+    		{
+    		this.backdown.visible = false;
+    		
+    		}
     	if(this.gout1.input.pointerOver())
     		{
     		this.gin1.visible = true;
@@ -121,9 +193,11 @@ var mainState= {
             {
                 if(sound1)
                 	{
+                	this.loadinventory();
                 	this.bclick.play();
                 	sound1 = false;
                 	headingtext.setText("Ingredients");
+                	
                   	}
             }
     		
@@ -141,6 +215,7 @@ var mainState= {
                 if(sound2)
                 	{
                 	this.bclick.play();
+                	this.loadrecipe();
                 	sound2 = false;
                 	headingtext.setText("Recipes");
                 	}
@@ -160,6 +235,7 @@ var mainState= {
                 	{
                 	this.bclick.play();
                 	sound3 = false;
+                	this.loadequipment();
                 	headingtext.setText("Equipment");
                 	}
             }
@@ -205,14 +281,33 @@ var mainState= {
 		}
 
     },
-    
     loadinventory: function(){
-    	var current = ingredients[currentingredient];
-    	 this.tem = game.add.sprite(165,265,current.graphic);
-    	 this.item.anchor.set(0.5);
-   }
+    	var current = (ingredients[currentingredient].Ingredient);
+    	console.log(current);
+    	
+    	console.log(current.graphic);
+   	 	this.item = game.add.sprite(200,520,current.graphic);
+   	 	this.item.anchor.set(0.5);
+   	 	descriptiontext.setText(current.name + '\nCategory: '+current.category+'\nPrice: ' + current.price +'\nAvailable: ' + current.amount +'\n\nDecription: '+current.description);
+   	 	this.buyup.visible = true;
+    },
+    loadrecipe: function(){
+    	this.item.visible = false;
+    	descriptiontext.setText('');
+    },
+    loadequipment: function(){
+    	descriptiontext.setText('');
+    	this.item.visible = false;
+    }
+    
+   
 };
 
 
 game.state.add('market',mainState);
-//game.state.start('market');
+game.state.start('market');
+
+
+getinvitems = function(result){
+	ingredients.push(JSON.parse(result));
+}
