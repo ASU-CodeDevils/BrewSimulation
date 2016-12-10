@@ -96,6 +96,7 @@ public class InvItem {
 		else
 			return false;
 	}
+
 	public JSONObject getJson(){
 		JSONObject obj = new JSONObject();
 		obj.put("name", this.name);
@@ -106,6 +107,17 @@ public class InvItem {
 		obj.put("price", this.price);
 		
 		return(obj);
-		
-	}
+	}		
+
+	public String toString(){
+		StringBuilder s = new StringBuilder();
+		s.append(this.name + " ");
+		s.append(this.description+ " ");
+		s.append(this.category+ " ");
+		s.append(this.amount+ " ");
+		s.append(this.graphic+ " ");
+		s.append(this.price+ " ");
+		return s.toString();
+  }
+
 }

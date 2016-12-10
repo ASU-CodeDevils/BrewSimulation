@@ -18,62 +18,77 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 package cdbrewsim;
 
 public class Recipe {
+	final static int MAX_HOPS = 7;
+	final static int MAX_GRAINS = 5;
 	String name;
-	//The next two items are directly tied to each other. Could be another object if we have time. 
-	String [] ingredients;
-	double [] amount;
+	InvItem [] ingredients;
 	int level;
-	double price;
 	
-	public Recipe(String nameit, String[] ingredient,double[] amountNeed,int diffLevel, int sellprice){
-		
-	}
-	public String[] getIngredients(){
-		
-	}
-	public boolean setIngredients(String[] nIngredients){
-		
-	}
-	//careful here. Going to need to copy array to add. 
-	public boolean setIngredient(String ingredient){
-		
-	}
-	public double[] getAmount(){
-		
-	}
-	public boolean setAmount(double[] nprices){
-		
-	}
-	//Going to take the ingredient name to match with the right ingredient for array. 
-	public boolean setAmount(String ingredient, double nprice){
-		
-	}
+	public Recipe(String name, InvItem[] ingredients, int level){
+		this.name = name;
+		this.ingredients = ingredients;
+		this.level = level;}
 	
-	public int getDifficulty(){
-		
-	}
-	
-	public boolean setDifficulty(int diff){
-		
-	}
-	public int getLevel(){
-		
-		
-	}
-	public boolean setLevel(int nlevel){
-		
-	}
-	public int getPrice(){
-		
-	}
-	public boolean setPrice(double nPrice){
-		
-	}
 	public String getName(){
-		
+		return this.name;}
+	
+	public Hop[] getHops(){
+		int counter = 0;
+		Hop[] hops = new Hop[MAX_HOPS];
+		for(InvItem item: ingredients){
+			if(item instanceof Hop)
+				hops[counter++] = (Hop)item;
+		}
+		return hops;}
+	
+	public Grain[] getGrains(){
+		int counter = 0;
+		Grain[] grains = new Grain[MAX_GRAINS];
+		for(InvItem item: ingredients){
+			if(item instanceof Hop)
+				grains[counter++] = (Grain)item;
+		}
+		return grains;}
+	
+	public Yeast getYeast(){
+		// intentionally only returns first yeast. There should be only one.
+		for(InvItem item: ingredients){
+			if(item instanceof Hop)
+				return (Yeast)item;
+		}
+		return null;}
+	
+	public InvItem[] getIngredients(){
+		return this.ingredients;}
+	
+	public boolean setIngredients(InvItem[] nIngredients){
+		ingredients = nIngredients;
+		if(ingredients.equals(nIngredients))
+			return true;
+		return false;}
+	
+	//careful here. Going to need to copy array to add. Thanks, this should be ok.
+	public boolean addIngredient(InvItem ingredient){
+		int oldLength = ingredients.length;
+		InvItem[] temp = new InvItem[ingredients.length+1];
+		for(int i = 0; i<ingredients.length;i++)
+			temp[i] = ingredients[i];
+		temp[temp.length-1] = ingredient;
+		ingredients = temp;
+		if(ingredients.length == oldLength+1)
+			return true;
+		return false;}
+	
+	public int getLevel(){
+		return this.level;}
+	
+	public boolean setLevel(int level){
+		this.level = level;
+		return true;
 	}
-	public boolean changeName(String nName){
-		
+	public boolean setName(String name){
+		this.name = name;
+		return true;
 	}
 	
 
