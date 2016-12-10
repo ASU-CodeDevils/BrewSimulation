@@ -19,53 +19,70 @@ package cdbrewsim;
 
 public class Brew {
 	String name;
-	String[] ingredients;
-	double[] amount;
+	Brewing brewing;
 	double timeToSpoil;
 	int brewScore;
 	int brewRank;
 	int currentQuantity;
 	double currentPrice;
 	//We can set different constructors here. I don't know when we will need what. 
-	public Brew(String name, String[] ingredients, double[] amount, double timeToSpoil, int brewScore){
-		
-	}
-	public String[] getIngredients(){
-		
-	}
-	public boolean setIngredients(String[] ingredients){
-		
-	}
-	public double getTimeToSpoil(){
-		
-	}
-	public boolean setTimeToSpoil(double time){
-		
-	}
-	public int getBrewScore(){
-		
-	}
-	public boolean setBrewScore(int brewScore){
-		
-	}
-	public int getBrewRank(){
-		
-	}
-	public boolean setBrewRank(int rank){
-		
-	}
-	public int getCurrentQuantity(){
-		
-	}
-	public boolean setCurrentQuantity(int quantity){
-		
-	}
-	public double getCurrentPrice(){
-		
-	}
-	public boolean setCurrentPrice(double currentprice){
-		
+	public Brew(String name, Brewing brewing, double timeToSpoil, int brewRank, int currentQuantity, double currentPrice){
+		this.name = name;
+		this.brewing = brewing;
+		this.timeToSpoil = timeToSpoil;
+		this.brewScore = brewing.getBrewScore();
+		this.brewRank = brewRank;
+		this.currentQuantity = currentQuantity;
+		this.currentPrice = currentPrice;
 	}
 	
+	public InvItem[] getIngredients(){
+		return brewing.getRecipe().getIngredients();}
+	
+	public double getTimeToSpoil(){
+		return this.timeToSpoil;}
+	
+	public boolean setTimeToSpoil(double time){
+		this.timeToSpoil = time;
+		if(this.timeToSpoil == time)
+			return true;
+		return false;}
+	
+	public int getBrewScore(){
+		return brewScore;}
+	
+	public int getBrewRank(){
+		return this.brewRank;}
+	
+	public boolean setBrewRank(int rank){
+		this.brewRank = rank;
+		if(this.brewRank == rank)
+			return true;
+		return false;}
+	
+	public double getCurrentQuantity(){
+		return this.currentQuantity;}
 
+	public boolean addQuantity(double more){
+		double oldQuantity = this.currentQuantity;
+		this.currentQuantity += more;
+		if(this.currentQuantity == oldQuantity + more)
+			return true;
+		return false;}
+	
+	public boolean removeQuantity(double less){
+		double oldQuantity = this.currentQuantity;
+		this.currentQuantity -= less;
+		if(this.currentQuantity == oldQuantity - less)
+			return true;
+		return false;}
+	
+	public double getCurrentPrice(){
+		return this.currentPrice;}
+	
+	public boolean setCurrentPrice(double newPrice){
+		this.currentPrice = newPrice;
+		if(this.currentPrice == newPrice)
+			return true;
+		return false;}
 }
