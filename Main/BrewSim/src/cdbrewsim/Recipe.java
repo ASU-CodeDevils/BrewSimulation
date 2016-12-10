@@ -34,26 +34,58 @@ public class Recipe {
 	
 	public Hop[] getHops(){
 		int counter = 0;
-		Hop[] hops = new Hop[MAX_HOPS];
+		Hop[] hops;
+		// count number of hops
 		for(InvItem item: ingredients){
 			if(item instanceof Hop)
+				counter++;
+		}
+		// if less than max hops, array size is counter, else max hops
+		if(counter<MAX_HOPS)
+			hops = new Hop[counter];
+		else
+			hops = new Hop[MAX_HOPS];
+		// reset counter
+		counter = 0;
+		// fill array with hops, if more hops than max hops, return at max
+		for(InvItem item: ingredients){
+			if(item instanceof Hop){
 				hops[counter++] = (Hop)item;
+				if(counter == MAX_HOPS)
+					return hops;
+			}
 		}
 		return hops;}
 	
 	public Grain[] getGrains(){
 		int counter = 0;
-		Grain[] grains = new Grain[MAX_GRAINS];
+		Grain[] grains;
+		// count number of grains
 		for(InvItem item: ingredients){
-			if(item instanceof Hop)
+			if(item instanceof Grain)
+				counter++;
+		}
+		// if less than max grains, array size is counter, else max grains
+		if(counter<MAX_GRAINS)
+			grains = new Grain[counter];
+		else
+			grains = new Grain[MAX_HOPS];
+		// reset counter
+		counter = 0;
+		// fill array with grains, if more grains than max grains, return at max
+		for(InvItem item: ingredients){
+			if(item instanceof Grain){
 				grains[counter++] = (Grain)item;
+				if(counter == MAX_GRAINS)
+					return grains;
+			}
 		}
 		return grains;}
 	
 	public Yeast getYeast(){
 		// intentionally only returns first yeast. There should be only one.
 		for(InvItem item: ingredients){
-			if(item instanceof Hop)
+			if(item instanceof Yeast)
 				return (Yeast)item;
 		}
 		return null;}
@@ -91,5 +123,14 @@ public class Recipe {
 		return true;
 	}
 	
+	public String toString(){
+		StringBuilder s = new StringBuilder();
+		for(InvItem item: ingredients){
+			if(item == null)
+				return s.toString();
+			s.append(item.toString() +"\n");
+		}
+		return s.toString();
+	}
 
 }
