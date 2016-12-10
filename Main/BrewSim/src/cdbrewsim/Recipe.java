@@ -27,11 +27,11 @@ public class Recipe {
 	public Recipe(String name, InvItem[] ingredients, int level){
 		this.name = name;
 		this.ingredients = ingredients;
-		this.level = level;
-	}
+		this.level = level;}
+	
 	public String getName(){
-		return this.name;
-	}
+		return this.name;}
+	
 	public Hop[] getHops(){
 		int counter = 0;
 		Hop[] hops = new Hop[MAX_HOPS];
@@ -39,8 +39,8 @@ public class Recipe {
 			if(item instanceof Hop)
 				hops[counter++] = (Hop)item;
 		}
-		return hops;
-	}
+		return hops;}
+	
 	public Grain[] getGrains(){
 		int counter = 0;
 		Grain[] grains = new Grain[MAX_GRAINS];
@@ -48,38 +48,45 @@ public class Recipe {
 			if(item instanceof Hop)
 				grains[counter++] = (Grain)item;
 		}
-		return grains;
-	}
+		return grains;}
+	
 	public Yeast getYeast(){
+		// intentionally only returns first yeast. There should be only one.
 		for(InvItem item: ingredients){
 			if(item instanceof Hop)
 				return (Yeast)item;
 		}
-		return null;
-	}
+		return null;}
+	
+	public InvItem[] getIngredients(){
+		return this.ingredients;}
+	
 	public boolean setIngredients(InvItem[] nIngredients){
 		ingredients = nIngredients;
 		if(ingredients.equals(nIngredients))
 			return true;
-		return false;
-	}
-	//careful here. Going to need to copy array to add. 
+		return false;}
+	
+	//careful here. Going to need to copy array to add. Thanks, this should be ok.
 	public boolean addIngredient(InvItem ingredient){
-		
-		return false;
-	}
-	public boolean setAmount(double[] nprices){
-		
-		return false;
-	}
+		int oldLength = ingredients.length;
+		InvItem[] temp = new InvItem[ingredients.length+1];
+		for(int i = 0; i<ingredients.length;i++)
+			temp[i] = ingredients[i];
+		temp[temp.length-1] = ingredient;
+		ingredients = temp;
+		if(ingredients.length == oldLength+1)
+			return true;
+		return false;}
+	
 	public int getLevel(){
-		return this.level;
-	}
+		return this.level;}
+	
 	public boolean setLevel(int level){
 		this.level = level;
 		return true;
 	}
-	public boolean changeName(String name){
+	public boolean setName(String name){
 		this.name = name;
 		return true;
 	}
