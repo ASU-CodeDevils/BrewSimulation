@@ -57,7 +57,7 @@ public class Main {
 	  String result = reflectflip(method, names);*/
 		  
 	  staticFileLocation("/public");
-	 
+	  Database.importJson();
 	 
 	  post("/meth",(req,res)->{
 		  System.out.println("receiving request");

@@ -15,11 +15,6 @@ function checkLog(){
      
     var pack = packJson("LogReg","login", username,pass);
     getInfo(pack,valid);
-        
-    
-        
-     
-    
 }
 
 function valid(result){

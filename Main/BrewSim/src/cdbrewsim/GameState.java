@@ -17,6 +17,8 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package cdbrewsim;
 import java.util.List;
+
+import org.json.JSONObject;
 public class GameState {
 	int brewingScore;
 	List<Recipe> recipes;
@@ -30,6 +32,11 @@ public class GameState {
 		brewingScore = brewsc;
 		brewingRank = brewr;
 		balance = bal;
+	}
+	public GameState(JSONObject obj){
+		brewingScore = obj.getInt("BrewScore");
+		brewingRank = obj.getInt("BrewRank");
+		balance = obj.getDouble("Balance");
 	}
 	public int getBrewingScore(){
 		return(brewingScore);
@@ -94,6 +101,14 @@ public class GameState {
 	public boolean setBrewRank(int rank){
 		brewingRank = rank;
 		return(true);
+	}
+	public JSONObject toJson()
+	{
+		JSONObject obj = new JSONObject();
+		obj.put("Balance", this.balance);
+		obj.put("BrewScore", this.brewingScore);
+		obj.put("BrewRank", this.brewingRank);
+		return(obj);
 	}
 
 }

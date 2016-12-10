@@ -1,6 +1,10 @@
 var click = true;
 var click1 = true;
 var click2 = true;
+var score = 0;
+var balance = 0;
+var rank = 0;
+var name = "";
 var mainState={
     preload:function(){
         game.load.image('back','graphics/Garage.png');
@@ -19,8 +23,9 @@ var mainState={
         game.stage.backgroundColor = '#F5F1DE';
         game.physics.startSystem(Phaser.Physics.ARCADE);
         game.add.tileSprite(0,0,1200,800, 'back');
-        
-        
+        name = localStorage.name;
+        var pack = packJson("LogReg","getgamestate", name);
+        getInfo(pack,this.updateplayerinfo);
         this.money = game.add.sprite(260,383,'money');
         this.money.inputEnabled = true;
         this.money.input.useHandCursor = true;
@@ -40,6 +45,21 @@ var mainState={
         this.soundbeer = game.add.audio('soundbeer');
         this.soundreg = game.add.audio('soundreg');
         this.soundshop = game.add.audio('shopsound');
+        balancetext = game.add.text(790,45, 'Balance: $' +balance);
+        balancetext.fontSize = 35;
+        balancetext.fontWeight = 'bold';
+        balancetext.fill = '#FDFEFE';
+        balancetext.setShadow(4,4, 'rgba(0,0,0,0.5)',0);
+        ranktext = game.add.text(790,85, 'Brew Rank: ' +rank);
+        ranktext.fontSize = 35;
+        ranktext.fontWeight = 'bold';
+        ranktext.fill = '#FDFEFE';
+        ranktext.setShadow(4,4, 'rgba(0,0,0,0.5)',0);
+        scoretext = game.add.text(790,125, 'Score: ' +rank);
+        scoretext.fontSize = 35;
+        scoretext.fontWeight = 'bold';
+        scoretext.fill = '#FDFEFE';
+        scoretext.setShadow(4,4, 'rgba(0,0,0,0.5)',0);
          
     },
     update: function(){
@@ -119,6 +139,18 @@ var mainState={
     out: function(){
         console.log('button out');
     },
+    updateplayerinfo: function(result){
+    	console.log(result);
+    	result = JSON.parse(result);
+    	balance = result.Balance;
+    	score = result.BrewScore;
+    	rank = result.BrewRank;
+    	balancetext.setText("Balance: $" + balance);
+    	ranktext.setText("Brew Rank: " + rank);
+    	scoretext.setText("Score: " + score);
+    	console.log(balance, score, rank);
+    	
+    }
     
 };
 var game = new Phaser.Game(1200,800);
