@@ -18,40 +18,108 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 package cdbrewsim;
 
 public class Brewing {
-	Recipe recipe;
-	BeerStyle style;
-	Brewing(Recipe recipe,BeerStyle style){
+	private final Recipe recipe;
+	private final BeerStyle style;
+	private final int IBU_WEIGHT = 7;		// Every IBU off style, takes this percent off IBU score.
+	private final int ABV_WEIGHT = 30;		// Every percent off style, takes this percent off ABV score.
+	private final int COLOR_WEIGHT = 20;	// Every SRM unit off style, takes this percent off Color score.	
+	private final int SCORE_FACTORS = 3;	// Number of factors being averaged for overall score.
+	private final double BATCH_SIZE = Grain.BATCH_SIZE; // Standardize all calculations to be 5 gallon batch.
+	
+	Brewing(Recipe recipe, BeerStyle style){
 		this.recipe = recipe;
-		this.style = style;
-	}
+		this.style = style;}
+	
+	private double calculateIBUperHop(Hop hop){
+		// Does all the calculations to find out IBU of a hop addition.
+		double IBU = 0;
+		
+		double gravityOfBoil = this.calculateGravityOfBoil();
+		double fG = 1.65 * Math.pow(0.000125, gravityOfBoil);
+		double fT = (1-Math.pow(Math.E, (-0.04*hop.getTime()))) / 4.15 ;
+		double utilization = fG * fT;
+		// IBU = AAU * U * C / V
+		IBU = (hop.getAAU() * utilization * 74.89) / BATCH_SIZE;
+		return IBU;}
+	
+	private double calculateGravityOfBoil(){
+		double gravity = 0;
+		for(Grain grain: recipe.getGrains()){
+			gravity += grain.getSpecificGravity();}
+		return gravity;}
+	
+	private double calculateABVperGrain(Grain grain){
+		double ABV = 0;
+		
+		// FG = Final Gravity = 1 + ((OG-1) * (1 - Attenuation Percent))
+		double FG = 1 + ((grain.getSpecificGravity()-1) * (1 - recipe.getYeast().getApparentAttenuation()));
+		// ABV = (OG - FG) *0.129
+		ABV  = (grain.getSpecificGravity() - FG) * 0.129;
+		return ABV;}
 	
 	public int getBitterScore(){
 		// returns a score 0-100
 		int score = 100;
 		double IBU = 0;
-		for(Hop hop: recipe.getHops()){
-			// convert  to IBU's
-			double gravityBoil = 1.08; // temp value, needs to be calculated.
-			
-			
-			double fG = 1.65 * Math.pow(0.000125, gravityBoil);
-			double fT = (1-Math.pow(Math.E, (-0.04*hop.getTime()))) / 4.15 ;
-			double utilization = 0;
-			// IBU = AAU * U * C / V
-			IBU = hop.getAAU() * 74.89;
-			IBU+=hop.getAAU();
-		}
 		
+		// use helper method to calculate total IBU
+		for(Hop hop: recipe.getHops()){
+			IBU += calculateIBUperHop(hop);}
+		
+		// check beer style against this recipe's IBU, deduct points if outside range
 		if(IBU<style.getMinBitterness())
-			score -= (int)((style.getMinBitterness()-IBU)/10);
+			score -= (int)((style.getMinBitterness()-IBU)* IBU_WEIGHT);
 		else if(style.getMaxBitterness()<IBU)
-			score -= (int)((IBU - style.getMaxBitterness())/10);
+			score -= (int)((IBU - style.getMaxBitterness()) * IBU_WEIGHT);
 		if(score < 0)
 			return 0;
-		return score;
-	}
+		return score;}
 	
+	public int getAbvScore(){
+		// returns a score 0-100
+		int score = 100;
+		double ABV = 0;
+		
+		// use helper method to calculate total ABV
+		for(Grain grain: recipe.getGrains()){
+			ABV += calculateABVperGrain(grain);}
+		
+		// check beer style against this recipe's ABV, deduct points if outside range
+		if(ABV<style.getMinABV())
+			score -= (int)((style.getMinABV()-ABV) * ABV_WEIGHT);
+		else if(style.getMaxABV()<ABV)
+			score -= (int)((ABV - style.getMaxABV()) * ABV_WEIGHT);
+		if(score < 0)
+			return 0;
+		return score;}
 	
+	public int getColorScore(){
+		// returns a score 0-100
+		int score = 100;
+		double SRM = 0;
+		
+		// use helper method to calculate total ABV
+		for(Grain grain: recipe.getGrains()){
+			SRM += grain.getSRMcolor();}
+		
+		// check beer style against this recipe's ABV, deduct points if outside range
+		if(SRM<style.getMinColor())
+			score -= (int)((style.getMinColor()-SRM) * COLOR_WEIGHT);
+		else if(style.getMaxColor()<SRM)
+			score -= (int)((SRM - style.getMaxColor()) * COLOR_WEIGHT);
+		if(score < 0)
+			return 0;
+		return score;}
 	
+	public int getBrewScore(){
+		int score = 0;
+		// currently just averaging the scores together. Will want to weight them. Want more factors, add later.
+		score = (this.getAbvScore() + this.getBitterScore() + this.getColorScore()) / SCORE_FACTORS;
+		return score;}
 	
+	public Recipe getRecipe(){
+		return this.recipe;}
+	
+	public BeerStyle getBeerStyle(){
+		return this.style;}
 }
