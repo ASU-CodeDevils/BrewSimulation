@@ -1,5 +1,7 @@
 package cdbrewsim;
 
+import org.json.JSONObject;
+
 public class Grain extends InvItem {
 	double PE; //Potential Extract (points per lb / gallon)
 	double lovibonds; // Color intensity of grain
@@ -23,5 +25,18 @@ public class Grain extends InvItem {
 		// SRM color = 1.4922 * (MCU * 0.6859)
 		double SRMcolor = 1.4922 * MCU * 0.6859;
 		return SRMcolor;
+	}
+	public JSONObject getgJson(){
+		JSONObject obj = new JSONObject();
+		obj.put("name", this.name);
+		obj.put("description", this.description);
+		obj.put("category", this.category);
+		obj.put("amount",this.amount);
+		obj.put("graphic", this.graphic);
+		obj.put("price", this.price);
+		obj.put("extract",this.PE);
+		obj.put("lovibonds", this.lovibonds);
+		return(obj);
+		
 	}
 }

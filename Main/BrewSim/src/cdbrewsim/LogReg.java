@@ -18,6 +18,8 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 package cdbrewsim;
 
 import java.io.FileNotFoundException;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.json.JSONObject;
 
@@ -114,5 +116,20 @@ public class LogReg {
     	packed = gamedata.toString();
     	return(packed);
     	
+    }
+    //Return inventory Items. Not using user right now, but will need it 
+    //for when we adjust the ingredient list by their rank. 
+    public String getIngredients(String user){
+    	 
+    	List<? extends InvItem> list = new LinkedList<InvItem>();
+    	JSONObject ingredients  =new JSONObject();
+    	list = Database.getIngredients();
+    	for(InvItem each : list){
+    		if(each instanceof Grain)
+    		{
+    			ingredients.put("Ingredient",((Grain) each).getgJson());
+    		}
+    	}
+    	return(ingredients.toString());
     }
 }
