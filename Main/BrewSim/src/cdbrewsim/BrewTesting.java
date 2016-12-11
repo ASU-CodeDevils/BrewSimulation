@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class BrewTesting {
-	static InvItem[] ingredients = new InvItem[5];
+	static InvItem[] ingredients = new InvItem[20];
 	static Recipe recipe;
 	static BeerStyle style;
 	static Brewing brewing;
@@ -27,9 +27,9 @@ public class BrewTesting {
 		List<InvItem> list = new LinkedList<InvItem>();
 		list.add(new Yeast("WLP001 California Ale", 0.75));
 		list.add(new Grain("2-row Pale Malt", 11.0, 37, 1.8));
-		list.add(new Grain("2-row Pale Malt", 0.5, 34, 1.8));
-		list.add(new Hop("Cascade", 2.0, 5.5, 60));
-		list.add(new Hop("Cascade", 2.0, 5.5, 10));
+		list.add(new Grain("Crystal Malt 40°", 0.5, 34, 40));
+		list.add(new Hop("Cascade 5.5AA", 1.8, 5.5, 60));
+		list.add(new Hop("Cascade 5.5AA", 2.0, 5.5, 10));
 		
 		//	Database.setIngredients(list);
 		
@@ -43,7 +43,7 @@ public class BrewTesting {
 		System.out.println("Here at recipe");
 		for(Recipe each: listrecipe){
 			
-			if(each.getName().compareTo("Classic American Pale Ale")!=-1)
+			if(each.getName().compareTo("Classic American Pale Ale")==0)
 			{
 				recipe = each;
 			}
@@ -55,7 +55,7 @@ public class BrewTesting {
 		//style = new  BeerStyle("American Pale Ale", 20, 50, 3, 14, 4.2, 6.2);
 		List<BeerStyle> list2 = Database.getStyles();
 		for(BeerStyle each: list2){
-			if(each.getName().compareTo("American Pale Ale")!=-1)
+			if(each.getName().compareTo("American Pale Ale")==0) //was returning the wrong style when checking if not -1. Style names have a lot of similarities.
 			{
 				style = each;
 			}
@@ -66,13 +66,13 @@ public class BrewTesting {
 		brewing = new Brewing(recipe, style);
 		brew = new Brew("Testing", brewing);
 		System.out.println(recipe.toString());
+		System.out.println(recipe.getNumberOfIngredients());
 		System.out.println(brewing.getAbvScore());
+		System.out.println("The beer's ABV is " + brewing.getABV());
 		System.out.println(brewing.getBitterScore());
+		System.out.println("The beer's IBU is " + brewing.getIBU());
 		System.out.println(brewing.getColorScore());
+		System.out.println("The beer's SRM (color) is " + brewing.getColor());
 		System.out.println(brewing.getBrewScore());
 	}
-	
-	
-	
-
 }

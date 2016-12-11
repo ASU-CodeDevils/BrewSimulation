@@ -31,7 +31,7 @@ public class Yeast extends InvItem {
 	}
 	public String toString(){
 		StringBuilder s = new StringBuilder(super.toString());
-		s.append(apparentAttenuation + " ");
+		s.append(this.apparentAttenuation + " ");
 		return s.toString();
 	}
 	public JSONObject getJson(){

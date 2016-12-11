@@ -1,1 +1,91 @@
-{"style0":{"mbit":20,"maxbit":50,"maxcolor":14,"name":"American Pale Ale","minABV":4.2,"mincolor":3,"maxABV":6.2}}
+{"style0":{
+    "name":"American Pale Ale",
+    "mbit":20,
+    "maxbit":50,
+    "mincolor":3,
+    "maxcolor":14,
+    "minABV":4.2,
+    "maxABV":6.2
+    },
+ "style1":{
+    "name":"American IPA",
+    "mbit":50,
+    "maxbit":70,
+    "mincolor":6,
+    "maxcolor":12,
+    "minABV":6.3,
+    "maxABV":7.5
+    },
+ "style2":{
+    "name":"American Lager",
+    "mbit":5,
+    "maxbit":15,
+    "mincolor":2,
+    "maxcolor":6,
+    "minABV":3.2,
+    "maxABV":4
+    },
+ "style3":{
+    "name":"Hefeweizen",
+    "mbit":10,
+    "maxbit":15,
+    "mincolor":3,
+    "maxcolor":9,
+    "minABV":4.9,
+    "maxABV":5.6
+    },
+ "style4":{
+    "name":"American Brown Ale",
+    "mbit":25,
+    "maxbit":45,
+    "mincolor":15,
+    "maxcolor":26,
+    "minABV":4,
+    "maxABV":6.4
+    },
+ "style5":{
+    "name":"Kolsch",
+    "mbit":18,
+    "maxbit":28,
+    "mincolor":3,
+    "maxcolor":6,
+    "minABV":4.8,
+    "maxABV":5.3
+    },
+ "style6":{
+    "name":"American Imperial IPA",
+    "mbit":65,
+    "maxbit":100,
+    "mincolor":5,
+    "maxcolor":15,
+    "minABV":7.5,
+    "maxABV":10.5
+    },
+ "style7":{
+    "name":"American Stout",
+    "mbit":35,
+    "maxbit":60,
+    "mincolor":39,
+    "maxcolor":40,
+    "minABV":5.7,
+    "maxABV":8.9
+    },
+ "style8":{
+    "name":"American Imperial Porter",
+    "mbit":35,
+    "maxbit":50,
+    "mincolor":39,
+    "maxcolor":40,
+    "minABV":7,
+    "maxABV":12
+    },
+ "style9":{
+    "name":"Belgian Saison",
+    "mbit":20,
+    "maxbit":38,
+    "mincolor":5,
+    "maxcolor":7,
+    "minABV":4.4,
+    "maxABV":6.8
+    }
+}
