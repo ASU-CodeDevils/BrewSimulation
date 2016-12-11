@@ -121,14 +121,14 @@ public class LogReg {
     //for when we adjust the ingredient list by their rank. 
     public String getIngredients(String user){
     	 
-    	List<? extends InvItem> list = new LinkedList<InvItem>();
+    	List<InvItem> list = new LinkedList<InvItem>();
     	JSONObject ingredients  =new JSONObject();
     	list = Database.getIngredients();
+    	int x = 0;
     	for(InvItem each : list){
-    		if(each instanceof Grain)
-    		{
-    			ingredients.put("Ingredient",((Grain) each).getJson());
-    		}
+    		
+    		ingredients.put("Ingredient"+x,each.getJson());
+    		x++;
     	}
     	return(ingredients.toString());
     }

@@ -10,8 +10,13 @@ var sound4 = true;
 var sound5 = true;
 var sound6 = true;
 var sound7 = true;
-var ingredients=[];
-var currentingredient =0;
+var click = true;
+var iflast = true;
+var inload = true;
+var recipeload = false;
+var equipmentload = false;
+var ingredients;
+var currentitem =0;
 var hasnotloaded = true;
 var mainState= {
     preload: function(){
@@ -30,6 +35,9 @@ var mainState= {
         game.load.image('buydown', 'graphics/buydown.png');
         game.load.image('buyup', 'graphics/buyup.png');
         game.load.image('leftdown', 'graphics/leftarrowdown.png');
+        game.load.image('yeast','graphics/yeast.png');
+        game.load.image('grain','graphics/grain.png');
+        game.load.image('hop','graphics/hops.png');
         
     },
     create: function(){
@@ -135,8 +143,8 @@ var mainState= {
     		}
     },
     update: function(){
-    	console.log(game.input.mousePointer.x);
-    	console.log(game.input.mousePointer.y);
+    	//console.log(game.input.mousePointer.x);
+    	//console.log(game.input.mousePointer.y);
     	if(this.buyup.input.pointerOver()){
     		this.buydown.visible = true;
     		if(game.input.activePointer.isDown)
@@ -197,7 +205,9 @@ var mainState= {
                 	this.bclick.play();
                 	sound1 = false;
                 	headingtext.setText("Ingredients");
-                	
+                	recipeload = false;
+                	equipmentload = false;
+                	inload = true;
                   	}
             }
     		
@@ -218,6 +228,9 @@ var mainState= {
                 	this.loadrecipe();
                 	sound2 = false;
                 	headingtext.setText("Recipes");
+                	recipeload = true;
+                	equipmentload = false;
+                	inload = false;
                 	}
             }
 		}
@@ -237,6 +250,9 @@ var mainState= {
                 	sound3 = false;
                 	this.loadequipment();
                 	headingtext.setText("Equipment");
+                	recipeload = false;
+                	equipmentload = true;
+                	inload = false;
                 	}
             }
 		}
@@ -250,12 +266,42 @@ var mainState= {
     		this.rrw.visible = true;
     		if(game.input.activePointer.isDown)
             {
-                if(sound4)
-                	{
-                	this.bclick.play();
-                	sound4 = false;
-                	}
+    			
+    			
+                	if(sound4)
+                		{
+                		
+                		this.bclick.play();
+                		
+                		if(inload){
+                			
+                			
+                			if(iflast)
+                				{
+                					currentitem++;
+                				}
+                			else {
+                				currentitem +=1;
+                				iflast=true;
+                			}
+                			this.loadinventory();
+                		}
+                		else if(recipeload){
+                			this.loadrecipe();
+                		}
+                		else if(equipmentload){
+                			this.loadequipment();
+                		}
+                		sound4 = false;
+                		}
+                	
+    			
             }
+    		else
+    		{
+    		sound4 = true;
+    		}
+    			
 		}
     	else
 		{
@@ -267,12 +313,39 @@ var mainState= {
     		this.rlw.visible = true;
     		if(game.input.activePointer.isDown)
             {
-                if(sound5)
-                	{
-                	this.bclick.play();
-                	sound5 = false;
-                	}
+    			
+    			
+                	if(sound5)
+                		{
+                		this.bclick.play();
+                		if(inload){
+                			
+                			
+                			if(!iflast)
+            				{
+            					currentitem--;
+            				}
+                			else {
+                				currentitem -=1;
+                				iflast = false;
+            				}
+                			this.loadinventory();
+                		}
+                		else if(recipeload){
+                			this.loadrecipe();
+                		}
+                		else if(equipmentload){
+                			this.loadequipment();
+                		}
+                		sound5 = false;
+                		}
+                	
+    			
             }
+    		else
+    		{
+    		sound5 = true;
+    		}
 		}
     	else
 		{
@@ -282,11 +355,21 @@ var mainState= {
 
     },
     loadinventory: function(){
-    	var current = (ingredients[currentingredient].Ingredient);
-    	console.log(current);
-    	
-    	console.log(current.graphic);
-   	 	this.item = game.add.sprite(200,520,current.graphic);
+    	var items = Object.keys(ingredients);
+    	console.log(items);
+    	console.log(currentitem);
+    	if(currentitem>=items.length)
+    		currentitem = 0;
+    	else if(currentitem<0)
+    		currentitem = items.length -1;
+    	var current = ingredients[items[currentitem]];
+    	console.log(currentitem);
+    	if(!click)
+    		{
+    		this.item.destroy();
+    		}
+    	click = false;
+   	 	this.item = game.add.sprite(190,520,current.graphic);
    	 	this.item.anchor.set(0.5);
    	 	descriptiontext.setText(current.name + '\nCategory: '+current.category+'\nPrice: ' + current.price +'\nAvailable: ' + current.amount +'\n\nDecription: '+current.description);
    	 	this.buyup.visible = true;
@@ -309,5 +392,5 @@ game.state.start('market');
 
 
 getinvitems = function(result){
-	ingredients.push(JSON.parse(result));
+	ingredients=JSON.parse(result);
 }

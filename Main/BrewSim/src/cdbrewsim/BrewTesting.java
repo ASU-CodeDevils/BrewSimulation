@@ -1,5 +1,6 @@
 package cdbrewsim;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class BrewTesting {
@@ -23,16 +24,16 @@ public class BrewTesting {
 	1 cup corn sugar (for priming)*/
 	public static void test(){
 		// Load ingredients into ingredient array.
-		/*
-		ingredients[0] = new Yeast("WLP001 California Ale", 0.75);
-		ingredients[1] = new Grain("2-row Pale Malt", 11.0, 37, 1.8);
-		ingredients[2] = new Grain("2-row Pale Malt", 0.5, 34, 1.8);
-		ingredients[3] = new Hop("Cascade", 2.0, 5.5, 60);
-		ingredients[4] = new Hop("Cascade", 2.0, 5.5, 10);
-		for(InvItem each: ingredients){
-			Database.setIngredient(each);
-		}
-		*/
+		List<InvItem> list = new LinkedList<InvItem>();
+		list.add(new Yeast("WLP001 California Ale", 0.75));
+		list.add(new Grain("2-row Pale Malt", 11.0, 37, 1.8));
+		list.add(new Grain("2-row Pale Malt", 0.5, 34, 1.8));
+		list.add(new Hop("Cascade", 2.0, 5.5, 60));
+		list.add(new Hop("Cascade", 2.0, 5.5, 10));
+		
+		//	Database.setIngredients(list);
+		
+		
 		// Create recipe
 		//recipe = new Recipe("Classic American Pale Ale", ingredients, 1);
 		//style = new  BeerStyle("American Pale Ale", 20, 50, 3, 14, 4.2, 6.2);
@@ -52,8 +53,8 @@ public class BrewTesting {
 		}
 		// Establish style characteristics
 		//style = new  BeerStyle("American Pale Ale", 20, 50, 3, 14, 4.2, 6.2);
-		List<BeerStyle> list = Database.getStyles();
-		for(BeerStyle each: list){
+		List<BeerStyle> list2 = Database.getStyles();
+		for(BeerStyle each: list2){
 			if(each.getName().compareTo("American Pale Ale")!=-1)
 			{
 				style = each;
