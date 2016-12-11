@@ -17,6 +17,10 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package cdbrewsim;
 
+import java.io.FileNotFoundException;
+
+import org.json.JSONObject;
+
 public class User {
 	String username;
 	String password;
@@ -24,10 +28,17 @@ public class User {
 	String challengeQuestion;
 	String challengeResponse;
 	
-	public User(String user, String pass)
+	public User(String user, String pass) throws FileNotFoundException
 	{
 		username = user;
 		password = pass;
+		
+	}
+	public User(JSONObject obj){
+		username = obj.getString("username");
+		password = obj.getString("password");
+		challengeQuestion = obj.getString("Question");
+		challengeResponse = obj.getString("Response");
 	}
 	public String getChallengeResponse(){
 		return(challengeResponse);
@@ -74,5 +85,14 @@ public class User {
 	    	username = user;
 	    	return(true);
 		
+	}
+	public JSONObject toJson()
+	{
+		JSONObject obj = new JSONObject();
+		obj.put("username", this.username);
+		obj.put("password", this.password);
+		obj.put("Question", this.challengeQuestion);
+		obj.put("Response", this.challengeQuestion);
+		return(obj);
 	}
 }

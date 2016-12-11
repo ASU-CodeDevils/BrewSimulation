@@ -17,6 +17,8 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package cdbrewsim;
 
+import org.json.JSONObject;
+
 public class InvItem {
 	String name;
 	String description;
@@ -105,6 +107,19 @@ public class InvItem {
 		else
 			return false;
 	}
+
+	public JSONObject getJson(){
+		JSONObject obj = new JSONObject();
+		obj.put("name", this.name);
+		obj.put("description", this.description);
+		obj.put("category", this.category);
+		obj.put("amount",this.amount);
+		obj.put("graphic", this.graphic);
+		obj.put("price", this.price);
+		
+		return(obj);
+	}		
+
 	public String toString(){
 		StringBuilder s = new StringBuilder();
 		s.append(this.name + " ");
@@ -114,5 +129,6 @@ public class InvItem {
 		s.append(this.graphic+ " ");
 		s.append(this.price+ " ");
 		return s.toString();
-	}
+  }
+
 }

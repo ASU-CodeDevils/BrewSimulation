@@ -17,9 +17,15 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package cdbrewsim;
 
+import java.io.FileNotFoundException;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.json.JSONObject;
+
 public class LogReg {
-    
-    public String addUsername(String username, String pass){
+    //Checks if it a user and if not it gets added to the database. 
+    public String addUsername(String username, String pass) throws FileNotFoundException{
 	
 	Boolean isname = Database.isUser(username);
 	String toset = username;
@@ -32,11 +38,15 @@ public class LogReg {
 	{
 	   User newuser = new User(username, pass);
 	   Database.addUser(newuser);
+	   GameState playerstate = new GameState(0,1,500.00);
+	   newuser.setGameState(playerstate);
 	   isname = true;
 	   System.out.println(toset);
+	   Database.exportJson();
 	   return("{\"Boolean\":"+isname.toString()+",\"Name\":\""+toset+"\"}");
 	}
     }
+    //To attemp a login
     public String login(String username,String pass){
 	
 	Boolean firstcheck = Database.isUser(username);
@@ -53,6 +63,7 @@ public class LogReg {
 	firstcheck = true;
 	return("{\"Boolean\":"+firstcheck.toString()+",\"Name\":\""+username+"\"}"); 
     }
+    //To check if the username exist. 
     public String isUser(String user){
 	Boolean firstcheck = Database.isUser(user);
 	if(!firstcheck){
@@ -66,6 +77,7 @@ public class LogReg {
 	}
 	
     }
+    //To check the Challenge Question. 
     public String checkChallenge(String user, String resp){
 	User checkuser = Database.getUser(user);
 	String response = checkuser.getChallengeResponse();
@@ -81,7 +93,8 @@ public class LogReg {
 	    return("{\"Boolean\":"+check.toString()+"}");
 	}
     }
-    public String addChallenge(String user, String challenge, String response){
+    //To add challenge Question
+    public String addChallenge(String user, String challenge, String response) throws FileNotFoundException{
 	Boolean firstcheck = Database.isUser(user);
 	if(!firstcheck)
 	{
@@ -91,7 +104,32 @@ public class LogReg {
 	checkuser.setChallengeQuestion(challenge);
 	checkuser.setChallengeResponse(response);
 	firstcheck = true;
+	Database.exportJson();
 	return("{\"Boolean\":"+firstcheck.toString()+"}");
     }
-
+    //To Return the gamestate of the user
+    public String getgamestate(String user){
+    	String packed = "";
+    	User current = Database.getUser(user);
+    	GameState currentgame = current.getGameState();
+    	JSONObject gamedata = currentgame.toJson();
+    	packed = gamedata.toString();
+    	return(packed);
+    	
+    }
+    //Return inventory Items. Not using user right now, but will need it 
+    //for when we adjust the ingredient list by their rank. 
+    public String getIngredients(String user){
+    	 
+    	List<? extends InvItem> list = new LinkedList<InvItem>();
+    	JSONObject ingredients  =new JSONObject();
+    	list = Database.getIngredients();
+    	for(InvItem each : list){
+    		if(each instanceof Grain)
+    		{
+    			ingredients.put("Ingredient",((Grain) each).getgJson());
+    		}
+    	}
+    	return(ingredients.toString());
+    }
 }

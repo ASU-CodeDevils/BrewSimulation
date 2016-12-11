@@ -17,8 +17,14 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package cdbrewsim;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.LinkedList;
 import java.util.List;
+
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
 public class Database {
 	static List<User> users = new LinkedList<User>();
@@ -42,10 +48,41 @@ public class Database {
 	
 	//Will implement when we know what these json files will look like. 
 	public static  boolean importJson(){
+		try{
+			FileInputStream in = new FileInputStream("data/userinfo.json");
+			JSONObject obj = new JSONObject(new JSONTokener(in));
+			String[] names = JSONObject.getNames(obj);
+			for(int i=0; i<names.length;i++)
+			{
+				JSONObject obj1 = new JSONObject();
+				obj1 = obj.getJSONObject(names[i]);
+				JSONObject obj2 = new JSONObject();
+				obj2 = obj1.getJSONObject("gamestate");
+				User eachuser = new User(obj1.getJSONObject("user"));
+				GameState eachgamestate = new GameState(obj2);
+				eachuser.setGameState(eachgamestate);
+				users.add(eachuser);
+				
+			}
+		}
+		catch(Exception ex) {
+			System.out.println("Exception importing from json: " + ex.getMessage());
+		}
 		return(true);
 	}
 	//Will implement when we know what these json files will look like. 
-	public static boolean exportJson(){
+	public static boolean exportJson() throws FileNotFoundException{
+		JSONObject obj1 = new JSONObject();
+		JSONObject obj2 = new JSONObject();
+		for(User each: users)
+		{
+			obj1.put("user", each.toJson());
+			obj1.put("gamestate", each.getGameState().toJson());
+			obj2.put("player", obj1);
+		}
+		PrintWriter out = new PrintWriter("data/userinfo.json");
+		out.println(obj2.toString());
+		out.close();
 		return(true);
 	}
 	public static User getUser(String username){

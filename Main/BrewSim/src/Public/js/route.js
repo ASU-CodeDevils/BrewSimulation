@@ -9,7 +9,7 @@ function packJson(classtype,method, param, param1, param2, param3, param4, param
 
 
 
-function getInfo(address,callback) {
+function getInfo(topost,callback) {
   var request = new XMLHttpRequest();
   request.onreadystatechange = function() {if (this.readyState == 4 && this.status == 200) {
 	    var call = request.responseText;
@@ -17,5 +17,5 @@ function getInfo(address,callback) {
 	    callback(call);
   } };//call this to build the table.
   request.open("POST", "/meth", true);
-  request.send(address);
+  request.send(topost);
 }
