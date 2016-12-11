@@ -45,6 +45,14 @@ public class InvItem {
 		this.graphic = obj.getString("graphic");
 		this.price = obj.getDouble("price");
 	}
+	public InvItem(InvItem another) {
+	    this.name = another.name;
+	    this.description = another.description;
+	    this.category = another.category;
+	    this.amount = another.amount;
+	    this.graphic = another.graphic;
+	    this.price = another.price;// you can access  
+	  }
 	
 	
 	public String getName(){

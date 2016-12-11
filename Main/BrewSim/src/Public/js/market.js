@@ -10,6 +10,11 @@ var sound4 = true;
 var sound5 = true;
 var sound6 = true;
 var sound7 = true;
+var upsound = true;
+var downsound = true;
+var purch = true;
+var quantity = 0;
+var price = 0;
 var click = true;
 var iflast = true;
 var inload = true;
@@ -18,6 +23,7 @@ var equipmentload = false;
 var ingredients;
 var currentitem =0;
 var hasnotloaded = true;
+
 var mainState= {
     preload: function(){
         game.load.image('back','graphics/Storeback.png');
@@ -38,6 +44,13 @@ var mainState= {
         game.load.image('yeast','graphics/yeast.png');
         game.load.image('grain','graphics/grain.png');
         game.load.image('hop','graphics/hops.png');
+        game.load.image('buyback','graphics/buyback.png');
+        game.load.image('upoff','graphics/topoff.png');
+        game.load.image('upon','graphics/upon.png');
+        game.load.image('downoff','graphics/downoff.png');
+        game.load.image('downon','graphics/downon.png');
+        game.load.image('purchu', 'graphics/purchu.png');
+        game.load.image('purchd','graphics/purchd.png');
         
     },
     create: function(){
@@ -92,6 +105,11 @@ var mainState= {
         equiptext.fill = '#FDFEFE';
         equiptext.setShadow(2,2, 'rgba(0,0,0,0.5)',0);
         
+        
+        
+        this.buyback = game.add.sprite(674,326,'buyback');
+        this.buyback.visible = true;
+        
         this.bclick = game.add.audio('bclick');
         this.back = game.add.sprite(20,40,'leftarrow');
         this.back.inputEnabled = true;
@@ -131,8 +149,48 @@ var mainState= {
         this.buyup.visible = false;
         this.buydown = game.add.sprite(195,670, 'buydown');
         this.buydown.visible = false;
+        this.item;
+        this.upoff = game.add.sprite(1113,410,'upoff');
+        this.upoff.inputEnabled = true;
+        this.upoff.input.useHandCursor = true;
+        this.downoff = game.add.sprite(1113,460,'downoff');
+        this.downoff.inputEnabled = true;
+        this.downoff.input.useHandCursor = true;
+        this.upon = game.add.sprite(1113,410,'upon');
+        this.upon.visible = false;
         
-        
+        this.downon = game.add.sprite(1113,460,'downon');
+        this.downon.visible = false;
+        buytext = game.add.text(703,416, '');
+        buytext.fontSize = 18;
+        buytext.fill = '#FDFEFE';
+        buytext.setShadow(2,2, 'rgba(0,0,0,0.5)',0);
+        buytext.wordWrap= true;
+        buytext.wordWrapWidth = 200;
+        buytext1 = game.add.text(934,434, '');
+        buytext1.fontSize = 18;
+        buytext1.fill = '#FDFEFE';
+        buytext1.setShadow(2,2, 'rgba(0,0,0,0.5)',0);
+        buytext1.wordWrap= true;
+        buytext1.wordWrapWidth = 200;
+        buytext2 = game.add.text(811,560, '');
+        buytext2.fontSize = 18;
+        buytext2.fill = '#FF0000';
+        buytext2.setShadow(2,2, 'rgba(0,0,0,0.5)',0);
+        buytext2.wordWrap= true;
+        buytext2.wordWrapWidth = 400;
+        this.upoff.visible = false;
+    	this.downoff.visible = false;
+    	this.buyback.visible = false;
+    	this.purchu = game.add.sprite(867,593,'purchu');
+        this.purchu.inputEnabled = true;
+        this.purchu.input.useHandCursor = true;
+        this.purchu.visible = false;
+        this.purchd = game.add.sprite(867,593,'purchd');
+        this.purchd.visible = false;
+        var pack = packJson("LogReg","getgamestate", name);
+        getInfo(pack,this.updateplayerinfo);
+       
         
     },
     loadingred: function(result){
@@ -143,8 +201,8 @@ var mainState= {
     		}
     },
     update: function(){
-    	//console.log(game.input.mousePointer.x);
-    	//console.log(game.input.mousePointer.y);
+    	console.log(game.input.mousePointer.x);
+    	console.log(game.input.mousePointer.y);
     	if(this.buyup.input.pointerOver()){
     		this.buydown.visible = true;
     		if(game.input.activePointer.isDown)
@@ -154,6 +212,7 @@ var mainState= {
 				this.bclick.play();
 				sound6=false;
 				console.log("load buy menu");
+				this.clickbuy();
 				}
 			
 			}
@@ -163,6 +222,26 @@ var mainState= {
     		{
     		this.buydown.visible = false;
     		sound6 = true;
+    		}
+    	if(this.purchu.input.pointerOver()){
+    		this.purchd.visible = true;
+    		if(game.input.activePointer.isDown)
+			{
+			if(purch)
+				{
+				this.bclick.play();
+				purch=false;
+				console.log("load buy menu");
+				this.purch();
+				}
+			
+			}
+    		
+    	}
+    	else
+    		{
+    		this.purchd.visible = false;
+    		purch = true;
     		}
     	if(this.back.input.pointerOver())
     		{
@@ -208,6 +287,7 @@ var mainState= {
                 	recipeload = false;
                 	equipmentload = false;
                 	inload = true;
+                	this.clearbuy();
                   	}
             }
     		
@@ -231,6 +311,7 @@ var mainState= {
                 	recipeload = true;
                 	equipmentload = false;
                 	inload = false;
+                	this.clearbuy();
                 	}
             }
 		}
@@ -253,6 +334,7 @@ var mainState= {
                 	recipeload = false;
                 	equipmentload = true;
                 	inload = false;
+                	this.clearbuy();
                 	}
             }
 		}
@@ -272,9 +354,8 @@ var mainState= {
                 		{
                 		
                 		this.bclick.play();
-                		
+                		this.clearbuy();
                 		if(inload){
-                			
                 			
                 			if(iflast)
                 				{
@@ -318,6 +399,7 @@ var mainState= {
                 	if(sound5)
                 		{
                 		this.bclick.play();
+                		this.clearbuy();
                 		if(inload){
                 			
                 			
@@ -352,6 +434,64 @@ var mainState= {
     		this.rlw.visible = false;
     		sound5 = true;
 		}
+    	if(this.upoff.input.pointerOver())
+		{
+    		this.upon.visible = true;
+    		if(game.input.activePointer.isDown)
+            {
+    			
+    			
+                	if(upsound)
+                		{
+                		
+                		this.bclick.play();
+                		this.updatebuyup();
+                		
+                		upsound = false;
+                		}
+                	
+    			
+            }
+    		else
+    		{
+    		upsound = true;
+    		}
+    			
+		}
+    	else
+		{
+    		this.upon.visible = false;
+    		upsound = true;
+		}
+    	if(this.downoff.input.pointerOver())
+		{
+    		this.downon.visible = true;
+    		if(game.input.activePointer.isDown)
+            {
+    			
+    			
+                	if(downsound)
+                		{
+                		this.updatebuydown();
+                		this.bclick.play();
+                		
+                		
+                		downsound = false;
+                		}
+                	
+    			
+            }
+    		else
+    		{
+    		downsound = true;
+    		}
+    			
+		}
+    	else
+		{
+    		this.downon.visible = false;
+    		downsound = true;
+		}
 
     },
     loadinventory: function(){
@@ -381,6 +521,81 @@ var mainState= {
     loadequipment: function(){
     	descriptiontext.setText('');
     	this.item.visible = false;
+    },
+    clickbuy: function(){
+    	var items = Object.keys(ingredients);
+    	
+    	var current = ingredients[items[currentitem]];
+    	this.upoff.visible = true;
+    	this.downoff.visible = true;
+    	this.buyback.visible = true;
+    	this.purchu.visible = true;
+    	buytext.setText(current.name+'\nAmount Available:'+current.amount.toFixed(2) +'\nPrice: '+current.price);
+    	buytext1.setText('Quantity to buy: '+ quantity + '\nTotal Price: ' + price.toFixed(2));
+    },
+    updatebuyup: function(){
+    	var items = Object.keys(ingredients);
+    	var current = ingredients[items[currentitem]];
+    	
+    	if(quantity<current.amount){
+    	quantity++;
+    	price = current.price*quantity;
+    	buytext.setText(current.name+'\nAmount Available:'+current.amount.toFixed(2) +'\nPrice: '+current.price);
+    	buytext1.setText('Quantity to buy: '+ quantity + '\nTotal Price: ' + price.toFixed(2));
+    	}
+    },
+    updatebuydown: function(){
+    	var items = Object.keys(ingredients);
+    	var current = ingredients[items[currentitem]];
+    	
+    	if(quantity>0){
+    	quantity--;
+    	price = current.price*quantity;
+    	buytext.setText(current.name+'\nAmount Available:'+current.amount.toFixed(2) +'\nPrice: '+current.price);
+    	buytext1.setText('Quantity to buy: '+ quantity + '\nTotal Price: ' + price.toFixed(2));
+    	}
+    },
+    clearbuy: function(){
+    	this.upoff.visible = false;
+    	this.downoff.visible = false;
+    	this.buyback.visible = false;
+    	this.purchu.visible = false;
+    	buytext.setText("");
+    	buytext1.setText("");
+    	buytext2.setText("");
+    	quantity = 0;
+    	price = 0;
+    	var pack = packJson("LogReg","getgamestate", name);
+        getInfo(pack,this.updateplayerinfo);
+    },
+    purch: function(){
+    	var items = Object.keys(ingredients);
+    	var current = ingredients[items[currentitem]];
+    	if(price>balance)
+    		{
+    			buytext2.setText("You don't have that much money!");
+    			
+    		}
+    	else
+    		{
+    		var pack = packJson("LogReg","purchase",name,current.name, quantity.toFixed(2),price.toFixed(2));
+    		
+            getInfo(pack,null);
+            this.clearbuy();
+    		}
+    	
+    },
+    updateplayerinfo: function(result){
+    	console.log(result);
+    	result = JSON.parse(result);
+    	balance = result.Balance;
+    	score = result.BrewScore;
+    	rank = result.BrewRank;
+    	balancetext.setText("Balance: $" + balance);
+    	ranktext.setText("Brew Rank: " + rank);
+    	scoretext.setText("Score: " + score);
+    	console.log(balance, score, rank);
+    	
     }
     
    
@@ -388,7 +603,7 @@ var mainState= {
 
 
 game.state.add('market',mainState);
-game.state.start('market');
+//game.state.start('market');
 
 
 getinvitems = function(result){

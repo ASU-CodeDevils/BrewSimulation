@@ -132,4 +132,40 @@ public class LogReg {
     	}
     	return(ingredients.toString());
     }
+    public boolean purchase(String user, String itemname, String amount, String price){
+    	double newamount = Double.parseDouble(amount);
+    	double newprice = Double.parseDouble(price);
+    	User current = Database.getUser(user);
+    	List<InvItem> buyitem = Database.getIngredients();
+    	List<Recipe> buyrecipe = Database.getRecipes();
+    	GameState userstate = current.getGameState();
+    	double money = userstate.getBalance();
+    	money = money-newprice;
+    	userstate.setBalance(money);
+    	System.out.println(userstate.getBalance());
+    	InvItem ingredient;
+    	Recipe buyrecipe2;
+    	for(InvItem each : buyitem)
+    	{
+    		if(each.getName()==itemname)
+    		{
+    			ingredient = new InvItem(each);
+    			each.setAmount(each.getAmount()-newamount);
+    			ingredient.setAmount(newamount);
+    			userstate.setIventory(ingredient);
+    			
+    			
+    		}
+    	}
+    	for(Recipe each : buyrecipe)
+    	{
+    		if(each.getName()==itemname)
+    		{
+    			buyrecipe2 = new Recipe(each);
+    			userstate.setRecipe(buyrecipe2);
+    		}
+    	}
+    	 	
+    	return(true);
+    }
 }
