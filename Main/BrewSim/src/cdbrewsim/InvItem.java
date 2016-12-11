@@ -36,16 +36,16 @@ public class InvItem {
 		this.price = price;
 		
 	}
-	
-	public InvItem(String name, double amount){
-		// for quickly putting together a recipe.
-		this.name = name;
-		this.amount = amount;
-		this.description = name;
-		this.category = "Item";
-		this.graphic = null;
-		this.price = 1.0;
+	public InvItem(JSONObject obj){
+		System.out.println("Hereinvitem");
+		this.name = obj.getString("name");
+		this.description = obj.getString("description");
+		this.category = obj.getString("category");
+		this.amount = obj.getDouble("amount");
+		this.graphic = obj.getString("graphic");
+		this.price = obj.getDouble("price");
 	}
+	
 	
 	public String getName(){
 		return this.name;

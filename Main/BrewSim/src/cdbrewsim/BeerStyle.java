@@ -1,5 +1,7 @@
 package cdbrewsim;
 
+import org.json.JSONObject;
+
 public class BeerStyle {
 	String name;
 	double minBitterness;
@@ -19,7 +21,15 @@ public class BeerStyle {
 		this.maxColor = maxColor;
 		this.minABV = ABV;
 		this.maxABV = maxABV;}
-	
+	public BeerStyle(JSONObject obj){
+		this.name = obj.getString("name");
+		this.minBitterness = obj.getDouble("mbit");
+		this.maxBitterness = obj.getDouble("maxbit");
+		this.minColor = obj.getDouble("mincolor");
+		this.maxColor = obj.getDouble("maxcolor");
+		this.minABV = obj.getDouble("minABV");
+		this.maxABV = obj.getDouble("maxABV");
+	}
 	public boolean setName(String name){
 		this.name = name;
 		if(this.name.equals(name))
@@ -101,7 +111,20 @@ public class BeerStyle {
 	public double getMaxBitterness(){
 		return this.maxBitterness;}
 	
-	
+	public JSONObject toJson(){
+		JSONObject obj = new JSONObject();
+		obj.put("name",this.name);
+		obj.put("mbit", this.minBitterness);
+		obj.put("maxbit",this.maxBitterness);
+		obj.put("mincolor",this.minColor);
+		obj.put("maxcolor",this.maxColor);
+		obj.put("minABV",this.minABV);
+		obj.put("maxABV",this.maxABV);
+		return(obj);
+	}
+	public String toString(){
+		return(name);
+	}
 	
 	
 

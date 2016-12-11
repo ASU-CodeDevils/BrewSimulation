@@ -17,6 +17,8 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package cdbrewsim;
 
+import org.json.JSONObject;
+
 public class Recipe {
 	final static int MAX_HOPS = 7;
 	final static int MAX_GRAINS = 5;
@@ -27,8 +29,43 @@ public class Recipe {
 	public Recipe(String name, InvItem[] ingredients, int level){
 		this.name = name;
 		this.ingredients = ingredients;
-		this.level = level;}
+		this.level = level;
+		}
 	
+	public Recipe(JSONObject obj){
+		this.name = obj.getString("name");
+		this.level = obj.getInt("level");
+		System.out.println(obj.toString());
+		String[] name = JSONObject.getNames(obj);
+		int y = 0;
+		for(int x =0;x<name.length;x++){
+			System.out.println(name[x].toString());
+			System.out.println("loop");
+			 
+			if(name[x].indexOf("ingredient")!=-1)
+			{
+				System.out.println(obj.getJSONObject(name[x]).getString("category"));
+				if(obj.getJSONObject(name[x]).getString("category").compareTo("Hop")!=-1)
+				{
+					System.out.println("here?");
+					ingredients[y] = new Hop(obj.getJSONObject(name[x]));
+				}
+				else if(obj.getJSONObject(name[x]).getString("category").compareTo("Grain")!=-1)
+				{
+					ingredients[y] = new Grain(obj.getJSONObject(name[x]));
+				}
+				else if(obj.getJSONObject(name[x]).getString("category").compareTo("Yeast")!=-1)
+				{
+					ingredients[y] = new Grain(obj.getJSONObject(name[x]));
+				}
+				else
+				{
+					ingredients[y] = new InvItem(obj.getJSONObject(name[x]));
+					y++;
+				}
+			}
+		}
+	}
 	public String getName(){
 		return this.name;}
 	
@@ -131,6 +168,20 @@ public class Recipe {
 			s.append(item.toString() +"\n");
 		}
 		return s.toString();
+	}
+	public JSONObject getJson(){
+		JSONObject obj = new JSONObject();
+		obj.put("name", this.name);
+		System.out.println("152");
+		int b = 1;
+		for(int x = 0;x<ingredients.length;x++){
+			System.out.println(ingredients[x].getName());
+			System.out.println(ingredients[x].toString());
+			obj.put("ingredient"+b, ingredients[x].getJson());
+			b++;
+		}
+		obj.put("level", this.level);
+		return(obj);
 	}
 
 }

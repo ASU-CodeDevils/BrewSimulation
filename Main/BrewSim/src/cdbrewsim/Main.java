@@ -58,13 +58,15 @@ public class Main {
 		  
 	  staticFileLocation("/public");
 	  Database.importJson();
+	  
 	  //Testing below
 	  Grain test = new Grain("TestBarley", "For Awesome beer", "Grain",100.00, "barley", 20.00, 5.0, 2.0);
 	  List<InvItem> ingred = new LinkedList<InvItem>();
 	  ingred.add(test);
 	  Database.setIngredients(ingred);
 	  System.out.println(ingred.get(0).getName());
-	 
+	  BrewTesting.test();
+	  Database.exportJson();
 	  //End Test
 	  
 	  
