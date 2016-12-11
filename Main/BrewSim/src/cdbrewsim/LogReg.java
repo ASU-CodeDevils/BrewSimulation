@@ -119,7 +119,7 @@ public class LogReg {
     }
     //Return inventory Items. Not using user right now, but will need it 
     //for when we adjust the ingredient list by their rank. 
-    public String getIngredients(String user){
+    public String getIngredients(){
     	 
     	List<InvItem> list = new LinkedList<InvItem>();
     	JSONObject ingredients  =new JSONObject();
@@ -131,6 +131,19 @@ public class LogReg {
     		x++;
     	}
     	return(ingredients.toString());
+    }
+    public String getRecipes(){
+   	 
+    	List<Recipe> list = new LinkedList<Recipe>();
+    	JSONObject recipes  =new JSONObject();
+    	list = Database.getRecipes();
+    	int x = 0;
+    	for(Recipe each : list){
+    		
+    		recipes.put("Recipe"+x,each.getJson());
+    		x++;
+    	}
+    	return(recipes.toString());
     }
     public boolean purchase(String user, String itemname, String amount, String price){
     	double newamount = Double.parseDouble(amount);
