@@ -13,11 +13,35 @@ public class Hop extends InvItem {
 		this.time = time;
 		this.setCategory("Hop");
 	}
+	//>>>>>From Evan: Had to kill your two item constructor for the InvItme class. 
+	//Was messing up my json. I worked around it below. 
 	public Hop(String name, double amount, double alphaAcid, int time){
-		super(name, amount);
+		super(name, "","Hop",amount,"",0.0);
 		this.alphaAcid = alphaAcid;
 		this.time = time;
 		this.setCategory("Hop");
+	}
+	public Hop(JSONObject obj){
+		
+		super(obj);
+		 
+		this.name = obj.getString("name");
+		this.description = obj.getString("description");
+		this.category = obj.getString("category");
+		this.amount = obj.getDouble("amount");
+		this.graphic = obj.getString("graphic");
+		 
+		this.price = obj.getDouble("price");
+		 
+		this.alphaAcid = obj.getDouble("alphaAcid");
+		 
+		this.time = obj.getInt("time");
+		 
+	}
+	public Hop(Hop another){
+		super(another);
+		this.alphaAcid = another.alphaAcid;
+		this.time = another.time;
 	}
 	
 	public double getAAU(){
@@ -46,4 +70,16 @@ public class Hop extends InvItem {
 		s.append(this.time + " ");
 		return s.toString();
 	}
+	public JSONObject getJson(){
+		JSONObject obj = new JSONObject();
+		obj.put("name", this.name);
+		obj.put("description", this.description);
+		obj.put("category", this.category);
+		obj.put("amount",this.amount);
+		obj.put("graphic", this.graphic);
+		obj.put("price", this.price);
+		obj.put("alphaAcid", this.alphaAcid);
+		obj.put("time", this.time);
+		return(obj);
+	}	
 }

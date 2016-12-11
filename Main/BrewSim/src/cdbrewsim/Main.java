@@ -58,13 +58,12 @@ public class Main {
 		  
 	  staticFileLocation("/public");
 	  Database.importJson();
+	  
 	  //Testing below
-	  Grain test = new Grain("TestBarley", "For Awesome beer", "Grain",100.00, "barley", 20.00, 5.0, 2.0);
-	  List<InvItem> ingred = new LinkedList<InvItem>();
-	  ingred.add(test);
-	  Database.setIngredients(ingred);
-	  System.out.println(ingred.get(0).getName());
 	 
+	  
+	  BrewTesting.test();
+	  Database.exportJson();
 	  //End Test
 	  
 	  
@@ -182,13 +181,13 @@ public class Main {
              }
             
            
-            System.out.println(params[0].toString());
+            //System.out.println(params[0].toString());
            
-            System.out.println(para[0].getparam() instanceof String);
-            System.out.println(para[0].getparam() instanceof Integer);
-            System.out.println(para[0].getparam() instanceof Boolean);
-            System.out.println(para[0].getparam() instanceof Double);
-            String test = para[0].getparam();
+            //System.out.println(para[0].getparam() instanceof String);
+            //System.out.println(para[0].getparam() instanceof Integer);
+            //System.out.println(para[0].getparam() instanceof Boolean);
+            //System.out.println(para[0].getparam() instanceof Double);
+            //String test = para[0].getparam();
             // get the Class
             Class<?> thisClass = Class.forName(aClass);
             // get an instance
@@ -197,7 +196,7 @@ public class Main {
             Method thisMethod = thisClass.getDeclaredMethod(aMethod, params);
             // call the method
             
-            System.out.println(para[0].getparam().toString());
+            //System.out.println(para[0].getparam().toString());
             switch(para.length){
             case 0: result = thisMethod.invoke(iClass, null).toString();
             		break;

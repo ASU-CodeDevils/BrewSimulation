@@ -17,18 +17,73 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package cdbrewsim;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import org.json.JSONObject;
+
 public class Recipe {
 	final static int MAX_HOPS = 7;
 	final static int MAX_GRAINS = 5;
 	String name;
 	InvItem [] ingredients;
+	double price;//Had to go back and add a selling price
+	
 	int level;
 	
-	public Recipe(String name, InvItem[] ingredients, int level){
+	public Recipe(String name, InvItem[] ingredients, int level,double price){
 		this.name = name;
 		this.ingredients = ingredients;
-		this.level = level;}
-	
+		this.level = level;
+		this.price = price;
+		}
+	public Recipe(Recipe another){
+		this.name = another.name;
+		this.ingredients =another.ingredients;
+		this.level = another.level;
+		this.price = another.price;
+	}
+	public Recipe(JSONObject obj){
+		this.name = obj.getString("name");
+		this.level = obj.getInt("level");
+		this.price = obj.getDouble("price");
+		String[] name = JSONObject.getNames(obj);
+		int y = 0;
+		ingredients = new InvItem[name.length-3];
+		for(int x =0;x<name.length;x++){
+			
+			 
+			if(name[x].indexOf("ingredient")!=-1)
+			{
+				 
+				JSONObject test = new JSONObject();
+				test = obj.getJSONObject(name[x]);
+			
+				if(obj.getJSONObject(name[x]).getString("category").compareTo("Hop")==0)
+				{
+					 
+					
+					 
+					ingredients[y] = new Hop(test);
+					 
+				}
+				else if(obj.getJSONObject(name[x]).getString("category").compareTo("Grain")==0)
+				{
+					ingredients[y] = new Grain(obj.getJSONObject(name[x]));
+				}
+				else if(obj.getJSONObject(name[x]).getString("category").compareTo("Yeast")==0)
+				{
+					ingredients[y] = new Yeast(obj.getJSONObject(name[x]));
+				}
+				else
+				{
+					ingredients[y] = new InvItem(obj.getJSONObject(name[x]));
+					
+				}
+				y++;
+			}
+		}
+	}
 	public String getName(){
 		return this.name;}
 	
@@ -131,6 +186,21 @@ public class Recipe {
 			s.append(item.toString() +"\n");
 		}
 		return s.toString();
+	}
+	public JSONObject getJson(){
+		JSONObject obj = new JSONObject();
+		obj.put("name", this.name);
+		obj.put("price", this.price);
+		System.out.println("152");
+		int b = 1;
+		for(int x = 0;x<ingredients.length;x++){
+			System.out.println(ingredients[x].getName());
+			System.out.println(ingredients[x].toString());
+			obj.put("ingredient"+b, ingredients[x].getJson());
+			b++;
+		}
+		obj.put("level", this.level);
+		return(obj);
 	}
 
 }

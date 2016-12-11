@@ -1,5 +1,7 @@
 package cdbrewsim;
 
+import org.json.JSONObject;
+
 public class Yeast extends InvItem {
 	double apparentAttenuation;
 	
@@ -11,9 +13,17 @@ public class Yeast extends InvItem {
 	}
 	public Yeast(String name, double apparentAttenuation) {
 		// amount is not important for yeast. Will not effect calculations as it is not used.
-		super(name, 1);
+		super(name, "","Yeast",1,"",0.0);
 		this.apparentAttenuation = apparentAttenuation;
 		this.setCategory("Yeast");
+	}
+	public Yeast(JSONObject obj){
+		super(obj);
+		this.apparentAttenuation = obj.getDouble("apparentA");
+	}
+	public Yeast(Yeast another){
+		super(another);
+		this.apparentAttenuation = another.apparentAttenuation;
 	}
 	
 	public double getApparentAttenuation(){
@@ -23,5 +33,10 @@ public class Yeast extends InvItem {
 		StringBuilder s = new StringBuilder(super.toString());
 		s.append(this.apparentAttenuation + " ");
 		return s.toString();
+	}
+	public JSONObject getJson(){
+		JSONObject obj = super.getJson();
+		obj.put("apparentA",this.apparentAttenuation);
+		return(obj);
 	}
 }
