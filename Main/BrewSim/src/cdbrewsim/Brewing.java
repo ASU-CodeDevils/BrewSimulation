@@ -31,6 +31,17 @@ public class Brewing {
 		this.recipe = recipe;
 		this.style = style;}
 	
+	public String[] checkIngredients(){
+		// returns a string array of each ingredient, first the amount, then the name, then on to next ingredient.
+		String[] output = new String[recipe.getNumberOfIngredients()*2];
+		int top = 0;
+		for(int i = 0; i < recipe.getNumberOfIngredients();i++){
+			output[top++] = Double.toString(recipe.getIngredients()[i].getAmount());
+			output[top++] = recipe.getIngredients()[i].getName();
+		}
+		return output;
+	}
+	
 	private double calculateIBUperHop(Hop hop){
 		// Does all the calculations to find out IBU of a hop addition.
 		double IBU = 0;
@@ -79,6 +90,7 @@ public class Brewing {
 		return score;}
 	
 	public double getIBU(){
+		// returns the IBU (international bitterness unit) of the brew
 		double IBU = 0;
 		
 		// use helper method to calculate total IBU
@@ -103,6 +115,15 @@ public class Brewing {
 		if(score < 0)
 			return 0;
 		return score;}
+
+	public double getABV(){
+		// returns the ABV (alcohol by volume) of the brew.
+		double ABV = 0;
+		
+		// use helper method to calculate total ABV
+		for(Grain grain: recipe.getGrains()){
+			ABV += calculateABVperGrain(grain);}
+		return ABV;}
 	
 	public int getColorScore(){
 		// returns a score 0-100
@@ -121,6 +142,15 @@ public class Brewing {
 		if(score < 0)
 			return 0;
 		return score;}
+
+	public double getColor(){
+		// returns the actual color in SRM of the brew.
+		double SRM = 0;
+		
+		// use helper method to calculate total SRM
+		for(Grain grain: recipe.getGrains()){
+			SRM += grain.getSRMcolor();}
+		return SRM;}
 	
 	public int getBrewScore(){
 		int score = 0;

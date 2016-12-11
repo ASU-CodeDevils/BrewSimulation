@@ -17,9 +17,6 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package cdbrewsim;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import org.json.JSONObject;
 
 public class Recipe {
@@ -27,8 +24,7 @@ public class Recipe {
 	final static int MAX_GRAINS = 5;
 	String name;
 	InvItem [] ingredients;
-	double price;//Had to go back and add a selling price
-	
+	double price;
 	int level;
 	
 	public Recipe(String name, InvItem[] ingredients, int level,double price){
@@ -36,13 +32,15 @@ public class Recipe {
 		this.ingredients = ingredients;
 		this.level = level;
 		this.price = price;
-		}
+		this.trimIngredientArray();}
+	
 	public Recipe(Recipe another){
 		this.name = another.name;
 		this.ingredients =another.ingredients;
 		this.level = another.level;
 		this.price = another.price;
-	}
+		this.trimIngredientArray();}
+	
 	public Recipe(JSONObject obj){
 		this.name = obj.getString("name");
 		this.level = obj.getInt("level");
@@ -51,34 +49,20 @@ public class Recipe {
 		int y = 0;
 		ingredients = new InvItem[name.length-3];
 		for(int x =0;x<name.length;x++){
-			
-			 
-			if(name[x].indexOf("ingredient")!=-1)
-			{
-				 
+			if(name[x].indexOf("ingredient")!=-1){
 				JSONObject test = new JSONObject();
 				test = obj.getJSONObject(name[x]);
 			
-				if(obj.getJSONObject(name[x]).getString("category").compareTo("Hop")==0)
-				{
-					 
-					
-					 
+				if(obj.getJSONObject(name[x]).getString("category").compareTo("Hop")==0){
 					ingredients[y] = new Hop(test);
-					 
 				}
-				else if(obj.getJSONObject(name[x]).getString("category").compareTo("Grain")==0)
-				{
-					ingredients[y] = new Grain(obj.getJSONObject(name[x]));
-				}
-				else if(obj.getJSONObject(name[x]).getString("category").compareTo("Yeast")==0)
-				{
+				else if(obj.getJSONObject(name[x]).getString("category").compareTo("Grain")==0){
+					ingredients[y] = new Grain(obj.getJSONObject(name[x]));}
+				else if(obj.getJSONObject(name[x]).getString("category").compareTo("Yeast")==0){
 					ingredients[y] = new Yeast(obj.getJSONObject(name[x]));
 				}
-				else
-				{
+				else{
 					ingredients[y] = new InvItem(obj.getJSONObject(name[x]));
-					
 				}
 				y++;
 			}
@@ -86,6 +70,25 @@ public class Recipe {
 	}
 	public String getName(){
 		return this.name;}
+	
+	public int getNumberOfIngredients(){
+		return this.ingredients.length;
+	}
+	
+	private void trimIngredientArray(){
+		// after construction, trims the ingredient array if needed. No more issues with null pointer.
+		int length = 0;
+		for(InvItem item: this.ingredients){
+			if(item == null)
+				break;
+			length++;
+		}
+		InvItem[] temp = new InvItem[length];
+		for(int i = 0; i<length; i++){
+			temp[i] = ingredients[i];
+		}
+		ingredients = temp;
+	}
 	
 	public Hop[] getHops(){
 		int counter = 0;
@@ -187,6 +190,7 @@ public class Recipe {
 		}
 		return s.toString();
 	}
+	
 	public JSONObject getJson(){
 		JSONObject obj = new JSONObject();
 		obj.put("name", this.name);
@@ -202,5 +206,4 @@ public class Recipe {
 		obj.put("level", this.level);
 		return(obj);
 	}
-
 }

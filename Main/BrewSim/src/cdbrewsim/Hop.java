@@ -3,11 +3,11 @@ package cdbrewsim;
 import org.json.JSONObject;
 
 public class Hop extends InvItem {
-	double alphaAcid;
-	int time;
+	double alphaAcid;	// as a percent.
+	int time;			// time in minutes that the hop is in the boil.
+	
 	public Hop(String name, String description, String category, double amount, String graphic, double price, double alphaAcid, int time) {
 		// amount should be in oz with increments of 0.1 oz.
-		// time is minutes in boil.
 		super(name, description, category, amount, graphic, price);
 		this.alphaAcid = alphaAcid;
 		this.time = time;
@@ -15,6 +15,7 @@ public class Hop extends InvItem {
 	}
 	//>>>>>From Evan: Had to kill your two item constructor for the InvItme class. 
 	//Was messing up my json. I worked around it below. 
+	//Totally fine, I only made it for making testing faster.
 	public Hop(String name, double amount, double alphaAcid, int time){
 		super(name, "","Hop",amount,"",0.0);
 		this.alphaAcid = alphaAcid;
@@ -70,16 +71,4 @@ public class Hop extends InvItem {
 		s.append(this.time + " ");
 		return s.toString();
 	}
-	public JSONObject getJson(){
-		JSONObject obj = new JSONObject();
-		obj.put("name", this.name);
-		obj.put("description", this.description);
-		obj.put("category", this.category);
-		obj.put("amount",this.amount);
-		obj.put("graphic", this.graphic);
-		obj.put("price", this.price);
-		obj.put("alphaAcid", this.alphaAcid);
-		obj.put("time", this.time);
-		return(obj);
-	}	
 }
