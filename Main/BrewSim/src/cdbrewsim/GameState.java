@@ -16,17 +16,20 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN 
 OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package cdbrewsim;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.json.JSONObject;
 public class GameState {
 	int brewingScore;
-	List<Recipe> recipes;
-	List<InvItem> inventory;
-	List<Brew> brews;
-	List<Equipment> equipment;
+	List<Recipe> recipes=new LinkedList<Recipe>();
+	List<InvItem> inventory=new LinkedList<InvItem>();
+	List<Brew> brews = new LinkedList<Brew>();
+	List<Equipment> equipment = new LinkedList<Equipment>();
 	double balance;
 	int brewingRank;
+	int recipe =0;
+	
 	
 	public GameState(int brewsc, int brewr, double bal){
 		brewingScore = brewsc;

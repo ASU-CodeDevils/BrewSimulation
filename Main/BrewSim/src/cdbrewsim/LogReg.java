@@ -145,6 +145,34 @@ public class LogReg {
     	}
     	return(recipes.toString());
     }
+    public String getUserRecipes(String username){
+    	JSONObject recipes = new JSONObject();
+    	User current = Database.getUser(username);
+    	GameState userstate = current.getGameState();
+    	List<Recipe> userlist = new LinkedList<Recipe>();
+    	userlist = userstate.getRecipes();
+    	int x = 0;
+    	for(Recipe each : userlist){
+    		
+    		recipes.put("Recipe"+x,each.getJson());
+    		x++;
+    	}
+    	return(recipes.toString());
+    }
+    public String getUserInv(String username){
+    	JSONObject inventory = new JSONObject();
+    	User current = Database.getUser(username);
+    	GameState userstate = current.getGameState();
+    	List<InvItem> userlist = new LinkedList<InvItem>();
+    	userlist = userstate.getInventory();
+    	int x = 0;
+    	for(InvItem each : userlist){
+    		
+    		inventory.put("Ingredient"+x,each.getJson());
+    		x++;
+    	}
+    	return(inventory.toString());
+    }
     public boolean purchase(String user, String itemname, String amount, String price){
     	double newamount = Double.parseDouble(amount);
     	double newprice = Double.parseDouble(price);
