@@ -1,5 +1,7 @@
 package cdbrewsim;
 
+import org.json.JSONObject;
+
 public class Hop extends InvItem {
 	double alphaAcid;
 	int time;
@@ -28,6 +30,16 @@ public class Hop extends InvItem {
 	public int getTime(){
 		return this.time;
 	}
+	
+
+	public JSONObject getJson(){
+		JSONObject obj = super.getJson();
+		obj.put("alphaAcid", this.alphaAcid);
+		obj.put("time", this.time);
+		
+		return(obj);
+	}		
+	
 	public String toString(){
 		StringBuilder s = new StringBuilder(super.toString());
 		s.append(this.alphaAcid + " ");

@@ -20,6 +20,7 @@ package cdbrewsim;
 public class Brewing {
 	private final Recipe recipe;
 	private final BeerStyle style;
+	// weighted values subject to change.
 	private final int IBU_WEIGHT = 7;		// Every IBU off style, takes this percent off IBU score.
 	private final int ABV_WEIGHT = 30;		// Every percent off style, takes this percent off ABV score.
 	private final int COLOR_WEIGHT = 20;	// Every SRM unit off style, takes this percent off Color score.	
@@ -58,7 +59,7 @@ public class Brewing {
 		// ABV = (OG - FG) *0.129
 		ABV  = (grain.getSpecificGravity() - FG) * 0.129;
 		return ABV;}
-	
+
 	public int getBitterScore(){
 		// returns a score 0-100
 		int score = 100;
@@ -76,6 +77,14 @@ public class Brewing {
 		if(score < 0)
 			return 0;
 		return score;}
+	
+	public double getIBU(){
+		double IBU = 0;
+		
+		// use helper method to calculate total IBU
+		for(Hop hop: recipe.getHops()){
+			IBU += calculateIBUperHop(hop);}
+		return IBU;}
 	
 	public int getAbvScore(){
 		// returns a score 0-100
