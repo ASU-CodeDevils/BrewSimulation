@@ -35,7 +35,11 @@ public class Recipe {
 		this.ingredients = ingredients;
 		this.level = level;
 		}
-	
+	public Recipe(Recipe another){
+		this.name = another.name;
+		this.ingredients =another.ingredients;
+		this.level = another.level;
+	}
 	public Recipe(JSONObject obj){
 		this.name = obj.getString("name");
 		this.level = obj.getInt("level");

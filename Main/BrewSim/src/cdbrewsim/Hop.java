@@ -38,6 +38,11 @@ public class Hop extends InvItem {
 		this.time = obj.getInt("time");
 		 
 	}
+	public Hop(Hop another){
+		super(another);
+		this.alphaAcid = another.alphaAcid;
+		this.time = another.time;
+	}
 	
 	public double getAAU(){
 		double AAU = amount * alphaAcid;

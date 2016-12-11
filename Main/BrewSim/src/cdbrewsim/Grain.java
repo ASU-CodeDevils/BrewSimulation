@@ -32,6 +32,12 @@ public class Grain extends InvItem {
 		this.PE = obj.getDouble("extract");
 		this.lovibonds = obj.getInt("lovibonds");
 	}
+	public Grain(Grain another)
+	{
+		super(another);
+		this.PE = another.PE;
+		this.lovibonds = another.lovibonds;
+	}
 	
 	public double getSpecificGravity(){
 		// specificGravity = (lbs grain * PotentialEnergy * EXTRACT_EFFICIENCY) / 5.0gal water (batch size)

@@ -157,4 +157,4 @@ var mainState={
 };
 var game = new Phaser.Game(1200,800);
 game.state.add('main',mainState);
-//game.state.start('main');
+game.state.start('main');

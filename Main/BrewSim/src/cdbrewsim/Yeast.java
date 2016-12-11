@@ -21,6 +21,10 @@ public class Yeast extends InvItem {
 		super(obj);
 		this.apparentAttenuation = obj.getDouble("apparentA");
 	}
+	public Yeast(Yeast another){
+		super(another);
+		this.apparentAttenuation = another.apparentAttenuation;
+	}
 	
 	public double getApparentAttenuation(){
 		return this.apparentAttenuation;
