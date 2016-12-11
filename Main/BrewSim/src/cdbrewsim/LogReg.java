@@ -188,7 +188,7 @@ public class LogReg {
     	Recipe buyrecipe2;
     	for(InvItem each : buyitem)
     	{
-    		if(each.getName()==itemname)
+    		if(each.getName().compareTo(itemname)==0)
     		{
     			ingredient = new InvItem(each);
     			each.setAmount(each.getAmount()-newamount);
@@ -200,7 +200,7 @@ public class LogReg {
     	}
     	for(Recipe each : buyrecipe)
     	{
-    		if(each.getName()==itemname)
+    		if(each.getName().compareTo(itemname)==0)
     		{
     			buyrecipe2 = new Recipe(each);
     			userstate.setRecipe(buyrecipe2);

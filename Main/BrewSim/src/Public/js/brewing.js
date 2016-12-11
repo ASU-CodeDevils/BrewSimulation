@@ -41,6 +41,7 @@ var mainState = {
         game.load.image('rlw', 'graphics/rlw.png');
         game.load.image('leftarrow','graphics/leftarrow.png');
         game.load.image('leftdown', 'graphics/leftarrowdown.png');
+        game.load.image('tagback', 'graphics/ingredtag.png');
     },
     create: function(){
         game.stage.backgroundColor = '#F5F1DE';
@@ -83,7 +84,7 @@ var mainState = {
         this.back = game.add.sprite(20,40,'leftarrow');
         this.back.inputEnabled = true;
         this.back.input.userHandCursor = true;
-        
+        this.tagback = game.add.sprite(56, 206,'tagback');
         this.backdown = game.add.sprite(20,40, 'leftdown');
         this.backdown.visible = false;
     
@@ -158,11 +159,15 @@ var mainState = {
             	if(sound4)
             		{
             		
-            		this.bclick.play();
-            		
-            		sound4 = false;
+            		var items = Object.keys(userrecipes);
+           		 
+            		if(currentrecipe<items.length-1)
+            			{
+            			this.bclick.play();
+            			currentrecipe++;
+            			sound4 = false;
+            			}
             		}
-            	
 			
         }
 		else
@@ -185,9 +190,15 @@ var mainState = {
 			
             	if(sound5)
             		{
-            		this.bclick.play();
             		
-            		sound5 = false;
+            		 
+            		if(currentrecipe>0)
+            			{
+            			this.bclick.play();
+            			currentrecipe++;
+            			sound5 = false;
+            			}
+            		
             		}
             	
 			
@@ -208,7 +219,15 @@ var mainState = {
     	userrecipes = JSON.parse(result);
     	console.log(userrecipes.toString());
     	var items = Object.keys(userrecipes);
-    	
+    	console.log(items);
+    	currentrecipe = items.length-1;
+    	if(currentrecipe>-1)
+    		{
+    		var current = userrecipes[items[currentrecipe]];
+    		var recipename = current.name;
+    		recipename = recipename.substr(0,16);
+    		headingtext.setText(recipename);
+    		}
     },
     updateInv: function(result){
     	useringredients = JSON.parse(result);
