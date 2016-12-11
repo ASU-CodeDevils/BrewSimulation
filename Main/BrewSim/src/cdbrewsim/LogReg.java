@@ -127,7 +127,7 @@ public class LogReg {
     	for(InvItem each : list){
     		if(each instanceof Grain)
     		{
-    			ingredients.put("Ingredient",((Grain) each).getgJson());
+    			ingredients.put("Ingredient",((Grain) each).getJson());
     		}
     	}
     	return(ingredients.toString());

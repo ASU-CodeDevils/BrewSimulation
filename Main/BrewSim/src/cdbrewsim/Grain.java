@@ -16,10 +16,21 @@ public class Grain extends InvItem {
 		this.setCategory("Grain");
 	}
 	public Grain(String name, double amount, double potentialExtract, double lovibonds){
-		super(name, amount);
+		super(name, "","Grain",amount, "", 0.0);
 		this.PE = potentialExtract;
 		this.lovibonds = lovibonds;
 		this.setCategory("Grain");
+	}
+	public Grain(JSONObject obj){
+		super(obj);
+		this.name = obj.getString("name");
+		this.description = obj.getString("description");
+		this.category = obj.getString("category");
+		this.amount = obj.getDouble("amount");
+		this.graphic = obj.getString("graphic");
+		this.price = obj.getDouble("price");
+		this.PE = obj.getDouble("extract");
+		this.lovibonds = obj.getInt("lovibonds");
 	}
 	
 	public double getSpecificGravity(){
@@ -36,14 +47,9 @@ public class Grain extends InvItem {
 		return SRMcolor;
 	}
 
-	public JSONObject getgJson(){
-		JSONObject obj = new JSONObject();
-		obj.put("name", this.name);
-		obj.put("description", this.description);
-		obj.put("category", this.category);
-		obj.put("amount",this.amount);
-		obj.put("graphic", this.graphic);
-		obj.put("price", this.price);
+	public JSONObject getJson(){
+		JSONObject obj =super.getJson();
+		
 		obj.put("extract",this.PE);
 		obj.put("lovibonds", this.lovibonds);
 		return(obj);

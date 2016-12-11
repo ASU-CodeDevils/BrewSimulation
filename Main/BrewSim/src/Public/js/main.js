@@ -60,7 +60,7 @@ var mainState={
         scoretext.fontWeight = 'bold';
         scoretext.fill = '#FDFEFE';
         scoretext.setShadow(4,4, 'rgba(0,0,0,0.5)',0);
-         
+        
     },
     update: function(){
              
@@ -157,4 +157,4 @@ var mainState={
 };
 var game = new Phaser.Game(1200,800);
 game.state.add('main',mainState);
-game.state.start('main');
+//game.state.start('main');
