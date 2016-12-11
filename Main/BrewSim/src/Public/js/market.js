@@ -21,7 +21,11 @@ var inload = true;
 var recipeload = false;
 var equipmentload = false;
 var ingredients;
+var recipes;
+var equipment;
 var currentitem =0;
+var currentrecipe = 0;
+var currentequip = 0;
 var hasnotloaded = true;
 
 var mainState= {
@@ -51,7 +55,7 @@ var mainState= {
         game.load.image('downon','graphics/downon.png');
         game.load.image('purchu', 'graphics/purchu.png');
         game.load.image('purchd','graphics/purchd.png');
-        
+        game.load.image('recipe','graphics/recipe.png');
     },
     create: function(){
         game.stage.backgroundColor = '#F5F1DE';
@@ -134,8 +138,10 @@ var mainState= {
         headingtext.fill = '#FDFEFE';
         headingtext.setShadow(2,2, 'rgba(0,0,0,0.5)',0);
         headingtext.anchor.set(0.5);
-        var pack = packJson("LogReg", "getIngredients",name);
+        var pack = packJson("LogReg", "getIngredients");
         getInfo(pack,getinvitems);
+        var pack = packJson("LogReg","getRecipes");
+        getInfo(pack,getrecipes);
         descriptiontext = game.add.text(310,370, '');
         descriptiontext.fontSize = 18;
         descriptiontext.fill = '#FDFEFE';
@@ -149,7 +155,9 @@ var mainState= {
         this.buyup.visible = false;
         this.buydown = game.add.sprite(195,670, 'buydown');
         this.buydown.visible = false;
-        this.item;
+        this.item = game.add.sprite(190,520,'wheat');
+   	 	this.item.anchor.set(0.5);
+   	 	this.item.visible = false;
         this.upoff = game.add.sprite(1113,410,'upoff');
         this.upoff.inputEnabled = true;
         this.upoff.input.useHandCursor = true;
@@ -161,6 +169,10 @@ var mainState= {
         
         this.downon = game.add.sprite(1113,460,'downon');
         this.downon.visible = false;
+        this.recipe = game.add.sprite(190,520,'recipe');
+        this.recipe.anchor.set(0.5);
+        this.recipe.visible = false;
+        
         buytext = game.add.text(703,416, '');
         buytext.fontSize = 18;
         buytext.fill = '#FDFEFE';
@@ -212,7 +224,15 @@ var mainState= {
 				this.bclick.play();
 				sound6=false;
 				console.log("load buy menu");
-				this.clickbuy();
+				if(inload){
+					this.clickbuy();
+				}
+				else if(recipeload){
+					this.clickrecequip();
+				}
+				else if(equipmentload){
+					
+				}
 				}
 			
 			}
@@ -498,11 +518,15 @@ var mainState= {
     	var items = Object.keys(ingredients);
     	console.log(items);
     	console.log(currentitem);
+    	var inload = true;
+    	var recipeload = false;
+    	var equipmentload = false;
     	if(currentitem>=items.length)
     		currentitem = 0;
     	else if(currentitem<0)
     		currentitem = items.length -1;
     	var current = ingredients[items[currentitem]];
+    	this.recipe.visible = false;
     	console.log(currentitem);
     	if(!click)
     		{
@@ -511,16 +535,32 @@ var mainState= {
     	click = false;
    	 	this.item = game.add.sprite(190,520,current.graphic);
    	 	this.item.anchor.set(0.5);
-   	 	descriptiontext.setText(current.name + '\nCategory: '+current.category+'\nPrice: ' + current.price +'\nAvailable: ' + current.amount +'\n\nDecription: '+current.description);
+   	 	descriptiontext.setText(current.name + '\nCategory: '+current.category+'\nPrice: ' + current.price.toFixed(2) +'\nAvailable: ' + current.amount +'\n\nDecription: '+current.description);
    	 	this.buyup.visible = true;
     },
     loadrecipe: function(){
+    	var inload = false;
+    	var recipeload = true;
+    	var equipmentload = false;
     	this.item.visible = false;
-    	descriptiontext.setText('');
+    	var items = Object.keys(recipes);
+    	if(currentrecipe>=items.length)
+    		currentrecipe = 0;
+    	else if(currentrecipe<0)
+    		currentrecipe = items.length -1;
+    	var current = recipes[items[currentrecipe]];
+    	this.recipe.visible = true;
+    	
+    	descriptiontext.setText(current.name +'\n\nPrice: ' + current.price.toFixed(2));
+   	 	this.buyup.visible = true;
     },
     loadequipment: function(){
+    	var inload = false;
+    	var recipeload = false;
+    	var equipmentload = true;
     	descriptiontext.setText('');
     	this.item.visible = false;
+    	this.recipe.visible = false;
     },
     clickbuy: function(){
     	var items = Object.keys(ingredients);
@@ -533,9 +573,21 @@ var mainState= {
     	buytext.setText(current.name+'\nAmount Available:'+current.amount.toFixed(2) +'\nPrice: '+current.price);
     	buytext1.setText('Quantity to buy: '+ quantity + '\nTotal Price: ' + price.toFixed(2));
     },
+    clickrecequip: function(){
+    	var items = Object.keys(recipes);
+    	
+    	var current = recipes[items[currentrecipe]];
+    	
+    	this.buyback.visible = true;
+    	this.purchu.visible = true;
+    	price = current.price;
+    	quantity = 1;
+    	buytext.setText(current.name+'\nPrice: '+current.price);
+    	
+    },
     updatebuyup: function(){
     	var items = Object.keys(ingredients);
-    	var current = ingredients[items[currentitem]];
+    	var current = ingredients[items[currentrecipe]];
     	
     	if(quantity<current.amount){
     	quantity++;
@@ -569,21 +621,38 @@ var mainState= {
         getInfo(pack,this.updateplayerinfo);
     },
     purch: function(){
-    	var items = Object.keys(ingredients);
-    	var current = ingredients[items[currentitem]];
-    	if(price>balance)
+    	if(inload){
+	    	var items = Object.keys(ingredients);
+	    	var current = ingredients[items[currentitem]];
+	    	if(price>balance)
+	    		{
+	    			buytext2.setText("You don't have that much money!");
+	    			
+	    		}
+	    	else
+	    		{
+	    		var pack = packJson("LogReg","purchase",name,current.name, quantity.toFixed(2),price.toFixed(2));
+	    		
+	            getInfo(pack,null);
+	            this.clearbuy();
+	    		}
+    	}
+    	else if(recipeload){
+    		var items = Object.keys(recipes);
+    		var current = recipes[items[currentrecipe]];
+    		if(price>balance)
     		{
     			buytext2.setText("You don't have that much money!");
     			
     		}
-    	else
+    		else
     		{
     		var pack = packJson("LogReg","purchase",name,current.name, quantity.toFixed(2),price.toFixed(2));
     		
             getInfo(pack,null);
             this.clearbuy();
     		}
-    	
+    	}
     },
     updateplayerinfo: function(result){
     	console.log(result);
@@ -603,9 +672,11 @@ var mainState= {
 
 
 game.state.add('market',mainState);
-//game.state.start('market');
+game.state.start('market');
 
-
+getrecipes = function(result){
+	recipes = JSON.parse(result);
+}
 getinvitems = function(result){
 	ingredients=JSON.parse(result);
 }

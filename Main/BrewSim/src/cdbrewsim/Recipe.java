@@ -27,26 +27,29 @@ public class Recipe {
 	final static int MAX_GRAINS = 5;
 	String name;
 	InvItem [] ingredients;
+	double price;//Had to go back and add a selling price
 	
 	int level;
 	
-	public Recipe(String name, InvItem[] ingredients, int level){
+	public Recipe(String name, InvItem[] ingredients, int level,double price){
 		this.name = name;
 		this.ingredients = ingredients;
 		this.level = level;
+		this.price = price;
 		}
 	public Recipe(Recipe another){
 		this.name = another.name;
 		this.ingredients =another.ingredients;
 		this.level = another.level;
+		this.price = another.price;
 	}
 	public Recipe(JSONObject obj){
 		this.name = obj.getString("name");
 		this.level = obj.getInt("level");
-		
+		this.price = obj.getDouble("price");
 		String[] name = JSONObject.getNames(obj);
 		int y = 0;
-		ingredients = new InvItem[name.length-2];
+		ingredients = new InvItem[name.length-3];
 		for(int x =0;x<name.length;x++){
 			
 			 
@@ -187,6 +190,7 @@ public class Recipe {
 	public JSONObject getJson(){
 		JSONObject obj = new JSONObject();
 		obj.put("name", this.name);
+		obj.put("price", this.price);
 		System.out.println("152");
 		int b = 1;
 		for(int x = 0;x<ingredients.length;x++){
