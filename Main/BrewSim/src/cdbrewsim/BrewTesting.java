@@ -23,6 +23,7 @@ public class BrewTesting {
 	1 cup corn sugar (for priming)*/
 	public static void test(){
 		// Load ingredients into ingredient array.
+		/*
 		ingredients[0] = new Yeast("WLP001 California Ale", 0.75);
 		ingredients[1] = new Grain("2-row Pale Malt", 11.0, 37, 1.8);
 		ingredients[2] = new Grain("2-row Pale Malt", 0.5, 34, 1.8);
@@ -31,7 +32,7 @@ public class BrewTesting {
 		for(InvItem each: ingredients){
 			Database.setIngredient(each);
 		}
-		
+		*/
 		// Create recipe
 		//recipe = new Recipe("Classic American Pale Ale", ingredients, 1);
 		//style = new  BeerStyle("American Pale Ale", 20, 50, 3, 14, 4.2, 6.2);
@@ -45,9 +46,9 @@ public class BrewTesting {
 			{
 				recipe = each;
 			}
-			System.out.println("Before");
+			 
 			//System.out.println(recipe.toString());
-			System.out.println("Out");
+			 
 		}
 		// Establish style characteristics
 		//style = new  BeerStyle("American Pale Ale", 20, 50, 3, 14, 4.2, 6.2);
@@ -69,16 +70,6 @@ public class BrewTesting {
 		System.out.println(brewing.getColorScore());
 		System.out.println(brewing.getBrewScore());
 	}
-	
-		
-		
-		
-		
-	
-
-	
-	
-	
 	
 	
 	

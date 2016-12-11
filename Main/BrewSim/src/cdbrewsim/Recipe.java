@@ -17,6 +17,9 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package cdbrewsim;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import org.json.JSONObject;
 
 public class Recipe {
@@ -24,6 +27,7 @@ public class Recipe {
 	final static int MAX_GRAINS = 5;
 	String name;
 	InvItem [] ingredients;
+	
 	int level;
 	
 	public Recipe(String name, InvItem[] ingredients, int level){
@@ -35,34 +39,41 @@ public class Recipe {
 	public Recipe(JSONObject obj){
 		this.name = obj.getString("name");
 		this.level = obj.getInt("level");
-		System.out.println(obj.toString());
+		
 		String[] name = JSONObject.getNames(obj);
 		int y = 0;
+		ingredients = new InvItem[name.length-2];
 		for(int x =0;x<name.length;x++){
-			System.out.println(name[x].toString());
-			System.out.println("loop");
+			
 			 
 			if(name[x].indexOf("ingredient")!=-1)
 			{
-				System.out.println(obj.getJSONObject(name[x]).getString("category"));
-				if(obj.getJSONObject(name[x]).getString("category").compareTo("Hop")!=-1)
+				 
+				JSONObject test = new JSONObject();
+				test = obj.getJSONObject(name[x]);
+			
+				if(obj.getJSONObject(name[x]).getString("category").compareTo("Hop")==0)
 				{
-					System.out.println("here?");
-					ingredients[y] = new Hop(obj.getJSONObject(name[x]));
+					 
+					
+					 
+					ingredients[y] = new Hop(test);
+					 
 				}
-				else if(obj.getJSONObject(name[x]).getString("category").compareTo("Grain")!=-1)
+				else if(obj.getJSONObject(name[x]).getString("category").compareTo("Grain")==0)
 				{
 					ingredients[y] = new Grain(obj.getJSONObject(name[x]));
 				}
-				else if(obj.getJSONObject(name[x]).getString("category").compareTo("Yeast")!=-1)
+				else if(obj.getJSONObject(name[x]).getString("category").compareTo("Yeast")==0)
 				{
-					ingredients[y] = new Grain(obj.getJSONObject(name[x]));
+					ingredients[y] = new Yeast(obj.getJSONObject(name[x]));
 				}
 				else
 				{
 					ingredients[y] = new InvItem(obj.getJSONObject(name[x]));
-					y++;
+					
 				}
+				y++;
 			}
 		}
 	}

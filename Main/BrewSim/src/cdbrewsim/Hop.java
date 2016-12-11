@@ -24,19 +24,19 @@ public class Hop extends InvItem {
 	public Hop(JSONObject obj){
 		
 		super(obj);
-		System.out.println("Herehop");
+		 
 		this.name = obj.getString("name");
 		this.description = obj.getString("description");
 		this.category = obj.getString("category");
 		this.amount = obj.getDouble("amount");
 		this.graphic = obj.getString("graphic");
-		System.out.println("hereatprice");
+		 
 		this.price = obj.getDouble("price");
-		System.out.println("after price");
+		 
 		this.alphaAcid = obj.getDouble("alphaAcid");
-		System.out.println("after acid");
+		 
 		this.time = obj.getInt("time");
-		System.out.println("after time");
+		 
 	}
 	
 	public double getAAU(){

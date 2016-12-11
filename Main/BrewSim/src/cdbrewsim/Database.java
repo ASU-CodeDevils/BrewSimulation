@@ -104,9 +104,10 @@ public class Database {
 		}
 		try{
 			FileInputStream inrecipe = new FileInputStream("data/recipes.json");
+			 
 			JSONObject obj = new JSONObject(new JSONTokener(inrecipe));
 			String[] names = JSONObject.getNames(obj);
-			
+			System.out.println(obj.toString());
 			for(int i=0; i<names.length;i++)
 			{
 				JSONObject obj1 = new JSONObject();
@@ -117,6 +118,40 @@ public class Database {
 				
 				recipes.add(recipe);
 				
+			}
+		}
+		catch(Exception ex) {
+			System.out.println("Exception importing from json: " + ex.getMessage());
+		}
+		try{
+			FileInputStream iningredients = new FileInputStream("data/ingredinfo.json");
+			 
+			JSONObject obj = new JSONObject(new JSONTokener(iningredients));
+			String[] name = JSONObject.getNames(obj);
+			System.out.println(obj.toString());
+			for(int x=0; x<name.length;x++)
+			{
+				if(obj.getJSONObject(name[x]).getString("category").compareTo("Hop")==0)
+				{
+					System.out.println("here?");
+					
+					System.out.println("after test");
+					ingredients.add(new Hop(obj.getJSONObject(name[x])));
+					System.out.println("afterhere?");
+				}
+				else if(obj.getJSONObject(name[x]).getString("category").compareTo("Grain")==0)
+				{
+					ingredients.add(new Grain(obj.getJSONObject(name[x])));
+				}
+				else if(obj.getJSONObject(name[x]).getString("category").compareTo("Yeast")==0)
+				{
+					ingredients.add(new Yeast(obj.getJSONObject(name[x])));
+				}
+				else
+				{
+					ingredients.add(new InvItem(obj.getJSONObject(name[x])));
+					
+				}
 			}
 		}
 		catch(Exception ex) {
