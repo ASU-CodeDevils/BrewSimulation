@@ -470,7 +470,14 @@ var mainState = {
     		}
     },
     updatestyle: function(){
-    	
+    	var items = Object.keys(styles);
+    	if(currentstyle>-1)
+		{
+		var current = styles[items[currentstyle]];
+		var stylename = current.name;
+		stylename = stylename.substr(0,40);
+		currentstyletext.setText(stylename);
+		}
     },
     updaterecipes: function(result){
     	userrecipes = JSON.parse(result);
@@ -512,7 +519,7 @@ var mainState = {
     		var current = styles[items[currentstyle]];
     		var stylename = current.name;
     		stylename = stylename.substr(0,40);
-    		styletext.setText(stylename);
+    		currentstyletext.setText(stylename);
     		}
     },
 
