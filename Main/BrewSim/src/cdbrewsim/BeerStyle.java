@@ -126,6 +126,4 @@ public class BeerStyle {
 		return(name);
 	}
 	
-	
-
 }

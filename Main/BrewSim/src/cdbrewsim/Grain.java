@@ -20,10 +20,10 @@ package cdbrewsim;
 import org.json.JSONObject;
 
 public class Grain extends InvItem {
-	private double PE; //Potential Extract (points per lb / gallon)
-	private double lovibonds; // Color intensity of grain
-	public static final double EXTRACT_EFFICIENCY = 0.70; // Efficiency is usually between 60%-80%. Split the difference.
-	public static final double BATCH_SIZE = 5.0; // Standardize all calculations to be 5 gallon batch.
+	private double PE;				//Potential Extract (points per lb / gallon)
+	private double lovibonds;		// Color intensity of grain
+	public static final double EXTRACT_EFFICIENCY = 0.70;	// Efficiency is usually between 60%-80%. Split the difference.
+	public static final double BATCH_SIZE = 5.0; 			// Standardize all calculations to be 5 gallon batch.
 	
 	public Grain(String name, String description, String category, double amount, String graphic, double price, double potentialExtract, double lovibonds) {
 		// amount should be in lbs with increments of 0.1 lb.
