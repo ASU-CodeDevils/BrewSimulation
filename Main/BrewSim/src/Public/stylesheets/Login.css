@@ -11,7 +11,13 @@ body {
     
 }
 #original {
-    
+    position: fixed;
+width: 500px;
+height: 100px;
+top: 50%;
+left: 50%;
+margin-top: -100px; /* Negative half of height. */
+margin-left: -250px; /* Negative half of width. */
 }
 h4 {
     color:white;

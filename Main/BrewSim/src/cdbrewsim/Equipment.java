@@ -26,6 +26,7 @@ public class Equipment {
 	public Equipment(String name, double price, int speed, int rank){
 		
 	}
+	/*
 	public String getName(){
 		
 	}
@@ -50,5 +51,5 @@ public class Equipment {
 	public boolean setRank(int rank){
 		
 	}
-
+*/
 }
