@@ -186,14 +186,14 @@ public class Database {
 			obj4.put(each.getName(), each.getJson());
 		}
 		PrintWriter recipeOut = new PrintWriter("data/recipes.json");
-		recipeOut.println(obj4.toString());
+		recipeOut.println(obj4.toString(4));
 		recipeOut.close();
 		JSONObject obj5 = new JSONObject();
 		for(BeerStyle each: styles){
 			obj5.put(each.getName(), each.toJson());
 		}
 		PrintWriter styleout = new PrintWriter("data/styles.json");
-		styleout.println(obj5.toString());
+		styleout.println(obj5.toString(4));
 		styleout.close();
 		return(true);
 	}
