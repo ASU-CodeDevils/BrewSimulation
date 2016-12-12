@@ -16,6 +16,10 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMA
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
 OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+var count = 0;
+var counth = 0;
+var countg = 0;
+var totals = 0;
 var sound8 = true;
 var sound9 = true;
 var sound10 = true;
@@ -97,42 +101,51 @@ var mainState = {
         game.load.image('h', 'graphics/h.png');
         game.load.image('y', 'graphics/y.png');
         game.load.image('minus', 'graphics/minus.png');
+        game.load.image('brewdown', 'graphics/brewdown.png');
+        game.load.image('brewup', 'graphics/brewup.png');
     },
     create: function(){
         game.stage.backgroundColor = '#F5F1DE';
         game.physics.startSystem(Phaser.Physics.ARCADE);
         game.add.tileSprite(0,0,1200,800,'brewback');
-        var pack = packJson("LogReg","getUserRecipes", name);
-        getInfo(pack,this.updaterecipes);
-        var pack = packJson("LogReg","getUserInv", name);
+        //var pack = packJson("LogReg","getUserRecipes", name);
+        
+        //getInfo(pack,this.updaterecipes);
+        //var pack = packJson("LogReg","getUserInv", name);
+        var pack = packJson("LogReg","getIngredients");
         getInfo(pack,this.updateInv);
         var pack = packJson("LogReg","getStyles");
         getInfo(pack,this.updatestyles);
         this.brewrecipeoff = game.add.sprite(251,32,'brewrecipeoff');
         this.brewrecipeoff.inputEnabled = true;
         this.brewrecipeoff.input.useHandCursor = true;
+        this.brewrecipeoff.visible = false;
         this.brewrecipeon = game.add.sprite(251,32,'brewrecipeon');
         this.brewrecipeon.visible = false;
-        this.newbrewoff = game.add.sprite(724,32,'newbrewoff');
+        this.newbrewoff = game.add.sprite(340,32,'newbrewoff');
         this.newbrewoff.inputEnabled = true;
         this.newbrewoff.input.useHandCursor = true;
-        this.newbrewon = game.add.sprite(724,32,'newbrewon');
+        this.newbrewon = game.add.sprite(340,32,'newbrewon');
         this.newbrewon.visible = false;
         this.bclick = game.add.audio('bclick');
-        this.redl = game.add.sprite(209,98,'redl');
-        this.redl.inputEnabled = true;
-        this.redl.input.useHandCursor = true;
-        this.redr = game.add.sprite(618,98,'redr');
-        this.redr.inputEnabled = true;
-        this.redr.input.useHandCursor = true;
-        this.reds = game.add.sprite(267,98,'reds');
+        //this.redl = game.add.sprite(209,98,'redl');
+        //this.redl.inputEnabled = true;
+        //this.redl.input.useHandCursor = true;
+        //this.redl.vislble = false;//for now
+        //this.redr = game.add.sprite(618,98,'redr');
+        //this.redr.inputEnabled = true;
+        //this.redr.input.useHandCursor = true;
+        //this.redr.visible = false;//for now
+        //this.reds = game.add.sprite(267,98,'reds');
+        //this.reds.visible = false;//for now
         this.invrl = game.add.sprite(65,649,'redl');
         this.invrl.inputEnabled = true;
         this.invrl.input.useHandCursor = true;
         this.invrr = game.add.sprite(221,649,'redr');
         this.invrr.inputEnabled = true;
         this.invrr.input.useHandCursor = true;
-        this.reds = game.add.sprite(267,98,'reds');
+         
+        
         this.bottleback = game.add.sprite(840,220,'bottle');
         headingtext = game.add.text(438,122, '');
         headingtext.fontSize = 24;
@@ -154,6 +167,7 @@ var mainState = {
         this.back = game.add.sprite(20,40,'leftarrow');
         this.back.inputEnabled = true;
         this.back.input.userHandCursor = true;
+        this.back.visible = false;
         this.tagback = game.add.sprite(56, 206,'tagback');
         this.invback= game.add.sprite(34, 216,'invback');
         this.backdown = game.add.sprite(20,40, 'leftdown');
@@ -161,7 +175,7 @@ var mainState = {
         descriptiontext = game.add.text(78,380, 'Current Ingredient');
         descriptiontext.fontSize = 20;
         descriptiontext.fill = '#8B4513';
-        //descriptiontext.setShadow(1,1, 'rgba(120,0,0,0.5)',0);
+        descriptiontext.setShadow(1,1, 'rgba(120,0,0,0.5)',0);
         descriptiontext.wordWrap= true;
         descriptiontext.wordWrapWidth = 180;
         
@@ -393,8 +407,15 @@ var mainState = {
         hopi.push(this.hop5);
         hopi.push(this.hop6);
         hopi.push(this.hop7);
-        
-        
+        console.log(JSON.stringify(useringredients));
+        this.brewoff = game.add.sprite(720,32,'brewup');
+        this.brewoff.inputEnabled = true;
+        this.brewoff.input.useHandCursor = true;
+       
+        this.brewon = game.add.sprite(720,32,'brewdown');
+        this.brewon.inputEnabled = true;
+        this.brewon.input.useHandCursor = true;
+        this.brewon.visible = false;
         
     },
     update: function(){
@@ -418,6 +439,29 @@ var mainState = {
 		{
 			sound7 =true;
 			this.backdown.visible = false;
+		}
+    	if(this.brewoff.input.pointerOver()||this.brewon.input.pointerOver())
+		{
+    		this.brewon.visible = true;
+    		console.log('Mouseover');
+			if(game.input.activePointer.isDown)
+				{
+				
+				if(sound25)
+					{
+					this.brewit();
+					this.bclick.play();
+					sound25=false;
+					
+					}
+			}
+			
+				
+		}
+		else
+		{
+			sound25 =true;
+			this.brewon.visible = false;
 		}
     	if(this.brewrecipeoff.input.pointerOver())
 		{
@@ -468,7 +512,7 @@ var mainState = {
 		this.newbrewon.visible = false;
 		sound2 = true;
 	}
-	if(this.redr.input.pointerOver())
+	/*if(this.redr.input.pointerOver())
 	{
 		this.rrw.visible = true;
 		if(game.input.activePointer.isDown)
@@ -533,7 +577,7 @@ var mainState = {
 	{
 		this.rlw.visible = false;
 		sound9 = true;
-	}
+	}*/
 	if(this.invrr.input.pointerOver())
 	{
 		this.invrw.visible = true;
@@ -1051,6 +1095,8 @@ var mainState = {
     		}
     	this.updateI();
     	totalhop--;
+    	if(totalhop ==0)
+    		havehop =false;
     },
     movegrains: function(pos){
     	var items = Object.keys(useringredients);
@@ -1067,7 +1113,9 @@ var mainState = {
 		 
 		}
     	this.updateI();
-	totalhop--;
+	totalgrain--;
+	if(totalgrain==0)
+		havegrain = false;
     },
     updateI: function(){
     
@@ -1131,7 +1179,7 @@ var mainState = {
     		var ingredientname = current.name;
     		var ingredientamount = current.amount;
     		var ingredientcategory = current.category;
-    		descriptiontext.setText('Current Ingredient\n\nName: ' + ingredientname +'\nCategory: '+ingredientcategory+'\nAmount: ' +ingredientamount.toFixed(2));
+    		//descriptiontext.setText('Current Ingredient\n\nName: ' + ingredientname +'\nCategory: '+ingredientcategory+'\nAmount: ' +ingredientamount.toFixed(2));
     		}
     },
     updatestyles: function(result){
@@ -1232,6 +1280,7 @@ var mainState = {
     			totalgrain++;
     			this.clearingredient();
     			this.updateI();
+    			havegrain = true;
     			}
     		else
     			{
@@ -1254,6 +1303,7 @@ var mainState = {
 				hopi[totalhop].visible = true;
 				minush[totalhop].visible = true;
 				totalhop++;
+				havehop=true;
 				this.clearingredient();
 				this.updateI();
 				}
@@ -1271,6 +1321,7 @@ var mainState = {
 			this.minusy1.visible = true;
 			totalyeast++;
 			this.updateI();
+			haveyeast = true;
 		}
 			else
 				{
@@ -1281,6 +1332,7 @@ var mainState = {
     newbrew: function(){
     	var items = Object.keys(useringredients);
     	var current = useringredients[items[currentingredient]];
+    	count = 0;
     	console.log(hopamount, gramount);
     	if(totalyeast>0)
     		console.log("yeast");
@@ -1344,10 +1396,63 @@ var mainState = {
     	totalgrain = 0;
     	totalhop = 0;
     },
-    fromrecipe: function(){
+    brewit: function(){
+    	console.log(haveyeast);
+    	console.log(havegrain);
+    	console.log(havehop);
+    	if(haveyeast&&havegrain&&havehop)
+    		{
+    		totals = totalyeast+totalgrain+totalhop;
+    		var pack = packJson("LogReg","startinv",totals);
+            getInfo(pack,this.nextIngredient);
+    		countg = graini.length;
+    		counth= hopi.length;
+    		}
+    },
+    nextIngredient: function(result){
+    	 
+    	if(count ==0)
+    		{
+    		var pack = packJson("LogReg","recipeIngredient",yeast[0]);
+    		count++;
+    		getInfo(pack,this.nextIngredient);
+    		
+    		}
+    	if(count>0&&count<totals)
+    		{
+    		 count++; 
+    		if(countg<graini.length)
+    			 {
+    			 var pack = packJson("LogReg","recipeIngredient",graini[countg],gramount[countg]);
+    			 countg++;
+    			 getInfo(pack.this.nextIngredient);
+    			 }
+    		 else if(counth<hopi.length)
+    			 {
+    			 var pack = packJson("LogReg","recipeIngredient",hopi[counth],hopamount[counth]);
+    			 counth++;
+    			 getInfo(pack.this.nextIngredient);
+    			 }
+    		
+    		}
+    	else
+    		{
+    			var current = styles[items[currentstyle]];
+    			var stylename = current.name;
+    			var pack = packJson("LogReg","getScore",stylename);
+   			 
+   			 	getInfo(pack.this.getscore);
+    		}
+    },
+    getscore: function(result){
+    	console.lot(result.toString());
+    },
+    fromrecipe: function(){/*
     	var items = Object.keys(useringredients);
     	var missingingred = [];
     	var missingamount = [];
+    	var foundingred = [];
+    	var foundamount = [];
     	var ingredname = [];
     	var ingredtamount=[];
     	var recipeitems = Object.keys(userrecipes);
@@ -1368,15 +1473,27 @@ var mainState = {
     				ingredAmount.push(testing.amount);
     			}
     		}
-    		if(ingredname.length==0)
-    				{
-    					ingedname.push(current.name);
-    					
-    				}
-    			else
-    				{
-    			for(var z = 0;z<ingredname.length;z++){
-    			if(current.name ==ingredname[z])
+    	for(var x = 0;x<ingredname.length-1;x++)
+    		{
+    		if(ingredname[x]==ingredname[x+1])
+    			{
+    				ingredamount[x]+=ingredamount[x+1];
+    				ingredname[x+1]=null;
+    			}
+    		}
+    		
+    	for(var z = 0;z<ingredname.length;z++){
+    		for(var g = 0;g<items.length;g++)
+    			{
+    			  var current = useringredients[items[g]];
+    			  if(current.name == ingredname[z])
+    				  {
+    				  	if(current.amount >=ingredamount[z])
+    				  		{
+    				  			
+    				  		}
+    				  }
+    			}
     				{
     				ingredtamount[z] += current.amount;
     				console.log("we have it");
@@ -1413,7 +1530,7 @@ var mainState = {
     					console.log(false, "don't have ingredient");
     					}
     				}
-    		}
+    		}*/
     },
     clearingredient: function(){
     	notetext.setText("");

@@ -72,7 +72,9 @@ public class Hop extends InvItem {
 	public int getTime(){
 		return this.time;
 	}
-	
+	public void setTime(int time){
+		this.time = time;
+	}
 
 	public JSONObject getJson(){
 		JSONObject obj = super.getJson();
