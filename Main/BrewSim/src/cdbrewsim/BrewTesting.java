@@ -43,7 +43,7 @@ public class BrewTesting {
 		System.out.println("Here at recipe");
 		for(Recipe each: listrecipe){
 			
-			if(each.getName().compareTo("Classic American Pale Ale")==0)
+			if(each.getName().compareTo("Hoppiness is an IPA")==0)
 			{
 				recipe = each;
 			}
@@ -55,7 +55,7 @@ public class BrewTesting {
 		//style = new  BeerStyle("American Pale Ale", 20, 50, 3, 14, 4.2, 6.2);
 		List<BeerStyle> list2 = Database.getStyles();
 		for(BeerStyle each: list2){
-			if(each.getName().compareTo("American Pale Ale")==0) //was returning the wrong style when checking if not -1. Style names have a lot of similarities.
+			if(each.getName().compareTo("American IPA")==0) //was returning the wrong style when checking if not -1. Style names have a lot of similarities.
 			{
 				style = each;
 			}
@@ -63,6 +63,7 @@ public class BrewTesting {
 		//Database.setRecipe(recipe);
 		//Database.setStyle(style);
 		System.out.println(style.name.toString());
+		System.out.println(recipe.getName());
 		brewing = new Brewing(recipe, style);
 		brew = new Brew("Testing", brewing);
 		System.out.println(recipe.toString());
