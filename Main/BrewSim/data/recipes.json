@@ -8,7 +8,7 @@
         "name":"WLP001 California Ale",
         "description":"",
         "category":"Yeast",
-        "graphic":"",
+        "graphic":"yeast",
         "apparentA":0.75
     },
     "ingredient2":{
@@ -19,7 +19,7 @@
         "description":"",
         "category":"Grain",
         "lovibonds":1,
-        "graphic":""
+        "graphic":"grain"
     },
     "ingredient3":{
         "amount":0.5,
@@ -29,7 +29,7 @@
         "description":"",
         "category":"Grain",
         "lovibonds":1,
-        "graphic":""
+        "graphic":"grain"
     },
     "ingredient4":{
         "amount":2,
@@ -38,7 +38,7 @@
         "description":"",
         "time":60,
         "category":"Hop",
-        "graphic":"",
+        "graphic":"grain",
         "alphaAcid":5.5
     },
     "ingredient5":{
