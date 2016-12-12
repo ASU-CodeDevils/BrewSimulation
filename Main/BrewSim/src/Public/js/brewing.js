@@ -16,6 +16,7 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMA
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
 OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+var allsent = true;
 var count = 0;
 var counth = 0;
 var countg = 0;
@@ -1402,38 +1403,48 @@ var mainState = {
     	console.log(havehop);
     	if(haveyeast&&havegrain&&havehop)
     		{
+    		console.log(totals);
     		totals = totalyeast+totalgrain+totalhop;
     		var pack = packJson("LogReg","startinv",totals);
             getInfo(pack,this.next);
-    		countg = graini.length;
-    		counth= hopi.length;
+    		countg = 0;
+    		counth= 0;
     		}
     },
-    next: function nextIngredient(result){
+    next: function lambda(result){
     	 
+    	while(allsent){
+    		
+    	
+    		 
     	if(count ==0)
     		{
     		var pack = packJson("LogReg","recipeIngredient",yeast[0]);
     		count++;
-    		getInfo(pack,nextIngredient);
+    		getInfo(pack);
     		
     		}
     	console.log(totals);
+    	console.log(count);
     	if(count>0&&count<totals)
     		{
     		console.log(totals); 
     		count++; 
-    		if(countg<graini.length)
+    		console.log(hop.length, "grain");
+    		console.log(hop.length, "hop");
+    		console.log(countg, "countg");
+    		console.log(counth, "counth");
+    		if(countg<grain.length)
     			 {
-    			 var pack = packJson("LogReg","recipeIngredient",graini[countg],gramount[countg]);
+    			 var pack = packJson("LogReg","recipeIngredient",grain[countg],gramount[countg].toString());
     			 countg++;
-    			 getInfo(pack,nextIngredient);
+    			 getInfo(pack);
     			 }
-    		 else if(counth<hopi.length)
+    		 else if(counth<hop.length)
     			 {
-    			 var pack = packJson("LogReg","recipeIngredient",hopi[counth],hopamount[counth]);
+    			 var pack = packJson("LogReg","recipeIngredient",hop[counth],hopamount[counth].toString(),hoptime[counth].toString());
     			 counth++;
-    			 getInfo(pack,nextIngredient);
+    			 getInfo(pack);
     			 }
     		
     		}
@@ -1443,12 +1454,16 @@ var mainState = {
     			var current = styles[items[currentstyle]];
     			var stylename = current.name;
     			var pack = packJson("LogReg","getScore",stylename);
-   			 
+   			 	allsent = false;
    			 	getInfo(pack,this.getscore);
     		}
+    	}
     },
     getscore: function(result){
     	console.lot(result.toString());
+    },
+    flip: function(){
+    	//nextIngredient();
     },
     fromrecipe: function(){/*
     	var items = Object.keys(useringredients);

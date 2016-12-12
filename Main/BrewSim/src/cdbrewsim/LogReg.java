@@ -290,6 +290,7 @@ public class LogReg {
     }
     public int getScore(String name){
     	List<BeerStyle> list = Database.getStyles();
+    	System.out.println("Start Of getScore");
     	array = new InvItem[tracking.size()];
     	for(int x =0;x<tracking.size();x++)
     	{
@@ -303,8 +304,9 @@ public class LogReg {
     		
     		}
     	System.out.println(list.toString());
+    	System.out.println("line 306");
     	Recipe temp = new Recipe("testing", array, 1, 10.00);
     	Brewing tocheck = new Brewing(temp,totry);
-    	return(tocheck.getBrewScore());
+    	return(100);
     }
 }
