@@ -1,3 +1,20 @@
+/*
+ * Copyright (c) 2016 ASU CodeDevils
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
+documentation files (the "Software"), to deal in the Software without restriction, including without 
+limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies 
+of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial 
+portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT 
+NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, 
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
+OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
 var score = 0;
 var balance = 0;
 var rank = 0;
@@ -119,7 +136,7 @@ var mainState= {
         this.back.inputEnabled = true;
         this.back.input.userHandCursor = true;
         this.backdown = game.add.sprite(20,40, 'leftdown');
-        this.backdown.visible = true;
+        this.backdown.visible = false;
         this.redl = game.add.sprite(80,260,'redl');
         this.redl.inputEnabled = true;
         this.redl.input.useHandCursor = true;
@@ -291,6 +308,7 @@ var mainState= {
     	else
     		{
     		this.backdown.visible = false;
+    		sound7 = true;
     		
     		}
     	if(this.gout1.input.pointerOver())
@@ -587,7 +605,7 @@ var mainState= {
     },
     updatebuyup: function(){
     	var items = Object.keys(ingredients);
-    	var current = ingredients[items[currentrecipe]];
+    	var current = ingredients[items[currentitem]];
     	
     	if(quantity<current.amount){
     	quantity++;
@@ -672,7 +690,7 @@ var mainState= {
 
 
 game.state.add('market',mainState);
-game.state.start('market');
+//game.state.start('market');
 
 getrecipes = function(result){
 	recipes = JSON.parse(result);
