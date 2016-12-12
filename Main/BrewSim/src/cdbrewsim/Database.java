@@ -175,30 +175,22 @@ public class Database {
 		out.close();
 		JSONObject obj3 = new JSONObject();
 		System.out.println(ingredients.toString());
-		int z = 1;
-		for(InvItem each: ingredients)
-		{
-			each.getJson().toString();
-			obj3.put("ingredients"+z, each.getJson());
-			z++;
-		}
+		for(InvItem each: ingredients){
+            obj3.put(each.getName(), each.getJson());
+        }
 		PrintWriter ingredOut = new PrintWriter("data/ingredinfo.json");
-		ingredOut.println(obj3.toString());
+		ingredOut.println(obj3.toString(4));
 		ingredOut.close();
 		JSONObject obj4 = new JSONObject();
-		int b =0;
 		for(Recipe each: recipes){
-			obj4.put("recipe"+b, each.getJson());
-			b++;
+			obj4.put(each.getName(), each.getJson());
 		}
 		PrintWriter recipeOut = new PrintWriter("data/recipes.json");
 		recipeOut.println(obj4.toString());
 		recipeOut.close();
 		JSONObject obj5 = new JSONObject();
-		int c = 0;
 		for(BeerStyle each: styles){
-			obj5.put("style"+c, each.toJson());
-			c++;
+			obj5.put(each.getName(), each.toJson());
 		}
 		PrintWriter styleout = new PrintWriter("data/styles.json");
 		styleout.println(obj5.toString());
