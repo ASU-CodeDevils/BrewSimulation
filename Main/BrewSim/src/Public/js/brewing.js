@@ -19,8 +19,25 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 var sound8 = true;
 var sound9 = true;
 var sound10 = true;
+var sound11 = true;
+var sound12 = true;
+var sound13 = true;
+var sound14 = true;
+var sound15 = true;
+var sound16 = true;
+var sound17 = true;
 var sound20 = true;
 var sound21 = true;
+var currentamount =0;
+var currenttime = 0;
+var amountmax =0;
+var grain = [];
+var gramount = [];
+var yeast = [];
+var hop = [];
+var hopamount = [];
+var hoptime = [];
+ 
 var userrecipes;
 var useringredients;
 var styles;
@@ -54,6 +71,14 @@ var mainState = {
         game.load.image('fwo',"graphics/fwo.png");
         game.load.image('bwon',"graphics/bwon.png");
         game.load.image('fwon',"graphics/fwon.png");
+        game.load.image('pad','graphics/pad.png');
+        game.load.image('upoff','graphics/topoff.png');
+        game.load.image('upon','graphics/upon.png');
+        game.load.image('downoff','graphics/downoff.png');
+        game.load.image('downon','graphics/downon.png');
+        game.load.image('atroff', 'graphics/atroff.png');
+        game.load.image('atron', 'graphics/atron.png');
+        game.load.image('thought', 'graphics/thought.png');
     },
     create: function(){
         game.stage.backgroundColor = '#F5F1DE';
@@ -151,6 +176,78 @@ var mainState = {
         this.fwon.visible = false;
         this.bwon = game.add.sprite(869,481,'bwon');
         this.bwon.visible = false;
+        this.pad = game.add.sprite(371,220,'pad');
+        notetext = game.add.text(455,262, 'Style');
+        notetext.fontSize = 22;
+        notetext.fill = '#8B4513';
+        //descriptiontext.setShadow(1,1, 'rgba(120,0,0,0.5)',0);
+        notetext.wordWrap= true;
+        notetext.wordWrapWidth = 250;
+        notetext2 = game.add.text(455,440, "Amount:           ing12.1oz");
+        notetext2.fontSize = 22;
+        notetext2.fill = '#8B4513';
+        //descriptiontext.setShadow(1,1, 'rgba(120,0,0,0.5)',0);
+        notetext2.wordWrap= true;
+        notetext2.wordWrapWidth = 260;
+        notetext3 = game.add.text(455,575, "Time:   60 Mins");
+        notetext3.fontSize = 22;
+        notetext3.fill = '#8B4513';
+        //descriptiontext.setShadow(1,1, 'rgba(120,0,0,0.5)',0);
+        notetext3.wordWrap= true;
+        notetext3.wordWrapWidth = 260;
+        this.auoff = game.add.sprite(550,405,'upoff');
+        this.auoff.inputEnabled = true;
+        this.auoff.input.useHandCursor = true;
+        this.adoff = game.add.sprite(550,453,'downoff');
+        this.adoff.inputEnabled = true;
+        this.adoff.input.useHandCursor = true;
+        this.auon = game.add.sprite(550,405,'upon');
+        this.auon.visible = false;
+        
+        this.adon = game.add.sprite(550,453,'downon');
+        this.adon.visible = false;
+        //this.upoff.visible = false;
+    	//this.downoff.visible = false;
+        this.aduoff = game.add.sprite(691,405,'upoff');
+        this.aduoff.inputEnabled = true;
+        this.aduoff.input.useHandCursor = true;
+        this.addoff = game.add.sprite(691,453,'downoff');
+        this.addoff.inputEnabled = true;
+        this.addoff.input.useHandCursor = true;
+        this.aduon = game.add.sprite(691,405,'upon');
+        this.aduon.visible = false;
+        
+        this.addon = game.add.sprite(691,453,'downon');
+        this.addon.visible = false;
+        
+        this.tuoff = game.add.sprite(630,533,'upoff');
+        this.tuoff.inputEnabled = true;
+        this.tuoff.input.useHandCursor = true;
+        this.tdoff = game.add.sprite(630,583,'downoff');
+        this.tdoff.inputEnabled = true;
+        this.tdoff.input.useHandCursor = true;
+        this.tuon = game.add.sprite(630,533,'upon');
+        this.tuon.visible = false;
+        
+        this.tdon = game.add.sprite(630,583,'downon');
+        this.tdon.visible = false;
+        this.atroff = game.add.sprite(495,659,'atroff');
+        this.atroff.inputEnabled = true;
+        this.atroff.input.useHandCursor = true;
+       
+        this.atron = game.add.sprite(495,659,'atron');
+        this.atron.visible = false;
+        this.thought = game.add.sprite(741, 450, 'thought');
+        message = game.add.text(815,520, "Need at least one of each ingredient!");
+        message.fontSize = 22;
+        message.fill = '#8B4513';
+        //descriptiontext.setShadow(1,1, 'rgba(120,0,0,0.5)',0);
+        message.wordWrap= true;
+        message.wordWrapWidth = 150;
+        this.thought.visible = false;
+        message.setText("");
+        this.clearingredient();
+        
     },
     update: function(){
     	console.log(game.input.mousePointer.x);
@@ -201,8 +298,17 @@ var mainState = {
             if(sound2)
             	{
             	this.bclick.play();
-            	 
-            	sound2 = false;
+            	 currentamount = 0;currentamount =0;
+            	 currenttime = 0;
+            	 amountmax =0;
+            	 grain = [];
+            	 gramount = [];
+            	 yeast = [];
+            	 hop = [];
+            	 hopamount = [];
+            	 hoptime = [];
+            	 this.clearingredient();
+            	 sound2 = false;
             	 
             	}
         }
@@ -357,10 +463,11 @@ var mainState = {
             		 
             		
             			this.bclick.play();
-            			
-            			 
+            			currentamount =0;
+            			currenttime = 0;
+            			amountmax = 0;
             			sound10 = false;
-            			
+            			this.checkingredient();
             		
             		}
             	
@@ -442,6 +549,259 @@ var mainState = {
 		this.bwon.visible = false;
 		sound21 = true;
 	}
+	if(this.auoff.input.pointerOver())
+	{
+		this.auon.visible = true;
+		if(game.input.activePointer.isDown)
+        {
+			
+			
+            	if(sound11)
+            		{
+            			if(currentamount+.9<amountmax)
+            				{
+            				currentamount++;
+            				this.checkingredient();
+            				this.bclick.play();
+            				this.thought.visible = false;
+            				}
+            			
+            			
+            			
+            			
+            			sound11 = false;
+            			
+            		}
+			
+        }
+		else
+		{
+		sound11 = true;
+		}
+			
+	}
+	else
+	{
+		this.auon.visible = false;
+		sound11 = true;
+	}
+	if(this.adoff.input.pointerOver())
+	{
+		this.adon.visible = true;
+		if(game.input.activePointer.isDown)
+        {
+			
+			
+            	if(sound12)
+            		{
+            		
+            		 
+            		 
+            		if(currentamount>.9)
+    				{
+	    				currentamount--;
+	    				this.checkingredient();
+	    				this.bclick.play();
+	    				this.thought.visible = false;
+    				}
+            			 
+            			 
+            			sound12 = false;
+            			
+            		
+            		}
+            	
+			
+        }
+		else
+		{
+		sound12 = true;
+		}
+	}
+	else
+	{
+		this.adon.visible = false;
+		sound12 = true;
+	}
+	if(this.aduoff.input.pointerOver())
+	{
+		this.aduon.visible = true;
+		if(game.input.activePointer.isDown)
+        {
+			
+			
+            	if(sound13)
+            		{
+            		
+            		if(currentamount<amountmax-.1)
+    				{
+	    				currentamount+=.1;
+	    				this.checkingredient();
+	    				this.bclick.play();
+	    				this.thought.visible = false;
+    				}
+            			
+            			
+            			sound13 = false;
+            			
+            		}
+			
+        }
+		else
+		{
+		sound13 = true;
+		}
+			
+	}
+	else
+	{
+		this.aduon.visible = false;
+		sound13 = true;
+	}
+	if(this.addoff.input.pointerOver())
+	{
+		this.addon.visible = true;
+		if(game.input.activePointer.isDown)
+        {
+			
+			
+            	if(sound14)
+            		{
+            		
+            		if(currentamount>.1)
+    				{
+	    				currentamount-=.1;
+	    				this.checkingredient();
+	    				this.bclick.play();
+	    				this.thought.visible = false;
+    				}
+            		 
+            		
+            			 
+            			 
+            			sound14 = false;
+            			
+            		
+            		}
+            	
+			
+        }
+		else
+		{
+		sound14 = true;
+		}
+	}
+	else
+	{
+		this.addon.visible = false;
+		sound14 = true;
+	}
+	if(this.tuoff.input.pointerOver())
+	{
+		this.tuon.visible = true;
+		if(game.input.activePointer.isDown)
+        {
+			
+			
+            	if(sound15)
+            		{
+            		
+            		if(currenttime<120)
+    				{
+	    				currenttime++;
+	    				this.checkingredient();
+	    				this.bclick.play();
+	    				this.thought.visible = false;
+    				}
+            		
+            			
+            			
+            			sound15 = false;
+            			
+            		}
+			
+        }
+		else
+		{
+		sound15 = true;
+		}
+			
+	}
+	else
+	{
+		this.tuon.visible = false;
+		sound15 = true;
+	}
+	if(this.tdoff.input.pointerOver())
+	{
+		this.tdon.visible = true;
+		if(game.input.activePointer.isDown)
+        {
+			
+			
+            	if(sound16)
+            		{
+	            		if(currenttime>0)
+	    				{
+		    				currenttime--;
+		    				this.checkingredient();
+		    				this.bclick.play();
+		    				this.thought.visible = false;
+	    				}
+            		 
+            		 
+            			this.bclick.play();
+            			 
+            			 
+            			sound16 = false;
+            			
+            		
+            		}
+            	
+			
+        }
+		else
+		{
+		sound16 = true;
+		}
+	}
+	else
+	{
+		this.tdon.visible = false;
+		sound16 = true;
+	}
+	if(this.atroff.input.pointerOver())
+	{
+		this.atron.visible = true;
+		if(game.input.activePointer.isDown)
+        {
+			
+			
+            	if(sound17)
+            		{
+            		
+            		 
+            		 
+            			this.bclick.play();
+            			 this.addtorecipe();
+            			 
+            			sound17 = false;
+            			
+            		
+            		}
+            	
+			
+        }
+		else
+		{
+		sound17 = true;
+		}
+	}
+	else
+	{
+		this.atron.visible = false;
+		sound17 = true;
+	}
     },
     updateI: function(){
     
@@ -516,12 +876,152 @@ var mainState = {
     	currentstyle = items.length-1;
     	if(currentstyle>-1)
     		{
+    		currentstyle = 0;
     		var current = styles[items[currentstyle]];
     		var stylename = current.name;
     		stylename = stylename.substr(0,40);
     		currentstyletext.setText(stylename);
     		}
     },
+    checkingredient: function(){
+    	var items = Object.keys(useringredients);
+    	
+    		var current = useringredients[items[currentingredient]];
+    		var ingredientname = current.name;
+    		
+    		var ingredientcategory = current.category;
+    		if(current.category =="Grain")
+    			{
+    			this.addgrain();
+    			this.showingredientgrain();
+    			}
+    		else if(current.category=="Hop")
+    			{
+    			this.addhop();
+    			this.showingredienthop();
+    			}
+    		else if(current.category=="Yeast")
+    			{
+    			this.addyeast();
+    			this.showingredientyeast();
+    			}
+    		
+    },
+    addgrain: function(){
+    	var items = Object.keys(useringredients);
+    	var current = useringredients[items[currentingredient]];
+    	var ingredientname = current.name;
+    	var ingredientcategory = current.category;
+    	if(current.amount>20)
+    		{
+    		amountmax = 20;
+    		}
+    	else{
+    		amountmax = current.amount;
+    		}
+    	notetext.setText("Name: "+ current.name +"\nCategory: " + current.category);
+    	notetext2.setText("Amount:           " + currentamount.toFixed(2) +" lbs");
+    	
+    },
+    addhop: function(){
+    	var items = Object.keys(useringredients);
+    	var current = useringredients[items[currentingredient]];
+    	var ingredientname = current.name;
+    	var ingredientcategory = current.category;
+    	if(current.amount>16)
+    		{
+    		amountmax = 16;
+    		}
+    	else{
+    		amountmax = current.amount;
+    		}
+    	notetext.setText("Name: "+ current.name +"\nCategory: " + current.category);
+    	notetext2.setText("Amount:            " + currentamount.toFixed(1) +" oz");
+    	notetext3.setText("Time:   " +currenttime + " Mins");
+    },
+    addyeast: function(){
+    	var items = Object.keys(useringredients);
+    	var current = useringredients[items[currentingredient]];
+    	notetext.setText("Name: "+ current.name +"\nCategory: " + current.category);
+    	notetext2.setText("Amount: 1");
+    	currentamount = 1;
+    },
+    addtorecipe: function(){
+    	var items = Object.keys(useringredients);
+    	var current = useringredients[items[currentingredient]];
+    	if(current.category =="Grain")
+		{
+    		if(currentamount==0)
+    			{
+    			this.thought.visible = true;
+    			message.setText("Need at least one of each ingredient!");
+    			}
+    		else
+    			{
+    			gramount.push(currentamount);
+    			grain.push(current.name);
+    			current.amount = current.amount-currentamount;
+    			this.clearingredient();
+    			}
+		}
+    	else if(current.category=="Hop")
+		{
+			if(currenttime==0||currentamount==0)
+				{
+				this.thought.visible = true;
+    			message.setText("Need at least one of each ingredient!");
+				}
+			else
+				{
+				hop.push(current.name);
+				hopamount.push(currentamount);
+				hoptime.push(currenttime);
+				this.clearingredient();
+				}
+		}
+		else if(current.category=="Yeast")
+		{
+			this.addyeast();
+			this.clearingredient();
+		}
+    },
+    clearingredient: function(){
+    	notetext.setText("");
+    	notetext2.setText("");
+    	notetext3.setText("");
+    	this.pad.visible = false;
+    	this.auoff.visible = false;
+    	this.adoff.visible = false;
+    	this.aduoff.visible = false;
+    	this.addoff.visible = false;
+    	this.tuoff.visible = false;
+    	this.tdoff.visible = false;
+    	this.atroff.visible = false;
+    	
+    },
+    showingredienthop: function(){
+    	this.pad.visible = true;
+    	this.auoff.visible = true;
+    	this.adoff.visible = true;
+    	this.aduoff.visible = true;
+    	this.addoff.visible = true;
+    	this.tuoff.visible = true;
+    	this.tdoff.visible = true;
+    	this.atroff.visible = true;
+    }, 
+    showingredientyeast: function(){
+    	this.atroff.visible = true;
+    	this.pad.visible = true;
+    }, 
+    showingredientgrain: function(){
+    	this.pad.visible = true;
+    	this.auoff.visible = true;
+    	this.adoff.visible = true;
+    	this.aduoff.visible = true;
+    	this.addoff.visible = true;
+    	this.atroff.visible = true;
+    }
+    
 
     
 };

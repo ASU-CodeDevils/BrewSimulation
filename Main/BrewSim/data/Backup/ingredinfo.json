@@ -1,1 +1,271 @@
-{"ingredients1":{"amount":100,"extract":5,"price":20,"name":"TestBarley","description":"For Awesome beer","category":"Grain","lovibonds":2,"graphic":"barley"},"ingredients6":{"amount":2,"price":0,"name":"Cascade","description":"","time":10,"category":"Hop","graphic":"","alphaAcid":5.5},"ingredients3":{"amount":11,"extract":37,"price":0,"name":"2-row Pale Malt","description":"","category":"Grain","lovibonds":1.8,"graphic":""},"ingredients2":{"amount":1,"price":0,"name":"WLP001 California Ale","description":"","category":"Yeast","graphic":"","apparentA":0.75},"ingredients5":{"amount":2,"price":0,"name":"Cascade","description":"","time":60,"category":"Hop","graphic":"","alphaAcid":5.5},"ingredients4":{"amount":0.5,"extract":34,"price":0,"name":"2-row Pale Malt","description":"","category":"Grain","lovibonds":1.8,"graphic":""}}
+{"ingredients1001":{
+    "amount":100,
+    "price":7,
+    "name":"WLP001 California Ale",
+    "description":"",
+    "category":"Yeast",
+    "graphic":"yeast",
+    "apparentA":0.75
+},
+ "ingredients2001":{
+     "amount":100,
+     "price":2.5,
+     "name":"Cascade 5.5AA",
+     "description":"",
+     "category":"Hop",
+     "graphic":"hop",
+     "alphaAcid":5.5
+ },
+
+"ingredients2002":{
+    "amount":1,
+    "price":0,
+    "name":"Horizon 13AA",
+    "description":"",
+    "time":60,
+    "category":"Hop",
+    "graphic":"hop",
+    "alphaAcid":13
+},
+"ingredients2003":{
+    "amount":1,
+    "price":0,
+    "name":"Centennial 9AA",
+    "description":"",
+    "time":10,
+    "category":"Hop",
+    "graphic":"hop",
+    "alphaAcid":9
+},
+"ingredients2004":{
+    "amount":1,
+    "price":0,
+    "name":"Simcoe 12AA",
+    "description":"",
+    "time":5,
+    "category":"Hop",
+    "graphic":"hop",
+    "alphaAcid":12
+},
+"ingredients2005":{
+    "amount":1,
+    "price":0,
+    "name":"Amarillo 9AA",
+    "description":"",
+    "time":0,
+    "category":"Hop",
+    "graphic":"hop",
+    "alphaAcid":9
+},
+ "ingredients3001":{
+     "amount":100,
+     "price":1.5,
+     "name":"Crystal Malt 10°",
+     "description":"Sweet, mild caramel flavor and a golden color. Use in light lagers and light ales.",
+     "category":"Grain",
+     "graphic":"grain",
+     "extract":34,
+     "lovibonds":10
+ },
+ "ingredients3002":{
+     "amount":100,
+     "price":1.5,
+     "name":"Crystal Malt 20°",
+     "description":"Sweet, mild caramel flavor and a golden color. Use in light lagers and light ales.",
+     "category":"Grain",
+     "graphic":"grain",
+     "extract":34,
+     "lovibonds":20
+ },
+ "ingredients3003":{
+     "amount":100,
+     "price":1.5,
+     "name":"Crystal Malt 30°",
+     "description":"Sweet, mild caramel flavor and a golden color. Use in light lagers and light ales.",
+     "category":"Grain",
+     "graphic":"grain",
+     "extract":34,
+     "lovibonds":30
+ },
+ "ingredients3004":{
+     "amount":100,
+     "price":1.5,
+     "name":"Crystal Malt 40°",
+     "description":"Sweet, mild caramel flavor and a golden color. Use in light lagers and light ales.",
+     "category":"Grain",
+     "graphic":"grain",
+     "extract":34,
+     "lovibonds":40
+ },
+ "ingredients3005":{
+     "amount":100,
+     "price":1.5,
+     "name":"Crystal Malt 60°",
+     "description":"Sweet caramel flavor, deep golden to red color. For dark amber and brown ales.",
+     "category":"Grain",
+     "graphic":"grain",
+     "extract":34,
+     "lovibonds":60
+ },
+ "ingredients3006":{
+     "amount":100,
+     "price":1.5,
+     "name":"Crystal Malt 80°",
+     "description":"Sweet, smooth caramel flavor and a red to deep red color. For porters, old ales.",
+     "category":"Grain",
+     "graphic":"grain",
+     "extract":34,
+     "lovibonds":80
+ },
+ "ingredients3007":{
+     "amount":100,
+     "price":1.5,
+     "name":"Crystal Malt 90°",
+     "description":"Pronounced caramel flavor and a red color. For stouts, porters and black beers.",
+     "category":"Grain",
+     "graphic":"grain",
+     "extract":34,
+     "lovibonds":90
+ },
+ "ingredients3008":{
+     "amount":100,
+     "price":1.5,
+     "name":"Crystal Malt 120°",
+     "description":"Pronounced caramel flavor and a red color. For stouts, porters and black beers.",
+     "category":"Grain",
+     "graphic":"grain",
+     "extract":34,
+     "lovibonds":120
+ },
+ "ingredients3009":{
+     "amount":100,
+     "price":1.5,
+     "name":"Black Patent Malt",
+     "description":"Provides color and sharp flavor in stouts and porters.",
+     "category":"Grain",
+     "graphic":"grain",
+     "extract":26,
+     "lovibonds":500
+ },
+ "ingredients3010":{
+     "amount":100,
+     "price":1.5,
+     "name":"Roasted Barley",
+     "description":"Sweet, grainy, coffee flavor and a red to deep brown color. For porters and stouts.",
+     "category":"Grain",
+     "graphic":"grain",
+     "extract":25,
+     "lovibonds":300
+ },
+ "ingredients3011":{
+     "amount":100,
+     "price":1.5,
+     "name":"Black Barley",
+     "description":"Imparts dryness. Unmalted; use in porters and dry stouts.",
+     "category":"Grain",
+     "graphic":"grain",
+     "extract":25,
+     "lovibonds":525
+ },
+ "ingredients3012":{
+     "amount":100,
+     "price":1.5,
+     "name":"Chocolate Malt",
+     "description":"Use in all types to adjust color and add nutty, toasted flavor. Chocolate flavor.",
+     "category":"Grain",
+     "graphic":"grain",
+     "extract":34,
+     "lovibonds":350
+ },
+ "ingredients3013":{
+     "amount":100,
+     "price":1.5,
+     "name":"Dextrin Malt (carapils)",
+     "description":"Balances body and flavor without adding color, aids in head retention. For any beer.",
+     "category":"Grain",
+     "graphic":"grain",
+     "extract":33,
+     "lovibonds":1.5
+ },
+ "ingredients3014":{
+     "amount":100,
+     "price":1.5,
+     "name":"2-row Pale Malt",
+     "description":"Smooth, less grainy, moderate malt flavor. Basic malt for all beer styles.",
+     "category":"Grain",
+     "graphic":"grain",
+     "extract":37,
+     "lovibonds":1.8
+ },
+ "ingredients3015":{
+     "amount":100,
+     "price":1.5,
+     "name":"6-row Pale Malt",
+     "description":"Moderate malt flavor. Basic malt for all beer styles.",
+     "category":"Grain",
+     "graphic":"grain",
+     "extract":35,
+     "lovibonds":1.8
+ },
+ "ingredients3016":{
+     "amount":100,
+     "price":1.5,
+     "name":"Munich Malt",
+     "description":"Sweet, toasted flavor and aroma. For Oktoberfests and malty styles.",
+     "category":"Grain",
+     "graphic":"grain",
+     "extract":34,
+     "lovibonds":10
+ },
+ "ingredients3017":{
+     "amount":100,
+     "price":1.5,
+     "name":"Special Roast",
+     "description":"Provides a deep golden to brown color for ales. Use in all darker ales.",
+     "category":"Grain",
+     "graphic":"grain",
+     "extract":35,
+     "lovibonds":50
+ },
+ "ingredients3018":{
+     "amount":100,
+     "price":1.5,
+     "name":"Vienna Malt",
+     "description":"Increases malty flavor, provides balance. Use in Vienna, Märzen and Oktoberfest.",
+     "category":"Grain",
+     "graphic":"grain",
+     "extract":35,
+     "lovibonds":4
+ },
+ "ingredients3019":{
+     "amount":100,
+     "price":1.5,
+     "name":"Victory Malt",
+     "description":"Provides a deep golden to brown color. Use in nut brown ales, IPAs and Scottish ales.",
+     "category":"Grain",
+     "graphic":"grain",
+     "extract":34,
+     "lovibonds":25
+ },
+ "ingredients3020":{
+     "amount":100,
+     "price":1.5,
+     "name":"Wheat Malt",
+     "description":"Light flavor and creamy head. For American weizenbier, weissbier and dunkelweiss.",
+     "category":"Grain",
+     "graphic":"grain",
+     "extract":38,
+     "lovibonds":2
+ },
+ "ingredients3021":{
+     "amount":100,
+     "price":1.5,
+     "name":"White Wheat Malt",
+     "description":"Imparts a malty flavor. For American wheat beers, wheat bock and doppel bock.",
+     "category":"Grain",
+     "graphic":"grain",
+     "extract":37,
+     "lovibonds":2
+ },
+}
+}
