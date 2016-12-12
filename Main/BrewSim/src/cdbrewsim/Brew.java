@@ -42,7 +42,7 @@ public class Brew {
 		this.timeToSpoil = 0;
 		this.brewScore = brewing.getBrewScore();
 		this.brewRank = 1;
-		this.currentQuantity = 1;
+		this.currentQuantity = 50;
 		this.currentPrice = 1;
 	}
 	

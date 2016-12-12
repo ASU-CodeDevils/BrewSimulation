@@ -25,6 +25,11 @@ import org.json.JSONObject;
 
 public class LogReg {
     //Checks if it a user and if not it gets added to the database. 
+	InvItem[]array;
+	List<InvItem> tracking = new LinkedList<InvItem>();
+	static List<InvItem> ingredients = Database.getIngredients();
+	 
+	int count = 0;
     public String addUsername(String username, String pass) throws FileNotFoundException{
 	
 	Boolean isname = Database.isUser(username);
@@ -186,6 +191,7 @@ public class LogReg {
     	}
     	return(inventory.toString());
     }
+    
     public boolean purchase(String user, String itemname, String amount, String price){
     	double newamount = Double.parseDouble(amount);
     	double newprice = Double.parseDouble(price);
@@ -222,5 +228,83 @@ public class LogReg {
     	}
     	 	
     	return(true);
+    }
+    public boolean startinv(Integer numingred){
+    	this.array = new InvItem[numingred];
+    	System.out.println(this.array.length);
+    	System.out.println("Aftercount");
+    	return(true);
+    }
+    public String recipeIngredient(String name, String amount)
+    {
+    	 
+    	for(InvItem each: ingredients) 
+    	{
+    		if(each.getName().compareTo(name)==0)
+    		{
+    			each.setAmount(Double.parseDouble(amount));
+    			tracking.add(each);
+    			//this.array[count].setAmount(Double.parseDouble(amount));
+    			count++;
+    			
+    		}
+    			
+    	}
+    	return("true");
+    }
+    //yeast
+    public String recipeIngredient(String name){
+    	System.out.println(ingredients.toString());
+    	for(InvItem each: ingredients)
+    	{
+    		if(each.getName().compareTo(name)==0)
+    		{
+    			System.out.println(count);
+    			//System.out.println(this.array.length);
+    			System.out.println("Before?");
+    			each.setAmount(1.0);
+    			tracking.add(each);
+    			
+    			//this.array[count] = each;
+    			//this.array[count].setAmount(1.0);
+    			count++;
+    			System.out.println("after");
+    		}
+    	}
+    	return("true");
+    }
+    public String recipeIngredient(String name, String amount, String time){
+    	for(InvItem each: ingredients)
+    	{
+    		if(each.getName().compareTo(name)==0)
+    		{
+    			each.setAmount(Double.parseDouble(amount));
+    			each.setTime(Integer.parseInt(time));
+    			tracking.add(each);
+    			//this.array[count] = new InvItem(each);
+    			//this.array[count].setAmount(Double.parseDouble(amount));
+    			//this.array[count].setTime(Integer.parseInt(time));
+    		}
+    	}
+    	return("true"); 
+    }
+    public int getScore(String name){
+    	List<BeerStyle> list = Database.getStyles();
+    	array = new InvItem[tracking.size()];
+    	for(int x =0;x<tracking.size();x++)
+    	{
+    		array[x] = tracking.get(x);
+    	}
+    	BeerStyle totry = list.get(0);
+    	for(BeerStyle each: list)
+    		{
+    		if(each.getName().compareTo(name)==0)
+    			totry = each;
+    		
+    		}
+    	System.out.println(list.toString());
+    	Recipe temp = new Recipe("testing", array, 1, 10.00);
+    	Brewing tocheck = new Brewing(temp,totry);
+    	return(tocheck.getBrewScore());
     }
 }

@@ -159,7 +159,7 @@ var mainState= {
         getInfo(pack,getinvitems);
         var pack = packJson("LogReg","getRecipes");
         getInfo(pack,getrecipes);
-        descriptiontext = game.add.text(310,370, '');
+        descriptiontext = game.add.text(290,370, '');
         descriptiontext.fontSize = 18;
         descriptiontext.fill = '#FDFEFE';
         descriptiontext.setShadow(2,2, 'rgba(0,0,0,0.5)',0);
@@ -406,7 +406,9 @@ var mainState= {
                 			this.loadinventory();
                 		}
                 		else if(recipeload){
+                			currentrecipe++;
                 			this.loadrecipe();
+                			
                 		}
                 		else if(equipmentload){
                 			this.loadequipment();
@@ -452,7 +454,9 @@ var mainState= {
                 			this.loadinventory();
                 		}
                 		else if(recipeload){
+                			currentrecipe--;
                 			this.loadrecipe();
+                			
                 		}
                 		else if(equipmentload){
                 			this.loadequipment();

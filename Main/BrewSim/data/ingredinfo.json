@@ -18,43 +18,43 @@
  },
 
 "ingredients2002":{
-    "amount":1,
-    "price":0,
+    "amount":100,
+    "price":10.00,
     "name":"Horizon 13AA",
     "description":"",
     "time":60,
     "category":"Hop",
-    "graphic":"",
+    "graphic":"hop",
     "alphaAcid":13
 },
 "ingredients2003":{
-    "amount":1,
-    "price":0,
+    "amount":100,
+    "price":10.00,
     "name":"Centennial 9AA",
     "description":"",
     "time":10,
     "category":"Hop",
-    "graphic":"",
+    "graphic":"hop",
     "alphaAcid":9
 },
 "ingredients2004":{
-    "amount":1,
-    "price":0,
+    "amount":100,
+    "price":10.00,
     "name":"Simcoe 12AA",
     "description":"",
     "time":5,
     "category":"Hop",
-    "graphic":"",
+    "graphic":"hop",
     "alphaAcid":12
 },
 "ingredients2005":{
-    "amount":1,
-    "price":0,
+    "amount":100,
+    "price":10.00,
     "name":"Amarillo 9AA",
     "description":"",
     "time":0,
     "category":"Hop",
-    "graphic":"",
+    "graphic":"hop",
     "alphaAcid":9
 },
  "ingredients3001":{

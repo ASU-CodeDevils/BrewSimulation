@@ -54,7 +54,9 @@ public class InvItem {
 	    this.price = another.price;// you can access  
 	  }
 	
-	
+	public void setTime(int time){
+		
+	}
 	public String getName(){
 		return this.name;
 	}
