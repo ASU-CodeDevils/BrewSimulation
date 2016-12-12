@@ -307,6 +307,6 @@ public class LogReg {
     	System.out.println("line 306");
     	Recipe temp = new Recipe("testing", array, 1, 10.00);
     	Brewing tocheck = new Brewing(temp,totry);
-    	return(100);
+    	return(tocheck.getBrewScore());
     }
 }

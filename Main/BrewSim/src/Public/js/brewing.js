@@ -1458,6 +1458,7 @@ var mainState = {
    			 	getInfo(pack,this.getscore);
     		}
     	}
+    	allsent = true;
     },
     getscore: function(result){
     	console.lot(result.toString());
