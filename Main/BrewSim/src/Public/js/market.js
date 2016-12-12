@@ -302,12 +302,13 @@ var mainState= {
     		else
 			{
     			sound7 =true;
-    			this.backdown.visible = false;
+    			
 			}
     		}
     	else
     		{
     		this.backdown.visible = false;
+    		sound7 = true;
     		
     		}
     	if(this.gout1.input.pointerOver())
@@ -604,7 +605,7 @@ var mainState= {
     },
     updatebuyup: function(){
     	var items = Object.keys(ingredients);
-    	var current = ingredients[items[currentrecipe]];
+    	var current = ingredients[items[currentitem]];
     	
     	if(quantity<current.amount){
     	quantity++;

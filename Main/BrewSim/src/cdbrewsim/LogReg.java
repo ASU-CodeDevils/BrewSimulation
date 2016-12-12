@@ -145,6 +145,19 @@ public class LogReg {
     	}
     	return(recipes.toString());
     }
+    public String getStyles(){
+      	 
+    	List<BeerStyle> list = new LinkedList<BeerStyle>();
+    	JSONObject styles  =new JSONObject();
+    	list = Database.getStyles();
+    	int x = 0;
+    	for(BeerStyle each : list){
+    		
+    		styles.put("Recipe"+x,each.toJson());
+    		x++;
+    	}
+    	return(styles.toString());
+    }
     public String getUserRecipes(String username){
     	JSONObject recipes = new JSONObject();
     	User current = Database.getUser(username);
@@ -203,6 +216,7 @@ public class LogReg {
     		if(each.getName().compareTo(itemname)==0)
     		{
     			buyrecipe2 = new Recipe(each);
+    			
     			userstate.setRecipe(buyrecipe2);
     		}
     	}
