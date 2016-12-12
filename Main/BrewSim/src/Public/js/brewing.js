@@ -1404,44 +1404,47 @@ var mainState = {
     		{
     		totals = totalyeast+totalgrain+totalhop;
     		var pack = packJson("LogReg","startinv",totals);
-            getInfo(pack,this.nextIngredient);
+            getInfo(pack,this.next);
     		countg = graini.length;
     		counth= hopi.length;
     		}
     },
-    nextIngredient: function(result){
+    next: function nextIngredient(result){
     	 
     	if(count ==0)
     		{
     		var pack = packJson("LogReg","recipeIngredient",yeast[0]);
     		count++;
-    		getInfo(pack,this.nextIngredient);
+    		getInfo(pack,nextIngredient);
     		
     		}
+    	console.log(totals);
     	if(count>0&&count<totals)
     		{
-    		 count++; 
+    		console.log(totals); 
+    		count++; 
     		if(countg<graini.length)
     			 {
     			 var pack = packJson("LogReg","recipeIngredient",graini[countg],gramount[countg]);
     			 countg++;
-    			 getInfo(pack.this.nextIngredient);
+    			 getInfo(pack,nextIngredient);
     			 }
     		 else if(counth<hopi.length)
     			 {
     			 var pack = packJson("LogReg","recipeIngredient",hopi[counth],hopamount[counth]);
     			 counth++;
-    			 getInfo(pack.this.nextIngredient);
+    			 getInfo(pack,nextIngredient);
     			 }
     		
     		}
     	else
     		{
+    			var items = Object.keys(styles);
     			var current = styles[items[currentstyle]];
     			var stylename = current.name;
     			var pack = packJson("LogReg","getScore",stylename);
    			 
-   			 	getInfo(pack.this.getscore);
+   			 	getInfo(pack,this.getscore);
     		}
     },
     getscore: function(result){
