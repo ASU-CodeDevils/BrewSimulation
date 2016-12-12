@@ -30,7 +30,8 @@ function getInfo(topost,callback) {
   request.onreadystatechange = function() {if (this.readyState == 4 && this.status == 200) {
 	    var call = request.responseText;
         console.log(call);
-	    callback(call);
+        if(typeof callback ==="function"){
+	    callback(call);}
   } };//call this to build the table.
   request.open("POST", "/meth", true);
   request.send(topost);
