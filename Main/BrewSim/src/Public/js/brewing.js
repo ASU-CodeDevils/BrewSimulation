@@ -28,16 +28,30 @@ var sound16 = true;
 var sound17 = true;
 var sound20 = true;
 var sound21 = true;
+var soundloop = true;
+var totalyeast = 0;
+var totalgrain = 0;
+var totalhop = 0;
+var sound22 = true;
+var sound23 = true;
+var sound24 = true;
+var sound25 = true;
 var currentamount =0;
 var currenttime = 0;
 var amountmax =0;
+var minush = [];
+var minusg = [];
+var graini = [];
+var hopi = [];
 var grain = [];
 var gramount = [];
 var yeast = [];
 var hop = [];
 var hopamount = [];
 var hoptime = [];
- 
+var haveyeast =false;
+var havegrain = false;
+var havehop = false;
 var userrecipes;
 var useringredients;
 var styles;
@@ -79,6 +93,10 @@ var mainState = {
         game.load.image('atroff', 'graphics/atroff.png');
         game.load.image('atron', 'graphics/atron.png');
         game.load.image('thought', 'graphics/thought.png');
+        game.load.image('g', 'graphics/g.png');
+        game.load.image('h', 'graphics/h.png');
+        game.load.image('y', 'graphics/y.png');
+        game.load.image('minus', 'graphics/minus.png');
     },
     create: function(){
         game.stage.backgroundColor = '#F5F1DE';
@@ -247,11 +265,141 @@ var mainState = {
         this.thought.visible = false;
         message.setText("");
         this.clearingredient();
+        this.hop1 = game.add.sprite(870,685, 'h');
+        this.hop1.inputEnabled = true;
+        this.hop1.input.useHandCursor = true;
+        this.minush1 = game.add.sprite(917, 693, 'minus');
+        this.minush1.inputEnabled = true;
+        this.minush1.input.useHandCursor = true;
+        this.hop2 = game.add.sprite(958,685, 'h');
+        this.hop2.inputEnabled = true;
+        this.hop2.input.useHandCursor = true;
+        this.minush2 = game.add.sprite(1004, 693, 'minus');
+        this.minush2.inputEnabled = true;
+        this.minush2.input.useHandCursor = true;
+        this.hop3 = game.add.sprite(1046,685, 'h');
+        this.hop3.inputEnabled = true;
+        this.hop3.input.useHandCursor = true;
+        this.minush3 = game.add.sprite(1092, 693, 'minus');
+        this.minush3.inputEnabled = true;
+        this.minush3.input.useHandCursor = true;
+        this.hop4 = game.add.sprite(870,637, 'h');
+        this.hop4.inputEnabled = true;
+        this.hop4.input.useHandCursor = true;
+        this.minush4 = game.add.sprite(917, 637, 'minus');
+        this.minush4.inputEnabled = true;
+        this.minush4.input.useHandCursor = true;
+        this.hop5 = game.add.sprite(958,637, 'h');
+        this.hop5.inputEnabled = true;
+        this.hop5.input.useHandCursor = true;
+        this.minush5 = game.add.sprite(1004, 637, 'minus');
+        this.minush5.inputEnabled = true;
+        this.minush5.input.useHandCursor = true;
+        this.hop6 = game.add.sprite(1046,637, 'h');
+        this.hop6.inputEnabled = true;
+        this.hop6.input.useHandCursor = true;
+        this.minush6 = game.add.sprite(1092, 637, 'minus');
+        this.minush6.inputEnabled = true;
+        this.minush6.input.useHandCursor = true;
+        this.hop7 = game.add.sprite(871,589, 'h');
+        this.hop7.inputEnabled = true;
+        this.hop7.input.useHandCursor = true;
+        this.minush7 = game.add.sprite(917, 589, 'minus');
+        this.minush7.inputEnabled = true;
+        this.minush7.input.useHandCursor = true;
+        this.grain1 = game.add.sprite(958,589, 'g');
+        this.grain1.inputEnabled = true;
+        this.grain1.input.useHandCursor = true;
+        this.minusg1 = game.add.sprite(1004, 589, 'minus');
+        this.minusg1.inputEnabled = true;
+        this.minusg1.input.useHandCursor = true;
+        this.grain2 = game.add.sprite(1046,589, 'g');
+        this.grain2.inputEnabled = true;
+        this.grain2.input.useHandCursor = true;
+        this.minusg2 = game.add.sprite(1092, 589, 'minus');
+        this.minusg2.inputEnabled = true;
+        this.minusg2.input.useHandCursor = true;
+        this.grain3 = game.add.sprite(871,540, 'g');
+        this.grain3.inputEnabled = true;
+        this.grain3.input.useHandCursor = true;
+        this.minusg3 = game.add.sprite(917, 540, 'minus');
+        this.minusg3.inputEnabled = true;
+        this.minusg3.input.useHandCursor = true;
+        this.grain4 = game.add.sprite(958,540, 'g');
+        this.grain4.inputEnabled = true;
+        this.grain4.input.useHandCursor = true;
+        this.minusg4 = game.add.sprite(1004, 540, 'minus');
+        this.minusg4.inputEnabled = true;
+        this.minusg4.input.useHandCursor = true;
+        this.grain5 = game.add.sprite(1046,540, 'g');
+        this.grain5.inputEnabled = true;
+        this.grain5.input.useHandCursor = true;
+        this.minusg5 = game.add.sprite(1092, 540, 'minus');
+        this.minusg5.inputEnabled = true;
+        this.minusg5.input.useHandCursor = true;
+        this.yeast1 = game.add.sprite(955,295, 'y');
+        this.yeast1.inputEnabled = true;
+        this.yeast1.input.useHandCursor = true;
+        this.minusy1 = game.add.sprite(1005, 305, 'minus');
+        this.minusy1.inputEnabled = true;
+        this.minusy1.input.useHandCursor = true;
+        this.hop1.visible = false;
+        this.hop2.visible = false;
+        this.hop3.visible = false;
+        this.hop4.visible = false;
+        this.hop5.visible = false;
+        this.hop6.visible = false;
+        this.hop7.visible = false;
+        this.grain1.visible = false;
+        this.grain2.visible = false;
+        this.grain3.visible = false;
+        this.grain4.visible = false;
+        this.grain5.visible = false;
+        this.yeast1.visible = false;
+        this.minush1.visible = false;
+        this.minush2.visible = false;
+        this.minush3.visible = false;
+        this.minush4.visible = false;
+        this.minush5.visible = false;
+        this.minush6.visible = false;
+        this.minush7.visible = false;
+        this.minusg1.visible = false;
+        this.minusg2.visible = false;
+        this.minusg3.visible = false;
+        this.minusg4.visible = false;
+        this.minusg5.visible = false;
+        this.minusy1.visible = false;
+        minusg.push(this.minusg1);
+        minusg.push(this.minusg2);
+        minusg.push(this.minusg3);
+        minusg.push(this.minusg4);
+        minusg.push(this.minusg5);
+        minush.push(this.minush1);
+        minush.push(this.minush2);
+        minush.push(this.minush3);
+        minush.push(this.minush4);
+        minush.push(this.minush5);
+        minush.push(this.minush6);
+        minush.push(this.minush7);
+        graini.push(this.grain1);
+        graini.push(this.grain2);
+        graini.push(this.grain3);
+        graini.push(this.grain4);
+        graini.push(this.grain5);
+        hopi.push(this.hop1);
+        hopi.push(this.hop2);
+        hopi.push(this.hop3);
+        hopi.push(this.hop4);
+        hopi.push(this.hop5);
+        hopi.push(this.hop6);
+        hopi.push(this.hop7);
+        
+        
         
     },
     update: function(){
-    	console.log(game.input.mousePointer.x);
-    	console.log(game.input.mousePointer.y);
+    	//console.log(game.input.mousePointer.x);
+    	//console.log(game.input.mousePointer.y);
     	if(this.back.input.pointerOver())
 		{
     		this.backdown.visible = true;
@@ -281,6 +429,7 @@ var mainState = {
             	 
             	this.bclick.play();
             	 sound1 = false;
+            	 this.fromrecipe();
               	}
         }
 		
@@ -309,6 +458,7 @@ var mainState = {
             	 hoptime = [];
             	 this.clearingredient();
             	 sound2 = false;
+            	 this.newbrew();
             	 
             	}
         }
@@ -603,6 +753,7 @@ var mainState = {
 	    				this.checkingredient();
 	    				this.bclick.play();
 	    				this.thought.visible = false;
+	    				message.setText("");
     				}
             			 
             			 
@@ -639,6 +790,7 @@ var mainState = {
 	    				this.checkingredient();
 	    				this.bclick.play();
 	    				this.thought.visible = false;
+	    				message.setText("");
     				}
             			
             			
@@ -674,6 +826,7 @@ var mainState = {
 	    				this.checkingredient();
 	    				this.bclick.play();
 	    				this.thought.visible = false;
+	    				message.setText("");
     				}
             		 
             		
@@ -712,6 +865,7 @@ var mainState = {
 	    				this.checkingredient();
 	    				this.bclick.play();
 	    				this.thought.visible = false;
+	    				message.setText("");
     				}
             		
             			
@@ -802,6 +956,118 @@ var mainState = {
 		this.atron.visible = false;
 		sound17 = true;
 	}
+	for(var x =0;x<hopi.length;x++)
+		{
+		if(hopi[x].input.pointerOver())
+			{
+			
+			}
+		}
+	if(this.minusy1.input.pointerOver())
+		{
+		if(game.input.activePointer.isDown)
+			{
+			if(sound22)
+				{
+				this.bclick.play();
+				sound22 = false;
+				totalyeast = 0
+				this.yeast1.visible = false;
+				this.minusy1.visible = false;
+				var items = Object.keys(useringredients);
+		    	for(var x = 0;x<items.length;x++)
+		    		{
+		    		var current = useringredients[items[x]];
+		    		if(current.name ==yeast[0])
+		    			{
+		    			current.amount++;
+		    			}
+		    		}
+		    	this.updateI();
+				}
+			}
+			
+		}
+	else
+		{
+		sound22 = true;
+		}
+	for(var x = 0;x<minush.length;x++)
+		{
+		if(minush[x].input.pointerOver())
+			{
+			if(game.input.activePointer.isDown)
+				{
+				if(soundloop)
+					{
+					this.bclick.play();
+					soundloop = false;
+					this.movehops(x);
+					minush[x].visible = false;
+					hopi[x].visible = false;
+					}
+				}
+		}
+	else
+		{
+		soundloop = true;
+		}
+    }
+	for(var x = 0;x<minusg.length;x++)
+	{
+		if(minusg[x].input.pointerOver())
+		{
+		if(game.input.activePointer.isDown)
+			{
+			if(soundloop)
+				{
+				this.bclick.play();
+				soundloop = false;
+				this.movegrains(x);
+				minusg[x].visible = false;
+				graini[x].visible = false;
+				}
+			}
+	}
+	else
+	{
+	soundloop = true;
+	}
+}
+    },
+    movehops: function(pos){
+    	var items = Object.keys(useringredients);
+    	for(var x = 0;x<items.length;x++)
+    		{
+    		var current = useringredients[items[x]];
+    		if(current.name ==hop[pos])
+    			current.amount +=hopamount[pos];
+    		}
+    	for(var x = pos;x<hopamount.length-1;x++)
+    		{
+    		hoptime[x] = hoptime[x+1];
+    		hopamount[x] = hopamount[x+1];
+    		hop[x] = hop[x+1];
+    		}
+    	this.updateI();
+    	totalhop--;
+    },
+    movegrains: function(pos){
+    	var items = Object.keys(useringredients);
+    	for(var x = 0;x<items.length;x++)
+    		{
+    		var current = useringredients[items[x]];
+    		if(current.name ==grain[pos])
+    			current.amount +=gramount[pos];
+    		}
+    	for(var x = pos;x<gramount.length-1;x++)
+		{
+		gramount[x] = gramount[x+1];
+		grain[x] = grain[x+1];
+		 
+		}
+    	this.updateI();
+	totalhop--;
     },
     updateI: function(){
     
@@ -956,12 +1222,20 @@ var mainState = {
     			this.thought.visible = true;
     			message.setText("Need at least one of each ingredient!");
     			}
-    		else
+    		else if(totalgrain<5)
     			{
     			gramount.push(currentamount);
     			grain.push(current.name);
     			current.amount = current.amount-currentamount;
+    			graini[totalgrain].visible = true;
+    			minusg[totalgrain].visible = true;
+    			totalgrain++;
     			this.clearingredient();
+    			this.updateI();
+    			}
+    		else
+    			{
+    			//message here
     			}
 		}
     	else if(current.category=="Hop")
@@ -971,24 +1245,181 @@ var mainState = {
 				this.thought.visible = true;
     			message.setText("Need at least one of each ingredient!");
 				}
-			else
+			else if(totalhop<7)
 				{
 				hop.push(current.name);
 				hopamount.push(currentamount);
+				current.amount = current.amount - currentamount;
 				hoptime.push(currenttime);
+				hopi[totalhop].visible = true;
+				minush[totalhop].visible = true;
+				totalhop++;
 				this.clearingredient();
+				this.updateI();
+				}
+				else{
+					//message here
 				}
 		}
 		else if(current.category=="Yeast")
 		{
-			this.addyeast();
+			if(totalyeast<1){
+			yeast.push(current.name);
 			this.clearingredient();
+			current.amount = current.amount - currentamount;
+			this.yeast1.visible = true;
+			this.minusy1.visible = true;
+			totalyeast++;
+			this.updateI();
 		}
+			else
+				{
+				//message
+				}
+		}
+    },
+    newbrew: function(){
+    	var items = Object.keys(useringredients);
+    	var current = useringredients[items[currentingredient]];
+    	console.log(hopamount, gramount);
+    	if(totalyeast>0)
+    		console.log("yeast");
+    		{
+    		for(var x = 0;x<items.length;x++)
+    		{
+    			var current = useringredients[items[x]];
+    			
+    		if(current.name ==yeast[0]){
+    			current.amount +=1;
+    		}
+    		}
+    		}
+    	if(totalgrain>0)
+    		{
+    		console.log("grain");
+    		 for(var x= 0;x<items.length;x++)
+    			 {
+    			 var current = useringredients[items[x]];
+    			 for(var y=0;y<grain.length;y++)
+    				 {
+    				 if(current.name==grain[y]){
+    					 current.amount +=gramount[y];
+    				 }
+    			 }
+    			 }
+    		}
+    	if(totalhop>0)
+    		{
+    		console.log("hop");
+    		for(var x= 0;x<items.length;x++)
+			 {
+			 var current = useringredients[items[x]];
+			 for(var y=0;y<hop.length;y++)
+				 {
+				 if(current.name==hop[y])
+					 current.amount +=hopamount[y];
+			 }
+			 }
+    		}
+    	for(var g = 0;g<hopi.length;g++)
+    		{
+    		hopi[g].visible = false;
+    		}
+    	for(var g = 0;g<graini.length;g++)
+    		{
+    		graini[g].visible = false;
+    		}
+    	for( var g = 0;g<minusg.length;g++)
+    		{
+    		minusg[g].visible = false;
+    		}
+    	for(var g = 0; g<minush.length;g++)
+    		{
+    		minush[g].visible =false;
+    		}
+    	this.minusy1.visible = false;
+    	this.yeast1.visible = false;
+    	this.updateI();
+    	totalyeast = 0;
+    	totalgrain = 0;
+    	totalhop = 0;
+    },
+    fromrecipe: function(){
+    	var items = Object.keys(useringredients);
+    	var missingingred = [];
+    	var missingamount = [];
+    	var ingredname = [];
+    	var ingredtamount=[];
+    	var recipeitems = Object.keys(userrecipes);
+    	var currentrecipe =[userrecipes[recipeitems[currentrecipes]]];
+    	console.log(currentrecipe[0]);
+    	var test = Object.keys(currentrecipe[0]);
+    	console.log(test);
+       
+        console.log(testing.name);
+        console.log(testkey);
+    	for(var x = 0;x<testkey.length;x++)
+    		{
+    		 var testing = currentrecipe[0][test[x]];
+    	     var testkey = Object.keys(testing);
+    		if(testkey.indexOf('ingredient')!=-1)
+    			{
+    				ingredname.push(testing.name);
+    				ingredAmount.push(testing.amount);
+    			}
+    		}
+    		if(ingredname.length==0)
+    				{
+    					ingedname.push(current.name);
+    					
+    				}
+    			else
+    				{
+    			for(var z = 0;z<ingredname.length;z++){
+    			if(current.name ==ingredname[z])
+    				{
+    				ingredtamount[z] += current.amount;
+    				console.log("we have it");
+    				}
+    			else
+    				{
+    				ingredtamount.push(current.amount);
+    				ingredname.push(current.name);
+    				}
+    				}
+    				}
+    			}
+    		}
+    	console.log(ingredname);
+    	console.log(ingredtamount);
+    	for(var x =0;x<ingredname.length;x++)
+    		{
+    			for(var z = 0;z<items;z++)
+    				{
+    				var current = useringredients[items[z]];
+    				if(ingredname[x]==current.name)
+    					{
+    					if(current.amount>ingredtamount)
+    						{
+    						
+    						}
+    					else
+    						{
+    						console.log(false, ingredname[x],ingredtamount);
+    						}
+    					}
+    				else
+    					{
+    					console.log(false, "don't have ingredient");
+    					}
+    				}
+    		}
     },
     clearingredient: function(){
     	notetext.setText("");
     	notetext2.setText("");
     	notetext3.setText("");
+    	message.setText("");
     	this.pad.visible = false;
     	this.auoff.visible = false;
     	this.adoff.visible = false;
@@ -1008,6 +1439,7 @@ var mainState = {
     	this.tuoff.visible = true;
     	this.tdoff.visible = true;
     	this.atroff.visible = true;
+    	
     }, 
     showingredientyeast: function(){
     	this.atroff.visible = true;
