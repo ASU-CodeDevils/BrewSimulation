@@ -1,129 +1,130 @@
-{"recipe0":{
-    "level":1,
-    "price":100,
-    "name":"Classic American Pale Ale",
-    "ingredient1":{
-        "amount":1,
-        "price":0,
-        "name":"WLP001 California Ale",
-        "description":"",
-        "category":"Yeast",
-        "graphic":"yeast",
-        "apparentA":0.75
+{
+    "Hoppiness is an IPA": {
+        "level": 1,
+        "price": 100,
+        "name": "Hoppiness is an IPA",
+        "ingredient4": {
+            "amount": 1,
+            "price": 0,
+            "name": "WLP001 California Ale",
+            "description": "",
+            "category": "Yeast",
+            "graphic": "",
+            "apparentA": 0.75
+        },
+        "ingredient3": {
+            "amount": 12.75,
+            "extract": 37,
+            "price": 0,
+            "name": "2-row Pale Malt",
+            "description": "",
+            "category": "Grain",
+            "lovibonds": 1,
+            "graphic": ""
+        },
+        "ingredient2": {
+            "amount": 2,
+            "extract": 34,
+            "price": 0,
+            "name": "Munich Malt",
+            "description": "",
+            "category": "Grain",
+            "lovibonds": 10,
+            "graphic": ""
+        },
+        "ingredient1": {
+            "amount": 1,
+            "price": 0,
+            "name": "Horizon 13AA",
+            "description": "",
+            "time": 60,
+            "category": "Hop",
+            "graphic": "",
+            "alphaAcid": 13
+        },
+        "ingredient7": {
+            "amount": 1,
+            "price": 0,
+            "name": "Centennial 9AA",
+            "description": "",
+            "time": 10,
+            "category": "Hop",
+            "graphic": "",
+            "alphaAcid": 9
+        },
+        "ingredient6": {
+            "amount": 1,
+            "price": 0,
+            "name": "Simcoe 12AA",
+            "description": "",
+            "time": 5,
+            "category": "Hop",
+            "graphic": "",
+            "alphaAcid": 12
+        },
+        "ingredient5": {
+            "amount": 1,
+            "price": 0,
+            "name": "Amarillo 9AA",
+            "description": "",
+            "time": 0,
+            "category": "Hop",
+            "graphic": "",
+            "alphaAcid": 9
+        }
     },
-    "ingredient2":{
-        "amount":11,
-        "extract":37,
-        "price":0,
-        "name":"2-row Pale Malt",
-        "description":"",
-        "category":"Grain",
-        "lovibonds":1,
-        "graphic":"grain"
-    },
-    "ingredient3":{
-        "amount":0.5,
-        "extract":34,
-        "price":0,
-        "name":"Crystal Malt 40°",
-        "description":"",
-        "category":"Grain",
-        "lovibonds":1,
-        "graphic":"grain"
-    },
-    "ingredient4":{
-        "amount":2,
-        "price":0,
-        "name":"Cascade 5.5AA",
-        "description":"",
-        "time":60,
-        "category":"Hop",
-        "graphic":"grain",
-        "alphaAcid":5.5
-    },
-    "ingredient5":{
-        "amount":2,
-        "price":0,
-        "name":"Cascade 5.5AA",
-        "description":"",
-        "time":10,
-        "category":"Hop",
-        "graphic":"",
-        "alphaAcid":5.5
+    "Classic American Pale Ale": {
+        "level": 1,
+        "price": 100,
+        "name": "Classic American Pale Ale",
+        "ingredient4": {
+            "amount": 1,
+            "price": 0,
+            "name": "WLP001 California Ale",
+            "description": "",
+            "category": "Yeast",
+            "graphic": "yeast",
+            "apparentA": 0.75
+        },
+        "ingredient3": {
+            "amount": 11,
+            "extract": 37,
+            "price": 0,
+            "name": "2-row Pale Malt",
+            "description": "",
+            "category": "Grain",
+            "lovibonds": 1,
+            "graphic": "grain"
+        },
+        "ingredient2": {
+            "amount": 0.5,
+            "extract": 34,
+            "price": 0,
+            "name": "Crystal Malt 40°",
+            "description": "",
+            "category": "Grain",
+            "lovibonds": 1,
+            "graphic": "grain"
+        },
+        "ingredient1": {
+            "amount": 2,
+            "price": 0,
+            "name": "Cascade 5.5AA",
+            "description": "",
+            "time": 60,
+            "category": "Hop",
+            "graphic": "grain",
+            "alphaAcid": 5.5
+        },
+        "ingredient5": {
+            "amount": 2,
+            "price": 0,
+            "name": "Cascade 5.5AA",
+            "description": "",
+            "time": 10,
+            "category": "Hop",
+            "graphic": "",
+            "alphaAcid": 5.5
+        }
     }
-    },
- "recipe1":{
-    "level":1,
-    "price":100,
-    "name":"Hoppiness is an IPA",
-    "ingredient1":{
-        "amount":1,
-        "price":0,
-        "name":"WLP001 California Ale",
-        "description":"",
-        "category":"Yeast",
-        "graphic":"",
-        "apparentA":0.75
-    },
-    "ingredient2":{
-        "amount":12.75,
-        "extract":37,
-        "price":0,
-        "name":"2-row Pale Malt",
-        "description":"",
-        "category":"Grain",
-        "lovibonds":1,
-        "graphic":""
-    },
-    "ingredient3":{
-        "amount":2,
-        "extract":34,
-        "price":0,
-        "name":"Munich Malt",
-        "description":"",
-        "category":"Grain",
-        "lovibonds":10,
-        "graphic":""
-    },
-    "ingredient4":{
-        "amount":1,
-        "price":0,
-        "name":"Horizon 13AA",
-        "description":"",
-        "time":60,
-        "category":"Hop",
-        "graphic":"",
-        "alphaAcid":13
-    },
-    "ingredient5":{
-        "amount":1,
-        "price":0,
-        "name":"Centennial 9AA",
-        "description":"",
-        "time":10,
-        "category":"Hop",
-        "graphic":"",
-        "alphaAcid":9
-    },
-    "ingredient6":{
-        "amount":1,
-        "price":0,
-        "name":"Simcoe 12AA",
-        "description":"",
-        "time":5,
-        "category":"Hop",
-        "graphic":"",
-        "alphaAcid":12
-    },
-    "ingredient7":{
-        "amount":1,
-        "price":0,
-        "name":"Amarillo 9AA",
-        "description":"",
-        "time":0,
-        "category":"Hop",
-        "graphic":"",
-        "alphaAcid":9
-    }
-}
 }
