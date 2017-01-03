@@ -307,6 +307,14 @@ public class LogReg {
     	System.out.println("line 306");
     	Recipe temp = new Recipe("testing", array, 1, 10.00);
     	Brewing tocheck = new Brewing(temp,totry);
+    	System.out.println(temp.toString());
+		System.out.println(tocheck.getAbvScore());
+		System.out.println("The beer's ABV is " + tocheck.getABV());
+		System.out.println(tocheck.getBitterScore());
+		System.out.println("The beer's IBU is " + tocheck.getIBU());
+		System.out.println(tocheck.getColorScore());
+		System.out.println("The beer's SRM (color) is " + tocheck.getColor());
+		System.out.println(tocheck.getBrewScore());
     	return(tocheck.getBrewScore());
     }
 }
