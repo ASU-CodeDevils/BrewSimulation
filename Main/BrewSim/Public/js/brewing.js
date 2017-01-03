@@ -16,6 +16,16 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMA
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
 OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+//var score;
+ 
+var back = true;
+var sound1 = true;
+var sound2 = true;
+var sound3 = true;
+var sound4 = true;
+var sound5 = true;
+var sound6 = true;
+var sound7 = true;
 var allsent = true;
 var count = 0;
 var counth = 0;
@@ -33,6 +43,7 @@ var sound16 = true;
 var sound17 = true;
 var sound20 = true;
 var sound21 = true;
+var sound28 = true;
 var soundloop = true;
 var totalyeast = 0;
 var totalgrain = 0;
@@ -64,6 +75,7 @@ var currentstyle = -1;
 var currentrecipes = -1;
 var currentingredient = -1;
 var name = localStorage.name;
+var tries = 0;
 var mainState = {
     preload: function(){
         game.load.image('brewback', 'graphics/brewback.png');
@@ -104,6 +116,13 @@ var mainState = {
         game.load.image('minus', 'graphics/minus.png');
         game.load.image('brewdown', 'graphics/brewdown.png');
         game.load.image('brewup', 'graphics/brewup.png');
+        game.load.image('nexton', 'graphics/nexton.png');
+        game.load.image('nextoff', 'graphics/nextoff.png');
+        game.load.image('gameover', 'graphics/gameover.png');
+        game.load.image('youwin','graphics/youwin.png');
+        game.load.audio('clapping', 'sounds/clapping.wav');
+        game.load.audio('explosion', 'sounds/Explosion.wav');
+        game.load.audio('bubble', 'sounds/bubble.wav');
     },
     create: function(){
         game.stage.backgroundColor = '#F5F1DE';
@@ -129,6 +148,9 @@ var mainState = {
         this.newbrewon = game.add.sprite(340,32,'newbrewon');
         this.newbrewon.visible = false;
         this.bclick = game.add.audio('bclick');
+        this.bubble = game.add.audio('bubble');
+        this.explosion = game.add.audio('explosion');
+        this.clapping = game.add.audio('clapping');
         //this.redl = game.add.sprite(209,98,'redl');
         //this.redl.inputEnabled = true;
         //this.redl.input.useHandCursor = true;
@@ -418,10 +440,30 @@ var mainState = {
         this.brewon.input.useHandCursor = true;
         this.brewon.visible = false;
         
+        this.pad.visible = true;
+        this.addup.visible = false;
+        this.gameover = game.add.sprite(200,100, 'gameover');
+        this.gameover.visible = false;
+        this.youwin = game.add.sprite(200,100,'youwin');
+        this.youwin.visible = false;
+        this.nextoff = game.add.sprite(530,600,'nextoff');
+        this.nextoff.inputEnabled = true;
+        this.nextoff.input.useHandCursor = true;
+       
+        this.nexton = game.add.sprite(530,600,'nexton');
+    
+        this.nexton.visible = false;
+       
+        notetext.setText("Welcome to the brewery simulator! Here we see if you have what it takes to be a real brew Master! You get three chances to brew something worth drinking or you're fired!");
     },
     update: function(){
     	//console.log(game.input.mousePointer.x);
     	//console.log(game.input.mousePointer.y);
+    	if(!allsent)
+    		{
+    		this.flip();
+    		allsent = true;
+    		}
     	if(this.back.input.pointerOver())
 		{
     		this.backdown.visible = true;
@@ -453,7 +495,9 @@ var mainState = {
 					this.brewit();
 					this.bclick.play();
 					sound25=false;
-					
+					this.clearingredient();
+					this.pad.visible = true;
+					this.bubble.play();
 					}
 			}
 			
@@ -484,6 +528,32 @@ var mainState = {
 		this.brewrecipeon.visible = false;
 		sound1 = true;
 		}
+	if(this.nextoff.input.pointerOver())
+	{
+		this.nexton.visible = true;
+		if(game.input.activePointer.isDown)
+        {
+            if(sound28)
+            	{
+            	this.bclick.play();
+            	this.nextoff.visible = false;
+            	this.pad.visible = false;
+            	this.addup.visible = true;
+            	notetext.setText("");
+            	this.gameover.visible = false;
+            	this.youwin.visible = false;
+            	this.clearingredient();
+            	this.newbrew();
+            	console.log(JSON.stringify(useringredients));
+            	 
+            	}
+        }
+	}
+	else
+	{
+		this.nexton.visible = false;
+		sound28 = true;
+	}
 	if(this.newbrewoff.input.pointerOver())
 	{
 		this.newbrewon.visible = true;
@@ -1323,7 +1393,7 @@ var mainState = {
 			totalyeast++;
 			this.updateI();
 			haveyeast = true;
-		}
+			}
 			else
 				{
 				//message
@@ -1411,11 +1481,14 @@ var mainState = {
     		counth= 0;
     		}
     },
-    next: function lambda(result){
+    next: function (result){
     	 
     	while(allsent){
     		
-    	
+    	if(count==totals)
+    		{
+    		allsent = false;
+    		}
     		 
     	if(count ==0)
     		{
@@ -1442,29 +1515,123 @@ var mainState = {
     			 }
     		 else if(counth<hop.length)
     			 {
-    			 var pack = packJson("LogReg","recipeIngredient",hop[counth],hopamount[counth].toString(),hoptime[counth].toString());
+    			 var pack = packJson("LogReg","recipeIngredient",hop[counth],hopamount[counth].toString(),hoptime[counth].toString(),function(){var items = Object.keys(styles);
+ 				var current = styles[items[currentstyle]];
+				var stylename = current.name;
+				var pack = packJson("LogReg","getScore",stylename);
+			 	
+			 	getInfo(pack);});
     			 counth++;
-    			 getInfo(pack);
+    			 
     			 }
     		
     		}
     	else
     		{
-    			var items = Object.keys(styles);
-    			var current = styles[items[currentstyle]];
-    			var stylename = current.name;
-    			var pack = packJson("LogReg","getScore",stylename);
-   			 	allsent = false;
-   			 	getInfo(pack,this.getscore);
+    			 
+    			if(!allsent)
+    			{
+    				
+    				var items = Object.keys(styles);
+    				var current = styles[items[currentstyle]];
+    				var stylename = current.name;
+    				var pack = packJson("LogReg","getScore",stylename);
+    				getInfo(pack,us);
+    			allsent = false;
+    		}
     		}
     	}
-    	allsent = true;
+    	//allsent = true;
     },
-    getscore: function(result){
-    	console.lot(result.toString());
+    getscore: function(score){
+    	     var result = score;
+    	     console.log(score);
+    	     console.log(tries);
+    	     console.log(result);
+    	     tries++;
+    	    
+    		if(tries<3&&result<90)
+    			{
+    				
+    				if(result>80)
+    				{
+    				this.clearingredient();
+    				this.pad.visible=true;
+    				notetext.setText("Not bad, but you still need some work before you can brew with the big boys! Try Again!");
+    				this.addup.visible = false;
+    				
+    				this.nextoff.visible = true;
+    				
+    				}
+    			else if(result>70)
+    				{
+    				this.clearingredient();
+    				this.pad.visible=true;
+    				notetext.setText("You were likely dropped on your head a few times as a child, but there is still hope! Try again!");
+    				this.addup.visible = false;
+    			
+    				this.nextoff.visible = true;
+    				 
+    				}
+    			else if(result>60)
+				{
+    				this.clearingredient();
+    				this.pad.visible=true;
+    				notetext.setText("Starting to think your hero is Forest Gump! Try again!");
+    				this.addup.visible = false;
+    				
+    				this.nextoff.visible = true;
+    				 
+				}
+    			else if(result>=50)
+				{
+    				this.clearingredient();
+    				this.pad.visible=true;
+    				notetext.setText("You're a danger to those around you. Try again!");
+    				this.addup.visible = false;
+    			
+    				this.nextoff.visible = true;
+    				 
+				}
+    			else if(result<50)
+				{
+    				this.clearingredient();
+    				this.pad.visible=true;;
+    				notetext.setText("Step away from the computer. You are hopeless or try again!");
+    				this.addup.visible = false;
+    				
+    				this.nextoff.visible = true;
+    				this.explosion.play();
+    				 
+				}
+    		}
+    	else if(result>90)
+    		{
+    		this.clearingredient();
+    		this.youwin.visible = true;
+    		this.nextoff.visible = true;
+    		
+    		tries = 0;
+    		this.addup.visible = false;
+    		this.clapping.play();
+    		this.pad.visible;
+    		}
+    	else 
+    		{
+    		this.clearingredient();
+    		this.gameover.visible = true;
+    		this.nextoff.visible = true;
+    		
+    		tries = 0;
+    		this.addup.visible = false;
+    		this.explosion.play();
+    		this.pad.visible;
+    		}
+    	console.log("here");
+    	
     },
     flip: function(){
-    	//nextIngredient();
+    	
     },
     fromrecipe: function(){/*
     	var items = Object.keys(useringredients);
@@ -1596,3 +1763,7 @@ var mainState = {
 game.state.add('brewing',mainState);
 game.state.start('brewing');
 
+us = function(result){
+	console.log(result);
+	mainState.getscore(result);
+}

@@ -14,4 +14,11 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>data</name>
+			<type>2</type>
+			<location>C:/Users/lowes_000/git/BrewSimulation/Main/BrewSim/data</location>
+		</link>
+	</linkedResources>
 </projectDescription>
